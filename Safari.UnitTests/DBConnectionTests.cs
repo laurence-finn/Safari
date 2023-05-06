@@ -2,7 +2,7 @@ using Safari.Data;
 
 namespace Safari.UnitTests
 {
-    public class UnitTest1
+    public class DBConnectionTests
     {
         [Fact]
         public void DBConnectTest()

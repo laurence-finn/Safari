@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Safari.Data", "Safari.Data\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Safari.UnitTests", "Safari.UnitTests\Safari.UnitTests.csproj", "{057FC672-5EC9-43C8-98CF-0E3D41497CE7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Safari.Web", "Safari.Web\Safari.Web.csproj", "{3B549C01-B956-42E8-A8C7-5D8A05EB8E83}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{057FC672-5EC9-43C8-98CF-0E3D41497CE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{057FC672-5EC9-43C8-98CF-0E3D41497CE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{057FC672-5EC9-43C8-98CF-0E3D41497CE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B549C01-B956-42E8-A8C7-5D8A05EB8E83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B549C01-B956-42E8-A8C7-5D8A05EB8E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B549C01-B956-42E8-A8C7-5D8A05EB8E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B549C01-B956-42E8-A8C7-5D8A05EB8E83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
