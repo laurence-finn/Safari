@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Safari.Data.Entities;
+namespace Safari.Data;
 
 [Table("DietType")]
 public partial class DietType

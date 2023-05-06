@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Safari.Data.Entities;
+namespace Safari.Data;
 
 [Table("Animal")]
 public partial class Animal
@@ -13,9 +13,11 @@ public partial class Animal
     [Column("AnimalID")]
     public int AnimalId { get; set; }
 
+    [Required]
     [StringLength(50)]
     public string Name { get; set; } = null!;
 
+    [Required]
     [Column("StateID")]
     public int StateId { get; set; }
 
@@ -28,7 +30,8 @@ public partial class Animal
 
     public int? Height { get; set; }
 
-    public bool? Endangered { get; set; }
+    [Column("IsEndangered")]
+    public bool? IsEndangered { get; set; }
 
     public int? AverageLifeSpan { get; set; }
 
