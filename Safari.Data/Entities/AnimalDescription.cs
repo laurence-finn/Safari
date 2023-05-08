@@ -13,7 +13,6 @@ public partial class AnimalDescription
     [Column("AnimalDescriptionID")]
     public int AnimalDescriptionId { get; set; }
 
-    [Required]
     [Column("AnimalID")]
     public int AnimalId { get; set; }
 

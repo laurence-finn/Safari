@@ -13,36 +13,27 @@ public partial class Animal
     [Column("AnimalID")]
     public int AnimalId { get; set; }
 
-    [Required]
     [StringLength(50)]
     public string Name { get; set; } = null!;
 
-    [Required]
-    [Column("StateID")]
-    public int StateId { get; set; }
+    [Column("AnimalTypeID")]
+    public int? AnimalTypeId { get; set; }
 
     [Column("DietTypeID")]
     public int? DietTypeId { get; set; }
 
-    public int? MinWeight { get; set; }
+    [Column(TypeName = "decimal(6, 2)")]
+    public decimal? MinWeight { get; set; }
 
-    public int? MaxWeight { get; set; }
+    [Column(TypeName = "decimal(6, 2)")]
+    public decimal? MaxWeight { get; set; }
 
-    public int? Height { get; set; }
+    [Column(TypeName = "decimal(6, 2)")]
+    public decimal? Height { get; set; }
 
-    [Column("IsEndangered")]
     public bool? IsEndangered { get; set; }
 
     public int? AverageLifeSpan { get; set; }
-
-    [Column("AnimalPicID")]
-    public int? AnimalPicId { get; set; }
-
-    [Column(TypeName = "datetime")]
-    public DateTime? DateCreated { get; set; }
-
-    [Column(TypeName = "datetime")]
-    public DateTime? LastModified { get; set; }
 
     [InverseProperty("Animal")]
     public virtual ICollection<AnimalDescription> AnimalDescriptions { get; } = new List<AnimalDescription>();
@@ -52,6 +43,10 @@ public partial class Animal
 
     [InverseProperty("Animal")]
     public virtual ICollection<AnimalState> AnimalStates { get; } = new List<AnimalState>();
+
+    [ForeignKey("AnimalTypeId")]
+    [InverseProperty("Animals")]
+    public virtual AnimalType? AnimalType { get; set; }
 
     [ForeignKey("DietTypeId")]
     [InverseProperty("Animals")]

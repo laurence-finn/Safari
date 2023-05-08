@@ -13,7 +13,6 @@ public partial class AnimalPic
     [Column("AnimalPicID")]
     public int AnimalPicId { get; set; }
 
-    [Required]
     [Column("AnimalID")]
     public int AnimalId { get; set; }
 
@@ -26,11 +25,8 @@ public partial class AnimalPic
     [StringLength(150)]
     public string? AltText { get; set; }
 
-    [Column(TypeName = "datetime")]
-    public DateTime DateUploaded { get; set; }
-
-    [Column(TypeName = "datetime")]
-    public DateTime LastModified { get; set; }
+    [StringLength(500)]
+    public string? Source { get; set; }
 
     [ForeignKey("AnimalId")]
     [InverseProperty("AnimalPics")]

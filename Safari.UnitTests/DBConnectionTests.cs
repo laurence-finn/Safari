@@ -1,4 +1,4 @@
-using Safari.Data;
+using Safari.Data.DataContext;
 
 namespace Safari.UnitTests
 {

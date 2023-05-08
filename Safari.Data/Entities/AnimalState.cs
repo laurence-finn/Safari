@@ -13,11 +13,9 @@ public partial class AnimalState
     [Column("AnimalStateID")]
     public int AnimalStateId { get; set; }
 
-    [Required]
     [Column("AnimalID")]
     public int AnimalId { get; set; }
 
-    [Required]
     [Column("StateID")]
     public int StateId { get; set; }
 
