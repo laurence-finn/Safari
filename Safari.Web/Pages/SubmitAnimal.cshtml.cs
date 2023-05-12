@@ -41,20 +41,24 @@ namespace Safari.Web.Pages
         //[BindProperty]
         //public AnimalPic AnimalPic { get; set; }
 
-        //[BindProperty]
-        //public AnimalState AnimalState { get; set; }
+        [BindProperty]
+        public List<int> SelectedStateIds { get; set; } = default!;
+
+        [BindProperty]
+        public AnimalDescription AnimalDescription { get; set; } = default!;
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
+            // If the model state is invalid for any other reason, cancel the post
             if (!ModelState.IsValid || _context.Animal == null || Animal == null)
             {
                 ViewData["AnimalTypeId"] = new SelectList(
                     _context.AnimalType, "AnimalTypeId", "Name");
                 ViewData["DietTypeId"] = new SelectList(
                     _context.DietType, "DietTypeId", "Name");
-                //ViewData["StateId"] = new SelectList(
-                //    _context.State, "StateId", "Name");
+                ViewData["StateId"] = new SelectList(
+                    _context.State, "StateId", "Name");
                 return Page();
             }
 
@@ -87,6 +91,37 @@ namespace Safari.Web.Pages
                     new SqlParameter("@AverageLifeSpan", Animal.AverageLifeSpan));
             }
             catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return Page();
+            }
+
+            // Execute the insert_animalstate stored procedure
+            try
+            {
+                foreach (var stateId in SelectedStateIds)
+                {
+                    await _context.Database.ExecuteSqlRawAsync("EXEC insert_animalstate @AnimalID, @StateID",
+                        new SqlParameter("@AnimalID", NewAnimalID.Value),
+                        new SqlParameter("@StateID", stateId));
+                }
+            }
+            catch (SqlException ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return Page();
+            }
+
+            try
+            {
+                if (!string.IsNullOrEmpty(AnimalDescription.Description))
+                {
+                    await _context.Database.ExecuteSqlRawAsync("EXEC insert_animaldescription @AnimalID, @Description",
+                        new SqlParameter("@AnimalID", NewAnimalID.Value),
+                        new SqlParameter("@Description", AnimalDescription.Description));
+                }
+            }
+            catch (SqlException ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
                 return Page();

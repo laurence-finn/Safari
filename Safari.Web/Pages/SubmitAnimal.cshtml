@@ -21,46 +21,75 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Animal.Name" class="control-label"></label>
+                <label asp-for="Animal.Name" class="control-label">Name</label>
                 <input asp-for="Animal.Name" class="form-control" />
                 <span asp-validation-for="Animal.Name" class="text-danger"></span>
-            </div>
-@*            <div class="form-group">
-                <label asp-for="AnimalState.StateId" class="control-label">State(s) where the animal lives</label>
-                <select asp-for="AnimalState.StateId" class="form-control" asp-items="ViewBag.StateId"></select>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="Animal.AnimalTypeId" class="control-label"></label>
-                <select asp-for="Animal.AnimalTypeId" class ="form-control" asp-items="ViewBag.AnimalTypeId"></select>
+                <br />
             </div>
             <div class="form-group">
-                <label asp-for="Animal.DietTypeId" class="control-label"></label>
-                <select asp-for="Animal.DietTypeId" class ="form-control" asp-items="ViewBag.DietTypeId"></select>
+                <label asp-for="SelectedStateIds" class="control-label">States where the animal lives</label>
+                <select asp-for="SelectedStateIds" class="form-control" asp-items="ViewBag.StateId" multiple></select>
+                <span asp-validation-for="SelectedStateIds" class="text-danger"></span>
+                <br />
+
             </div>
             <div class="form-group">
-                <label asp-for="Animal.MinWeight" class="control-label"></label>
+                <label asp-for="Animal.AnimalTypeId" class="control-label">Animal Type</label>
+                <select asp-for="Animal.AnimalTypeId" class ="form-control" asp-items="ViewBag.AnimalTypeId">
+                    <option value="">Select an Animal Type</option>
+                </select>
+                <br />
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Animal.DietTypeId" class="control-label">Diet</label>
+                <select asp-for="Animal.DietTypeId" class ="form-control" asp-items="ViewBag.DietTypeId">
+                    <option value="">Select a Diet Type</option>
+                </select>
+                <br />
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Animal.MinWeight" class="control-label">Minimum Weight (pounds)</label>
                 <input asp-for="Animal.MinWeight" class="form-control" />
                 <span asp-validation-for="Animal.MinWeight" class="text-danger"></span>
+                <br />
+
             </div>
             <div class="form-group">
-                <label asp-for="Animal.MaxWeight" class="control-label"></label>
+                <label asp-for="Animal.MaxWeight" class="control-label">Maximum Weight (pounds)</label>
                 <input asp-for="Animal.MaxWeight" class="form-control" />
                 <span asp-validation-for="Animal.MaxWeight" class="text-danger"></span>
+                <br />
+
             </div>
             <div class="form-group">
-                <label asp-for="Animal.Height" class="control-label"></label>
+                <label asp-for="Animal.Height" class="control-label">Height (inches)</label>
                 <input asp-for="Animal.Height" class="form-control" />
                 <span asp-validation-for="Animal.Height" class="text-danger"></span>
+                <br />
+
             </div>
             <div class="form-group">
-                <label asp-for="Animal.IsEndangered" class="control-label"></label>
-                <input asp-for="Animal.IsEndangered" class="form-control" />
-                <span asp-validation-for="Animal.IsEndangered" class="text-danger"></span>
+                <label asp-for="Animal.IsEndangered" class="control-label">Is the animal endangered?</label>
+                <select asp-for="Animal.IsEndangered" class="form-control">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+                <br />
+
             </div>
             <div class="form-group">
-                <label asp-for="Animal.AverageLifeSpan" class="control-label"></label>
+                <label asp-for="Animal.AverageLifeSpan" class="control-label">Average Life Span (years)</label>
                 <input asp-for="Animal.AverageLifeSpan" class="form-control" />
                 <span asp-validation-for="Animal.AverageLifeSpan" class="text-danger"></span>
+                <br />
+            </div>
+            <div class="form-group">
+                <label asp-for="AnimalDescription.Description" class="control-label">Description</label>
+                <textarea asp-for="AnimalDescription.Description" class="form-control"></textarea>
+                <span asp-validation-for="AnimalDescription.Description" class="text-danger"></span>
+                <br />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
