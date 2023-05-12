@@ -23,28 +23,38 @@ namespace Safari.Web.Pages
 
         public IActionResult OnGet()
         {
-        ViewData["AnimalTypeId"] = new SelectList(_context.AnimalType, "AnimalTypeId", "Name");
-        ViewData["DietTypeId"] = new SelectList(_context.DietType, "DietTypeId", "Name");
+            ViewData["AnimalTypeId"] = new SelectList(
+                _context.AnimalType, "AnimalTypeId", "Name");
+            ViewData["DietTypeId"] = new SelectList(
+                _context.DietType, "DietTypeId", "Name");
+            ViewData["StateId"] = new SelectList(
+                _context.State, "StateId", "Name");
             return Page();
         }
 
         [BindProperty]
         public Animal Animal { get; set; } = default!;
 
-        [BindProperty]
-        public AnimalDescription AnimalDescription { get; set; }
+        //[BindProperty]
+        //public AnimalDescription AnimalDescription { get; set; }
 
-        [BindProperty]
-        public AnimalPic AnimalPic { get; set; }
+        //[BindProperty]
+        //public AnimalPic AnimalPic { get; set; }
 
-        [BindProperty]
-        public AnimalState AnimalState { get; set; }
+        //[BindProperty]
+        //public AnimalState AnimalState { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid || _context.Animal == null || Animal == null)
             {
+                ViewData["AnimalTypeId"] = new SelectList(
+                    _context.AnimalType, "AnimalTypeId", "Name");
+                ViewData["DietTypeId"] = new SelectList(
+                    _context.DietType, "DietTypeId", "Name");
+                //ViewData["StateId"] = new SelectList(
+                //    _context.State, "StateId", "Name");
                 return Page();
             }
 
@@ -64,41 +74,41 @@ namespace Safari.Web.Pages
             };
 
             // Execute the insert_animal stored procedure
-            await _context.Database.ExecuteSqlRawAsync("EXEC insert_animal @Name, @AnimalTypeId, @DietTypeId, @MinWeight, @MaxWeight, @Height, @IsEndangered, @AverageLifeSpan, @NewAnimalID Output, @Success Output, @ErrorMsg Output",
-                new SqlParameter("@Name", Animal.Name),
-                new SqlParameter("@AnimalTypeId", Animal.AnimalTypeId),
-                new SqlParameter("@DietTypeId", Animal.DietTypeId),
-                new SqlParameter("@MinWeight", Animal.MinWeight),
-                new SqlParameter("@MaxWeight", Animal.MaxWeight),
-                new SqlParameter("@Height", Animal.Height),
-                new SqlParameter("@IsEndangered", Animal.IsEndangered),
-                new SqlParameter("@AverageLifeSpan", Animal.AverageLifeSpan));
-
-            // Check the success flag and display an error message if the stored procedure failed
-            if (!(bool)Success.Value)
+            try
             {
-                var errorMsg = (string)ErrorMsg.Value;
-                TempData["ErrorMessage"] = errorMsg;
+                await _context.Database.ExecuteSqlRawAsync("DECLARE @NewAnimalID INT, @Success BIT, @ErrorMsg NVARCHAR(50); EXEC insert_animal @Name, @AnimalTypeId, @DietTypeId, @MinWeight, @MaxWeight, @Height, @IsEndangered, @AverageLifeSpan, @NewAnimalID Output, @Success Output, @ErrorMsg Output",
+                    new SqlParameter("@Name", Animal.Name),
+                    new SqlParameter("@AnimalTypeId", Animal.AnimalTypeId),
+                    new SqlParameter("@DietTypeId", Animal.DietTypeId),
+                    new SqlParameter("@MinWeight", Animal.MinWeight),
+                    new SqlParameter("@MaxWeight", Animal.MaxWeight),
+                    new SqlParameter("@Height", Animal.Height),
+                    new SqlParameter("@IsEndangered", Animal.IsEndangered),
+                    new SqlParameter("@AverageLifeSpan", Animal.AverageLifeSpan));
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
                 return Page();
             }
 
-            // Execute the insert_animalpic stored procedure
-            await _context.Database.ExecuteSqlRawAsync("EXEC insert_animalpic @AnimalID, @FileName, @FilePath, @AltText, @Source",
-                new SqlParameter("@AnimalID", NewAnimalID.Value),
-                new SqlParameter("@FileName", AnimalPic.FileName),
-                new SqlParameter("@FilePath", AnimalPic.FilePath),
-                new SqlParameter("@AltText", AnimalPic.AltText),
-                new SqlParameter("@Source", AnimalPic.Source));
+            //// Execute the insert_animalpic stored procedure
+            //await _context.Database.ExecuteSqlRawAsync("EXEC insert_animalpic @AnimalID, @FileName, @FilePath, @AltText, @Source",
+            //    new SqlParameter("@AnimalID", NewAnimalID.Value),
+            //    new SqlParameter("@FileName", AnimalPic.FileName),
+            //    new SqlParameter("@FilePath", AnimalPic.FilePath),
+            //    new SqlParameter("@AltText", AnimalPic.AltText),
+            //    new SqlParameter("@Source", AnimalPic.Source));
 
-            // Execute the insert_animaldescription stored procedure
-            await _context.Database.ExecuteSqlRawAsync("EXEC insert_animaldescription @AnimalID, @Description",
-                new SqlParameter("@AnimalID", NewAnimalID.Value),
-                new SqlParameter("@Description", AnimalDescription.Description));
+            //// Execute the insert_animaldescription stored procedure
+            //await _context.Database.ExecuteSqlRawAsync("EXEC insert_animaldescription @AnimalID, @Description",
+            //    new SqlParameter("@AnimalID", NewAnimalID.Value),
+            //    new SqlParameter("@Description", AnimalDescription.Description));
 
-            // Execute the insert_animalstate stored procedure
-            await _context.Database.ExecuteSqlRawAsync("EXEC insert_animalstate @AnimalID, @StateID",
-                new SqlParameter("@AnimalID", NewAnimalID.Value),
-                new SqlParameter("@StateID", AnimalState.StateId));
+            //// Execute the insert_animalstate stored procedure
+            //await _context.Database.ExecuteSqlRawAsync("EXEC insert_animalstate @AnimalID, @StateID",
+            //    new SqlParameter("@AnimalID", NewAnimalID.Value),
+            //    new SqlParameter("@StateID", AnimalState.StateId));
 
             return RedirectToPage("./Index");
         }

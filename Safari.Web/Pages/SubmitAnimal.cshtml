@@ -25,6 +25,10 @@
                 <input asp-for="Animal.Name" class="form-control" />
                 <span asp-validation-for="Animal.Name" class="text-danger"></span>
             </div>
+@*            <div class="form-group">
+                <label asp-for="AnimalState.StateId" class="control-label">State(s) where the animal lives</label>
+                <select asp-for="AnimalState.StateId" class="form-control" asp-items="ViewBag.StateId"></select>
+            </div>*@
             <div class="form-group">
                 <label asp-for="Animal.AnimalTypeId" class="control-label"></label>
                 <select asp-for="Animal.AnimalTypeId" class ="form-control" asp-items="ViewBag.AnimalTypeId"></select>
@@ -65,17 +69,11 @@
     </div>
 </div>
 
-@if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
-{
-    <div class="alert alert-danger">
-        @TempData["ErrorMessage"]
-    </div>
-}
-
 <div>
     <a asp-page="Index">Home</a>
 </div>
 
-@section Scripts {
+@section Scripts 
+{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
