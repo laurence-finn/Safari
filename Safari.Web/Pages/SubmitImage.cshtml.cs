@@ -20,7 +20,7 @@ namespace Safari.Web.Pages
 
         public IActionResult OnGet()
         {
-            ViewData["AnimalId"] = new SelectList(_context.Animals, "AnimalId", "Name");
+            ViewData["AnimalId"] = new SelectList(_context.Animal, "AnimalId", "Name");
             return Page();
         }
 
@@ -31,12 +31,12 @@ namespace Safari.Web.Pages
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid || _context.AnimalPics == null || AnimalPic == null)
+            if (!ModelState.IsValid || _context.AnimalPic == null || AnimalPic == null)
             {
                 return Page();
             }
 
-            _context.AnimalPics.Add(AnimalPic);
+            _context.AnimalPic.Add(AnimalPic);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

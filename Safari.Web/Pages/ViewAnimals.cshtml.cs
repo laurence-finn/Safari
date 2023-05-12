@@ -22,9 +22,9 @@ namespace Safari.Web.Pages.Animals
 
         public async Task OnGetAsync()
         {
-            if (_context.Animals != null)
+            if (_context.Animal != null)
             {
-                Animal = await _context.Animals
+                Animal = await _context.Animal
                 .Include(a => a.AnimalType)
                 .Include(a => a.DietType).ToListAsync();
             }

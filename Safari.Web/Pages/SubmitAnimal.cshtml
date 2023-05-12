@@ -5,6 +5,13 @@
     ViewData["Title"] = "SubmitAnimal";
 }
 
+@if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
 <h1>SubmitAnimal</h1>
 
 <h4>Animal</h4>
@@ -58,8 +65,15 @@
     </div>
 </div>
 
+@if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="Index">Home</a>
 </div>
 
 @section Scripts {

@@ -15,19 +15,19 @@ public partial class WildlifeDataContext : DbContext
     {
     }
 
-    public virtual DbSet<Animal> Animals { get; set; }
+    public virtual DbSet<Animal> Animal { get; set; }
 
-    public virtual DbSet<AnimalDescription> AnimalDescriptions { get; set; }
+    public virtual DbSet<AnimalDescription> AnimalDescription { get; set; }
 
-    public virtual DbSet<AnimalPic> AnimalPics { get; set; }
+    public virtual DbSet<AnimalPic> AnimalPic { get; set; }
 
-    public virtual DbSet<AnimalState> AnimalStates { get; set; }
+    public virtual DbSet<AnimalState> AnimalState { get; set; }
 
-    public virtual DbSet<AnimalType> AnimalTypes { get; set; }
+    public virtual DbSet<AnimalType> AnimalType { get; set; }
 
-    public virtual DbSet<DietType> DietTypes { get; set; }
+    public virtual DbSet<DietType> DietType { get; set; }
 
-    public virtual DbSet<State> States { get; set; }
+    public virtual DbSet<State> State { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
