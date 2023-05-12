@@ -1,0 +1,67 @@
+﻿@page
+@model Safari.Web.Pages.SubmitAnimalModel
+
+@{
+    ViewData["Title"] = "SubmitAnimal";
+}
+
+<h1>SubmitAnimal</h1>
+
+<h4>Animal</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Animal.Name" class="control-label"></label>
+                <input asp-for="Animal.Name" class="form-control" />
+                <span asp-validation-for="Animal.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Animal.AnimalTypeId" class="control-label"></label>
+                <select asp-for="Animal.AnimalTypeId" class ="form-control" asp-items="ViewBag.AnimalTypeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Animal.DietTypeId" class="control-label"></label>
+                <select asp-for="Animal.DietTypeId" class ="form-control" asp-items="ViewBag.DietTypeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Animal.MinWeight" class="control-label"></label>
+                <input asp-for="Animal.MinWeight" class="form-control" />
+                <span asp-validation-for="Animal.MinWeight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Animal.MaxWeight" class="control-label"></label>
+                <input asp-for="Animal.MaxWeight" class="form-control" />
+                <span asp-validation-for="Animal.MaxWeight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Animal.Height" class="control-label"></label>
+                <input asp-for="Animal.Height" class="form-control" />
+                <span asp-validation-for="Animal.Height" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Animal.IsEndangered" class="control-label"></label>
+                <input asp-for="Animal.IsEndangered" class="form-control" />
+                <span asp-validation-for="Animal.IsEndangered" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Animal.AverageLifeSpan" class="control-label"></label>
+                <input asp-for="Animal.AverageLifeSpan" class="form-control" />
+                <span asp-validation-for="Animal.AverageLifeSpan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
