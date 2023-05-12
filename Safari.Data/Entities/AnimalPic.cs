@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Safari.Data;
@@ -17,18 +18,20 @@ public partial class AnimalPic
     public int AnimalId { get; set; }
 
     [StringLength(50)]
-    public string FileName { get; set; } = null!;
+    public string? FileName { get; set; } = null;
 
     [StringLength(100)]
-    public string FilePath { get; set; } = null!;
+    public string? FilePath { get; set; } = null;
 
     [StringLength(150)]
-    public string? AltText { get; set; }
+    public string? AltText { get; set; } = null;
 
     [StringLength(500)]
-    public string? Source { get; set; }
+    public string? Source { get; set; } = null;
 
-    [ForeignKey("AnimalId")]
-    [InverseProperty("AnimalPics")]
-    public virtual Animal Animal { get; set; } = null!;
+    // This property temporarily stores the file uploaded by the user,
+    // and it handles the upload to the images folder.
+    // This is not intended to be saved to the database.
+    [NotMapped]
+    public IFormFile? File { get; set; } = null;
 }

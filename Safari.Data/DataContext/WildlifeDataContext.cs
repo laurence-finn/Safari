@@ -43,32 +43,14 @@ public partial class WildlifeDataContext : DbContext
     {
         modelBuilder.Entity<Animal>(entity =>
         {
-            entity.HasOne(d => d.AnimalType).WithMany(p => p.Animals).HasConstraintName("FK_Animal_AnimalType");
+            entity.HasOne(d => d.AnimalType).WithMany(p => p.Animal).HasConstraintName("FK_Animal_AnimalType");
 
-            entity.HasOne(d => d.DietType).WithMany(p => p.Animals).HasConstraintName("FK_Animal_DietType");
-        });
-
-        modelBuilder.Entity<AnimalDescription>(entity =>
-        {
-            entity.HasOne(d => d.Animal).WithMany(p => p.AnimalDescriptions)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AnimalDescription_Animal");
-        });
-
-        modelBuilder.Entity<AnimalPic>(entity =>
-        {
-            entity.HasOne(d => d.Animal).WithMany(p => p.AnimalPics)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AnimalPic_Animal");
+            entity.HasOne(d => d.DietType).WithMany(p => p.Animal).HasConstraintName("FK_Animal_DietType");
         });
 
         modelBuilder.Entity<AnimalState>(entity =>
         {
-            entity.HasOne(d => d.Animal).WithMany(p => p.AnimalStates)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AnimalState_Animal");
-
-            entity.HasOne(d => d.State).WithMany(p => p.AnimalStates)
+            entity.HasOne(d => d.State).WithMany(p => p.AnimalState)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_AnimalState_State");
         });

@@ -17,5 +17,5 @@ public partial class DietType
     public string Name { get; set; } = null!;
 
     [InverseProperty("DietType")]
-    public virtual ICollection<Animal> Animals { get; } = new List<Animal>();
+    public virtual ICollection<Animal> Animal { get; } = new List<Animal>();
 }

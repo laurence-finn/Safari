@@ -16,9 +16,5 @@ public partial class AnimalDescription
     [Column("AnimalID")]
     public int AnimalId { get; set; }
 
-    public string Description { get; set; } = null!;
-
-    [ForeignKey("AnimalId")]
-    [InverseProperty("AnimalDescriptions")]
-    public virtual Animal Animal { get; set; } = null!;
+    public string? Description { get; set; } = null;
 }

@@ -17,5 +17,5 @@ public partial class State
     public string Name { get; set; } = null!;
 
     [InverseProperty("State")]
-    public virtual ICollection<AnimalState> AnimalStates { get; } = new List<AnimalState>();
+    public virtual ICollection<AnimalState> AnimalState { get; } = new List<AnimalState>();
 }

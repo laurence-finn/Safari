@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -35,24 +36,29 @@ namespace Safari.Web.Pages
         [BindProperty]
         public Animal Animal { get; set; } = default!;
 
-        //[BindProperty]
-        //public AnimalDescription AnimalDescription { get; set; }
-
-        //[BindProperty]
-        //public AnimalPic AnimalPic { get; set; }
-
         [BindProperty]
         public List<int> SelectedStateIds { get; set; } = default!;
 
         [BindProperty]
         public AnimalDescription AnimalDescription { get; set; } = default!;
 
+        [BindProperty]
+        public AnimalPic AnimalPic { get; set; } = default!;
+
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
             // If the model state is invalid for any other reason, cancel the post
-            if (!ModelState.IsValid || _context.Animal == null || Animal == null)
+            if (!ModelState.IsValid)
             {
+                foreach (var entry in ModelState)
+                {
+                    var propertyName = entry.Key;
+                    var errorMessages = entry.Value.Errors.Select(error => error.ErrorMessage);
+                    // Do something with the property name and error messages
+                    // For example, log them or display them on the page
+                }
+
                 ViewData["AnimalTypeId"] = new SelectList(
                     _context.AnimalType, "AnimalTypeId", "Name");
                 ViewData["DietTypeId"] = new SelectList(
@@ -80,7 +86,7 @@ namespace Safari.Web.Pages
             // Execute the insert_animal stored procedure
             try
             {
-                await _context.Database.ExecuteSqlRawAsync("DECLARE @NewAnimalID INT, @Success BIT, @ErrorMsg NVARCHAR(50); EXEC insert_animal @Name, @AnimalTypeId, @DietTypeId, @MinWeight, @MaxWeight, @Height, @IsEndangered, @AverageLifeSpan, @NewAnimalID Output, @Success Output, @ErrorMsg Output",
+                await _context.Database.ExecuteSqlRawAsync("EXEC insert_animal @Name, @AnimalTypeId, @DietTypeId, @MinWeight, @MaxWeight, @Height, @IsEndangered, @AverageLifeSpan, @NewAnimalID Output, @Success Output, @ErrorMsg Output",
                     new SqlParameter("@Name", Animal.Name),
                     new SqlParameter("@AnimalTypeId", Animal.AnimalTypeId),
                     new SqlParameter("@DietTypeId", Animal.DietTypeId),
@@ -88,20 +94,23 @@ namespace Safari.Web.Pages
                     new SqlParameter("@MaxWeight", Animal.MaxWeight),
                     new SqlParameter("@Height", Animal.Height),
                     new SqlParameter("@IsEndangered", Animal.IsEndangered),
-                    new SqlParameter("@AverageLifeSpan", Animal.AverageLifeSpan));
+                    new SqlParameter("@AverageLifeSpan", Animal.AverageLifeSpan),
+                    NewAnimalID,
+                    Success,
+                    ErrorMsg);
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
                 return Page();
             }
 
-            // Execute the insert_animalstate stored procedure
+            //Execute the insert_animalstate stored procedure
             try
             {
                 foreach (var stateId in SelectedStateIds)
                 {
-                    await _context.Database.ExecuteSqlRawAsync("EXEC insert_animalstate @AnimalID, @StateID",
+                    await _context.Database.ExecuteSqlRawAsync("DECLARE @NewAnimalStateID int, @Success bit, @ErrorMsg nvarchar(50); EXEC insert_animalstate @AnimalID, @StateID, @NewAnimalStateID Output, @Success Output, @ErrorMsg Output",
                         new SqlParameter("@AnimalID", NewAnimalID.Value),
                         new SqlParameter("@StateID", stateId));
                 }
@@ -112,11 +121,12 @@ namespace Safari.Web.Pages
                 return Page();
             }
 
+            //Execute the insert_animaldescription stored procedure
             try
             {
                 if (!string.IsNullOrEmpty(AnimalDescription.Description))
                 {
-                    await _context.Database.ExecuteSqlRawAsync("EXEC insert_animaldescription @AnimalID, @Description",
+                    await _context.Database.ExecuteSqlRawAsync("DECLARE @Success bit, @ErrorMsg nvarchar(50); EXEC insert_animaldescription @AnimalID, @Description, @Success Output, @ErrorMsg Output",
                         new SqlParameter("@AnimalID", NewAnimalID.Value),
                         new SqlParameter("@Description", AnimalDescription.Description));
                 }
@@ -127,25 +137,62 @@ namespace Safari.Web.Pages
                 return Page();
             }
 
-            //// Execute the insert_animalpic stored procedure
-            //await _context.Database.ExecuteSqlRawAsync("EXEC insert_animalpic @AnimalID, @FileName, @FilePath, @AltText, @Source",
-            //    new SqlParameter("@AnimalID", NewAnimalID.Value),
-            //    new SqlParameter("@FileName", AnimalPic.FileName),
-            //    new SqlParameter("@FilePath", AnimalPic.FilePath),
-            //    new SqlParameter("@AltText", AnimalPic.AltText),
-            //    new SqlParameter("@Source", AnimalPic.Source));
+            if (AnimalPic.File != null)
+            {
+                //Check to see if the file submitted is an image
+                //if (!IsImage(AnimalPic.File))
+                //{
+                //    ModelState.AddModelError("AnimalPic.File", "Please select a valid image file.");
+                //    return Page();
+                //}
 
-            //// Execute the insert_animaldescription stored procedure
-            //await _context.Database.ExecuteSqlRawAsync("EXEC insert_animaldescription @AnimalID, @Description",
-            //    new SqlParameter("@AnimalID", NewAnimalID.Value),
-            //    new SqlParameter("@Description", AnimalDescription.Description));
+                // Generate a unique file name for the uploaded image
+                // Format is AnimalID + "_" + Name + "_1" + extension,
+                // where 1 indicates the number of images. Since this is the first image, the number is 1.
+                // This is stored in the database.
+                AnimalPic.FileName = $"{NewAnimalID.Value}_{Animal.Name}_1{Path.GetExtension(AnimalPic.File.FileName)}";
 
-            //// Execute the insert_animalstate stored procedure
-            //await _context.Database.ExecuteSqlRawAsync("EXEC insert_animalstate @AnimalID, @StateID",
-            //    new SqlParameter("@AnimalID", NewAnimalID.Value),
-            //    new SqlParameter("@StateID", AnimalState.StateId));
+                // Set the file path to the "images" folder in the wwwroot directory
+                // This is stored in the database.
+                AnimalPic.FilePath = Path.Combine("images", AnimalPic.FileName);
+
+                // Save the uploaded file to the images folder.
+                // In the future, we will add a moderation queue to approve images first.
+                var FullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", AnimalPic.FilePath);
+                using (var FileStream = new FileStream(FullPath, FileMode.Create))
+                {
+                    await AnimalPic.File.CopyToAsync(FileStream);
+                }
+
+                // Save the AnimalPic object to the database
+                try
+                {
+                    await _context.Database.ExecuteSqlRawAsync("DECLARE @NewAnimalPicID int, @Success bit, @ErrorMsg nvarchar(50); EXEC insert_animalpic @AnimalID, @FileName, @FilePath, @AltText, @Source, @NewAnimalPicID Output, @Success Output, @ErrorMsg Output",
+                        new SqlParameter("@AnimalID", NewAnimalID.Value),
+                        new SqlParameter("@FileName", AnimalPic.FileName),
+                        new SqlParameter("@FilePath", AnimalPic.FilePath),
+                        new SqlParameter("@AltText", AnimalPic.AltText),
+                        new SqlParameter("@Source", AnimalPic.Source));
+                }
+                catch (SqlException ex)
+                {
+                    TempData["ErrorMessage"] = ex.Message;
+                    return Page();
+                }
+            }
+
 
             return RedirectToPage("./Index");
+        }
+
+        //IsImage(): Function to check if the file is an image. Used by OnPostAsync()
+        private bool IsImage(IFormFile file)
+        {
+            return file.ContentType.StartsWith("image/") &&
+                (file.FileName.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                file.FileName.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ||
+                file.FileName.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
+                file.FileName.EndsWith(".gif", StringComparison.OrdinalIgnoreCase));
         }
     }
 }

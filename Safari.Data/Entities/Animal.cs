@@ -35,20 +35,11 @@ public partial class Animal
 
     public int? AverageLifeSpan { get; set; }
 
-    [InverseProperty("Animal")]
-    public virtual ICollection<AnimalDescription> AnimalDescriptions { get; } = new List<AnimalDescription>();
-
-    [InverseProperty("Animal")]
-    public virtual ICollection<AnimalPic> AnimalPics { get; } = new List<AnimalPic>();
-
-    [InverseProperty("Animal")]
-    public virtual ICollection<AnimalState> AnimalStates { get; } = new List<AnimalState>();
-
     [ForeignKey("AnimalTypeId")]
-    [InverseProperty("Animals")]
+    [InverseProperty("Animal")]
     public virtual AnimalType? AnimalType { get; set; }
 
     [ForeignKey("DietTypeId")]
-    [InverseProperty("Animals")]
+    [InverseProperty("Animal")]
     public virtual DietType? DietType { get; set; }
 }

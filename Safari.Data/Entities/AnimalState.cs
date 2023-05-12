@@ -19,11 +19,7 @@ public partial class AnimalState
     [Column("StateID")]
     public int StateId { get; set; }
 
-    [ForeignKey("AnimalId")]
-    [InverseProperty("AnimalStates")]
-    public virtual Animal Animal { get; set; } = null!;
-
     [ForeignKey("StateId")]
-    [InverseProperty("AnimalStates")]
+    [InverseProperty("AnimalState")]
     public virtual State State { get; set; } = null!;
 }
