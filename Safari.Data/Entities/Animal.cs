@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Safari.Data.Attributes;
 
 namespace Safari.Data;
 
@@ -22,9 +23,11 @@ public partial class Animal
     [Column("DietTypeID")]
     public int? DietTypeId { get; set; }
 
+    [LessThanOrEqual(nameof(MaxWeight), ErrorMessage = "Minimum Weight must be less than or equal to Maximum Weight.")]
     [Column(TypeName = "decimal(6, 2)")]
     public decimal? MinWeight { get; set; }
 
+    [GreaterThanOrEqual(nameof(MinWeight), ErrorMessage = "Maximum Weight must be greater than or equal to Minimum Weight.")]
     [Column(TypeName = "decimal(6, 2)")]
     public decimal? MaxWeight { get; set; }
 
