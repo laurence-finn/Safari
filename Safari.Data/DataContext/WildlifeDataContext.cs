@@ -29,6 +29,16 @@ public partial class WildlifeDataContext : DbContext
 
     public virtual DbSet<State> States { get; set; }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer(
+                "Data Source=.\\SQLEXPRESS;Initial Catalog=WildlifeData;Integrated Security=true;" +
+                "TrustServerCertificate=true;");
+        }
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Animal>(entity =>

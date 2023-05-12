@@ -1,12 +1,45 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Safari.Data;
 
 namespace Safari.Web.Pages
 {
-    public class SubmitImageModel : PageModel
+    public class ImagesModel : PageModel
     {
-        public void OnGet()
+        private readonly WildlifeDataContext _context;
+
+        public ImagesModel(WildlifeDataContext context)
         {
+            _context = context;
+        }
+
+        public IActionResult OnGet()
+        {
+            ViewData["AnimalId"] = new SelectList(_context.Animals, "AnimalId", "Name");
+            return Page();
+        }
+
+        [BindProperty]
+        public AnimalPic AnimalPic { get; set; } = default!;
+
+
+        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid || _context.AnimalPics == null || AnimalPic == null)
+            {
+                return Page();
+            }
+
+            _context.AnimalPics.Add(AnimalPic);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
         }
     }
 }
