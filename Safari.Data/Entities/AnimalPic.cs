@@ -33,5 +33,6 @@ public partial class AnimalPic
     // and it handles the upload to the images folder.
     // This is not intended to be saved to the database.
     [NotMapped]
+    [FileExtensions(Extensions = ".jpg,.jpeg,.png", ErrorMessage = "Please select a valid image file.")]
     public IFormFile? File { get; set; } = null;
 }

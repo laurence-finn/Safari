@@ -45,20 +45,11 @@ namespace Safari.Web.Pages
         [BindProperty]
         public AnimalPic AnimalPic { get; set; } = default!;
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
             // If the model state is invalid for any other reason, cancel the post
             if (!ModelState.IsValid)
             {
-                foreach (var entry in ModelState)
-                {
-                    var propertyName = entry.Key;
-                    var errorMessages = entry.Value.Errors.Select(error => error.ErrorMessage);
-                    // Do something with the property name and error messages
-                    // For example, log them or display them on the page
-                }
-
                 ViewData["AnimalTypeId"] = new SelectList(
                     _context.AnimalType, "AnimalTypeId", "Name");
                 ViewData["DietTypeId"] = new SelectList(
@@ -139,13 +130,6 @@ namespace Safari.Web.Pages
 
             if (AnimalPic.File != null)
             {
-                //Check to see if the file submitted is an image
-                //if (!IsImage(AnimalPic.File))
-                //{
-                //    ModelState.AddModelError("AnimalPic.File", "Please select a valid image file.");
-                //    return Page();
-                //}
-
                 // Generate a unique file name for the uploaded image
                 // Format is AnimalID + "_" + Name + "_1" + extension,
                 // where 1 indicates the number of images. Since this is the first image, the number is 1.
@@ -157,7 +141,7 @@ namespace Safari.Web.Pages
                 AnimalPic.FilePath = Path.Combine("images", AnimalPic.FileName);
 
                 // Save the uploaded file to the images folder.
-                // In the future, we will add a moderation queue to approve images first.
+                // In the future, I will add a moderation queue to approve images first.
                 var FullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", AnimalPic.FilePath);
                 using (var FileStream = new FileStream(FullPath, FileMode.Create))
                 {
@@ -183,16 +167,6 @@ namespace Safari.Web.Pages
 
 
             return RedirectToPage("./Index");
-        }
-
-        //IsImage(): Function to check if the file is an image. Used by OnPostAsync()
-        private bool IsImage(IFormFile file)
-        {
-            return file.ContentType.StartsWith("image/") &&
-                (file.FileName.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
-                file.FileName.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ||
-                file.FileName.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
-                file.FileName.EndsWith(".gif", StringComparison.OrdinalIgnoreCase));
         }
     }
 }

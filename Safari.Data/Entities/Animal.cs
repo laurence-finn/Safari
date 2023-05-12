@@ -33,6 +33,7 @@ public partial class Animal
 
     public bool? IsEndangered { get; set; }
 
+    [Range(1, 200, ErrorMessage ="Average life span must be greater than 0 and less than 200 years.")]
     public int? AverageLifeSpan { get; set; }
 
     [ForeignKey("AnimalTypeId")]

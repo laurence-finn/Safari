@@ -8,9 +8,9 @@ A website that tracks wildlife in the USA.
 - Add some copy below the logo to explain the purpose of the site. "Mr. Mori needs your help!"
 - Organize the page better into divs (possibly do this in layout file).
 
-### Search Animals
+### View All Animals/Search Animals
 - Add a page that allows the user to search for animals. (By default, the page will display all animals.)
-- Research ways to display a table with filtering and sorting.
+- Research ways to display a table with filtering and sorting. (DataTables?)
 - Research ways to display search fields above the table.
 
 ### Animal Details
@@ -24,9 +24,16 @@ A website that tracks wildlife in the USA.
 - Add an interactive map of the United States.
 
 ### Submit Animals
-- Add a page that allows the user to submit an animal sighting.
-- Allow them to upload an image, but they have to include the "source" of the image, and it has to be royalty free (like Pixabay).
-- Add logic to reformat the image file name to something easily organized/searchable.
+- Add more error handling.
+- Add server-side error handling.
+
+### Razor Partial Views
+- Learn more about Razor partial views.
+
+### SQL Database
+- Test stored procedures.
+- How do I store the description of the animal in the database so that it can be formatted nicely on the details page? CAN I even do that?
+- Do I need more foreign key relationships?
 
 ### Future: Add More Images
 - Add a page that allows the user to upload more images of an animal.
@@ -39,9 +46,8 @@ A website that tracks wildlife in the USA.
 - Add a special folder for images being moderated?
 -- Not ideal, people could submit inappropriate images and they'd have to be stored on the server...maybe make a hidden/secured folder so users can't mess around and access the images before they're approved.
 
-### SQL Database
-- Test stored procedures.
-- Add error handling (i.e., make sure max weight is greater than or equal to min weight).
-- Re-scaffold the database into the Safari.Data project.
-- How do I store the description of the animal in the database so that it can be formatted nicely on the details page? CAN I even do that?
+### Future: Population Map
+- Add a map that fills in colors according to the population of the selected animal.
+
+
 
