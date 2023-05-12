@@ -1,8 +1,12 @@
+using Microsoft.EntityFrameworkCore;
 using Safari.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var connection = builder.Configuration.GetConnectionString("WildlifeDataConnection");
+builder.Services.AddDbContext<WildlifeDataContext>(options =>
+    options.UseSqlServer(connection));
 builder.Services.AddRazorPages();
 
 var app = builder.Build();

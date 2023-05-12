@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Safari.Web/Pages/SubmitAnimal.cshtml
+/Safari.Web/Pages/SubmitAnimal.cshtml.cs
+/Safari.Web/Pages/ViewAnimals.cshtml
+/Safari.Web/Pages/ViewAnimals.cshtml.cs
