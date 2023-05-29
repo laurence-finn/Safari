@@ -131,6 +131,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                     Image File
                     <i class="far fa-question-circle" title="Upload a royalty-free picture of the animal."></i>
                 </label>
+                <br />
                 <input asp-for="AnimalPic.File" type="file" class="form-control-file" accept="image/*" />
                 <span asp-validation-for="AnimalPic.File" class="text-danger"></span>
                 <span asp-validation-message="AnimalPic.File" class="text-danger"></span>
@@ -158,7 +159,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                         <input type="submit" value="Submit Animal" class="btn btn-success" />
                     </div>
                     <div>
-                        <input type="reset" value="Reset Form" class="btn btn-danger" />
+                        <input type="reset" value="Reset Form" class="btn btn-danger" onclick="window.scrollTo(0, 0);" />
                     </div>
                     <div>
                         <a class="btn btn-secondary" asp-page="Index">Back to Home</a>
