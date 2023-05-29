@@ -165,8 +165,8 @@ namespace Safari.Web.Pages
                 }
             }
 
-
-            return RedirectToPage("./Index");
+            TempData["SuccessMessage"] = "Animal submitted successfully!";
+            return Page();
         }
     }
 }

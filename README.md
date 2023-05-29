@@ -7,6 +7,7 @@ A website that tracks wildlife in the USA.
 ### Index
 - Add some copy below the logo to explain the purpose of the site. "Mr. Mori needs your help!"
 - Organize the page better into divs (possibly do this in layout file).
+- Make the four buttons prettier (use FontAwesome icons?)
 
 ### View All Animals/Search Animals
 - Add a page that allows the user to search for animals. (By default, the page will display all animals.)
@@ -25,7 +26,8 @@ A website that tracks wildlife in the USA.
 
 ### Submit Animals
 - Add more error handling.
-- Add server-side error handling.
+- Add a message at the top that indicates if the animal was successfully added (green text box).
+- "Animal successfully submitted. Go back to home (link) or submit another animal below."
 
 ### Razor Partial Views
 - Learn more about Razor partial views.
@@ -34,6 +36,9 @@ A website that tracks wildlife in the USA.
 - Test stored procedures.
 - How do I store the description of the animal in the database so that it can be formatted nicely on the details page? CAN I even do that?
 - Do I need more foreign key relationships?
+
+### Future: Animal of the Day
+- Add an animal of the day to the home page, and use a Razor Partial View to do this. It would use a bootstrap card to display the animal's name, image, and description.
 
 ### Future: Add More Images
 - Add a page that allows the user to upload more images of an animal.

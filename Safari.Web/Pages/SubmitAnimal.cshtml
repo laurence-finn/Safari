@@ -11,6 +11,12 @@
         @TempData["ErrorMessage"]
     </div>
 }
+else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
 
 <h1>Submit an Animal</h1>
 
