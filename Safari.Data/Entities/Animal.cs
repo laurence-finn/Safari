@@ -36,7 +36,8 @@ public partial class Animal
     public bool? IsEndangered { get; set; }
 
     [Range(1, 200, ErrorMessage ="Average life span must be greater than 0 and less than 200 years.")]
-    public int? Lifespan { get; set; }
+    [Column (TypeName = "decimal(6, 2)")]
+    public decimal? Lifespan { get; set; }
 
     [ForeignKey("AnimalTypeId")]
     [InverseProperty("Animal")]

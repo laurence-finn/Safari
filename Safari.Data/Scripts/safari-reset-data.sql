@@ -1,0 +1,8 @@
+DELETE FROM Animal;
+DELETE FROM AnimalDescription;
+DELETE FROM AnimalPic;
+DELETE FROM AnimalState;
+DBCC CHECKIDENT ('Animal', RESEED, 1);
+DBCC CHECKIDENT ('AnimalDescription', RESEED, 1);
+DBCC CHECKIDENT ('AnimalPic', RESEED, 1);
+DBCC CHECKIDENT ('AnimalState', RESEED, 1);

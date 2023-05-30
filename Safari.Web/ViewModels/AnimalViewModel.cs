@@ -25,6 +25,7 @@ namespace Safari.Web.ViewModels
 
         public int AnimalId { get; set; }
 
+        [Display (Name="State(s)")]
         public List<string> States { get; set; } = default!;
 
         [Display (Name = "Image")]

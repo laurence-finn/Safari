@@ -56,6 +56,11 @@ namespace Safari.Web.Pages
                                _context.State, "StateId", "Name");
         }
 
+        public IActionResult OnPostResetForm()
+        {
+            RepopulateViewData();
+            return RedirectToPage(); // Redirect back to the same page
+        }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -176,7 +181,9 @@ namespace Safari.Web.Pages
                 }
             }
 
+            ModelState.Clear();
             TempData["SuccessMessage"] = "Animal submitted successfully!";
+            RepopulateViewData();
             return Page();
         }
     }

@@ -172,7 +172,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                         <input type="submit" value="Submit Animal" class="btn btn-success" />
                     </div>
                     <div>
-                        <input type="reset" value="Reset Form" class="btn btn-danger" onclick="window.scrollTo(0, 0);" />
+                        <input type="reset" value="Reset Form" class="btn btn-danger" asp-page-handler="ResetForm" asp-page="SubmitAnimal" onclick="window.scrollTo(0, 0);" />
                     </div>
                     <div>
                         <a class="btn btn-secondary" asp-page="Index">Back to Home</a>
