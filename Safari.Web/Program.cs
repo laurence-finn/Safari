@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Safari.Data;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
