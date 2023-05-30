@@ -1,33 +1,70 @@
-USE [WildlifeData]
+SET IDENTITY_INSERT [dbo].[AnimalType] ON 
+
+INSERT [dbo].[AnimalType] ([AnimalTypeID], [Name]) VALUES (1, N'Mammal')
+INSERT [dbo].[AnimalType] ([AnimalTypeID], [Name]) VALUES (2, N'Reptile')
+INSERT [dbo].[AnimalType] ([AnimalTypeID], [Name]) VALUES (3, N'Amphibian')
+INSERT [dbo].[AnimalType] ([AnimalTypeID], [Name]) VALUES (4, N'Bird')
+INSERT [dbo].[AnimalType] ([AnimalTypeID], [Name]) VALUES (5, N'Fish')
+SET IDENTITY_INSERT [dbo].[AnimalType] OFF
 GO
+SET IDENTITY_INSERT [dbo].[DietType] ON 
 
-DECLARE @NewAnimalID int
-DECLARE @NewAnimalStateID int
-DECLARE @Success bit
-DECLARE @ErrorMsg nvarchar(50)
+INSERT [dbo].[DietType] ([DietTypeID], [Name]) VALUES (1, N'Carnivore')
+INSERT [dbo].[DietType] ([DietTypeID], [Name]) VALUES (2, N'Herbivore')
+INSERT [dbo].[DietType] ([DietTypeID], [Name]) VALUES (3, N'Omnivore')
+SET IDENTITY_INSERT [dbo].[DietType] OFF
+GO
+SET IDENTITY_INSERT [dbo].[State] ON 
 
-DBCC CHECKIDENT ('Animal', RESEED, 0);
-
-EXEC dbo.insert_animal 'Texas Horned Lizard', 2, 2, 0.25, 0.5, 3, 0, 5, @NewAnimalID OUTPUT, @Success OUTPUT, @ErrorMsg OUTPUT;
-EXEC dbo.insert_animal 'Swift Fox', 1, 1, 3, 7, 14, 1, 6, @NewAnimalID OUTPUT, @Success OUTPUT, @ErrorMsg OUTPUT;
-EXEC dbo.insert_animal 'Golden-Cheeked Warbler', 4, 2, 0.4, 0.5, 4, 1, 10, @NewAnimalID OUTPUT, @Success OUTPUT, @ErrorMsg OUTPUT;
-EXEC dbo.insert_animal 'Texas Blind Salamander', 2, 2, 0.1, 0.4, 4, 1, 10, @NewAnimalID OUTPUT, @Success OUTPUT, @ErrorMsg OUTPUT;
-EXEC dbo.insert_animal 'Red-Crowned Parrot', 4, 2, 0.3, 0.5, 14, 0, 40, @NewAnimalID OUTPUT, @Success OUTPUT, @ErrorMsg OUTPUT;
-EXEC dbo.insert_animal 'Mexican Free-Tailed Bat', 1, 2, 0.5, 1, 5, 0, 20, @NewAnimalID OUTPUT, @Success OUTPUT, @ErrorMsg OUTPUT;
-EXEC dbo.insert_animal 'Texas Kangaroo Rat', 1, 2, 0.02, 0.03, 5, 0, 5, @NewAnimalID OUTPUT, @Success OUTPUT, @ErrorMsg OUTPUT;
-EXEC dbo.insert_animal 'Texas Tortoise', 3, 2, 6, 8, 8, 0, 100, @NewAnimalID OUTPUT, @Success OUTPUT, @ErrorMsg OUTPUT;
-EXEC dbo.insert_animal 'White-tailed Deer', 1, 2, 100, 300, 48, 0, 15, @NewAnimalID OUTPUT, @Success OUTPUT, @ErrorMsg OUTPUT;
-EXEC dbo.insert_animal 'Texas Horned Toad', 3, 2, 0.2, 0.5, 4, 0, 10, @NewAnimalID OUTPUT, @Success OUTPUT, @ErrorMsg OUTPUT;
-
-DBCC CHECKIDENT ('AnimalState', RESEED, 0);
-
-EXEC dbo.insert_animalstate 1, 43, @NewAnimalStateID Output, @Success Output, @ErrorMsg Output
-EXEC dbo.insert_animalstate 2, 43, @NewAnimalStateID Output, @Success Output, @ErrorMsg Output
-EXEC dbo.insert_animalstate 3, 43, @NewAnimalStateID Output, @Success Output, @ErrorMsg Output
-EXEC dbo.insert_animalstate 4, 43, @NewAnimalStateID Output, @Success Output, @ErrorMsg Output
-EXEC dbo.insert_animalstate 5, 43, @NewAnimalStateID Output, @Success Output, @ErrorMsg Output
-EXEC dbo.insert_animalstate 6, 43, @NewAnimalStateID Output, @Success Output, @ErrorMsg Output
-EXEC dbo.insert_animalstate 7, 43, @NewAnimalStateID Output, @Success Output, @ErrorMsg Output
-EXEC dbo.insert_animalstate 8, 43, @NewAnimalStateID Output, @Success Output, @ErrorMsg Output
-EXEC dbo.insert_animalstate 9, 43, @NewAnimalStateID Output, @Success Output, @ErrorMsg Output
-EXEC dbo.insert_animalstate 10, 43, @NewAnimalStateID Output, @Success Output, @ErrorMsg Output
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (1, N'Alabama')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (2, N'Alaska')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (3, N'Arizona')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (4, N'Arkansas')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (5, N'California')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (6, N'Colorado')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (7, N'Connecticut')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (8, N'Delaware')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (9, N'Florida')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (10, N'Georgia')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (11, N'Hawaii')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (12, N'Idaho')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (13, N'Illinois')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (14, N'Indiana')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (15, N'Iowa')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (16, N'Kansas')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (17, N'Kentucky')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (18, N'Louisiana')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (19, N'Maine')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (20, N'Maryland')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (21, N'Massachusetts')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (22, N'Michigan')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (23, N'Minnesota')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (24, N'Mississippi')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (25, N'Missouri')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (26, N'Montana')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (27, N'Nebraska')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (28, N'Nevada')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (29, N'New Hampshire')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (30, N'New Jersey')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (31, N'New Mexico')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (32, N'New York')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (33, N'North Carolina')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (34, N'North Dakota')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (35, N'Ohio')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (36, N'Oklahoma')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (37, N'Oregon')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (38, N'Pennsylvania')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (39, N'Rhode Island')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (40, N'South Carolina')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (41, N'South Dakota')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (42, N'Tennessee')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (43, N'Texas')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (44, N'Utah')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (45, N'Vermont')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (46, N'Virginia')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (47, N'Washington')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (48, N'West Virginia')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (49, N'Wisconsin')
+INSERT [dbo].[State] ([StateID], [Name]) VALUES (50, N'Wyoming')
+SET IDENTITY_INSERT [dbo].[State] OFF
+GO

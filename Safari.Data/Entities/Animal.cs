@@ -23,38 +23,33 @@ public partial class Animal
     [Column("DietTypeID")]
     public int? DietTypeId { get; set; }
 
-    [LessThanOrEqual(nameof(MaxWeight), ErrorMessage = "Minimum Weight must be less than or equal to Maximum Weight.")]
     [Column(TypeName = "decimal(6, 2)")]
-    public decimal? MinWeight { get; set; }
-
-    [GreaterThanOrEqual(nameof(MinWeight), ErrorMessage = "Maximum Weight must be greater than or equal to Minimum Weight.")]
-    [Column(TypeName = "decimal(6, 2)")]
-    public decimal? MaxWeight { get; set; }
+    public decimal? Weight { get; set; }
 
     [Column(TypeName = "decimal(6, 2)")]
     public decimal? Height { get; set; }
+
+    [Column(TypeName = "decimal(6, 2)")]
+    public decimal? Length { get; set; }
 
     [Display (Name = "Endangered?")]
     public bool? IsEndangered { get; set; }
 
     [Range(1, 200, ErrorMessage ="Average life span must be greater than 0 and less than 200 years.")]
-    [Display (Name = "Avg. Lifespan")]
-    public int? AverageLifeSpan { get; set; }
+    public int? Lifespan { get; set; }
 
     [ForeignKey("AnimalTypeId")]
     [InverseProperty("Animal")]
-    [Display(Name = "Type")]
     public virtual AnimalType? AnimalType { get; set; }
 
     [ForeignKey("DietTypeId")]
     [InverseProperty("Animal")]
-    [Display (Name = "Diet")]
     public virtual DietType? DietType { get; set; }
 
     // Navigation property for AnimalState
     public virtual ICollection<AnimalState> AnimalState { get; set; } = new List<AnimalState>();
 
     // Navigation property for AnimalPic
-    public virtual AnimalPic AnimalPic { get; set; }
+    public virtual AnimalPic? AnimalPic { get; set; }
 
 }

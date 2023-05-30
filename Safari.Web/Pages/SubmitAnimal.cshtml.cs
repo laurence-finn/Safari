@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Microsoft.JSInterop;
 using Safari.Data;
 
@@ -45,18 +46,23 @@ namespace Safari.Web.Pages
         [BindProperty]
         public AnimalPic AnimalPic { get; set; } = default!;
 
+        public void RepopulateViewData()
+        {
+            ViewData["AnimalTypeId"] = new SelectList(
+                               _context.AnimalType, "AnimalTypeId", "Name");
+            ViewData["DietTypeId"] = new SelectList(
+                               _context.DietType, "DietTypeId", "Name");
+            ViewData["StateId"] = new SelectList(
+                               _context.State, "StateId", "Name");
+        }
+
+
         public async Task<IActionResult> OnPostAsync()
         {
             // If the model state is invalid for any other reason, cancel the post
             if (!ModelState.IsValid)
             {
-                ViewData["AnimalTypeId"] = new SelectList(
-                    _context.AnimalType, "AnimalTypeId", "Name");
-                ViewData["DietTypeId"] = new SelectList(
-                    _context.DietType, "DietTypeId", "Name");
-                ViewData["StateId"] = new SelectList(
-                    _context.State, "StateId", "Name");
-                TempData["ErrorMessage"] = "Please correct the errors on the page.";
+                RepopulateViewData();
                 return Page();
             }
 
@@ -78,15 +84,15 @@ namespace Safari.Web.Pages
             // Execute the insert_animal stored procedure
             try
             {
-                await _context.Database.ExecuteSqlRawAsync("EXEC insert_animal @Name, @AnimalTypeId, @DietTypeId, @MinWeight, @MaxWeight, @Height, @IsEndangered, @AverageLifeSpan, @NewAnimalID Output, @Success Output, @ErrorMsg Output",
+                await _context.Database.ExecuteSqlRawAsync("EXEC insert_animal @Name, @AnimalTypeId, @DietTypeId, @Weight, @Height, @Length, @IsEndangered, @AverageLifeSpan, @NewAnimalID Output, @Success Output, @ErrorMsg Output",
                     new SqlParameter("@Name", Animal.Name),
-                    new SqlParameter("@AnimalTypeId", Animal.AnimalTypeId),
-                    new SqlParameter("@DietTypeId", Animal.DietTypeId),
-                    new SqlParameter("@MinWeight", Animal.MinWeight),
-                    new SqlParameter("@MaxWeight", Animal.MaxWeight),
-                    new SqlParameter("@Height", Animal.Height),
-                    new SqlParameter("@IsEndangered", Animal.IsEndangered),
-                    new SqlParameter("@AverageLifeSpan", Animal.AverageLifeSpan),
+                    new SqlParameter("@AnimalTypeId", Animal.AnimalTypeId ?? (object)DBNull.Value),
+                    new SqlParameter("@DietTypeId", Animal.DietTypeId ?? (object)DBNull.Value),
+                    new SqlParameter("@Weight", Animal.Weight ?? (object)DBNull.Value),                  
+                    new SqlParameter("@Height", Animal.Height ?? (object)DBNull.Value),
+                    new SqlParameter("@Length", Animal.Length ?? (object)DBNull.Value),
+                    new SqlParameter("@IsEndangered", Animal.IsEndangered ?? false),
+                    new SqlParameter("@AverageLifeSpan", Animal.Lifespan ?? (object)DBNull.Value),
                     NewAnimalID,
                     Success,
                     ErrorMsg);
@@ -94,6 +100,7 @@ namespace Safari.Web.Pages
             catch (SqlException ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
+                RepopulateViewData();
                 return Page();
             }
 
@@ -110,6 +117,7 @@ namespace Safari.Web.Pages
             catch (SqlException ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
+                RepopulateViewData();
                 return Page();
             }
 
@@ -126,6 +134,7 @@ namespace Safari.Web.Pages
             catch (SqlException ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
+                RepopulateViewData();
                 return Page();
             }
 
@@ -156,12 +165,13 @@ namespace Safari.Web.Pages
                         new SqlParameter("@AnimalID", NewAnimalID.Value),
                         new SqlParameter("@FileName", AnimalPic.FileName),
                         new SqlParameter("@FilePath", AnimalPic.FilePath),
-                        new SqlParameter("@AltText", AnimalPic.AltText),
-                        new SqlParameter("@Source", AnimalPic.Source));
+                        new SqlParameter("@AltText", AnimalPic.AltText ?? (object)DBNull.Value),
+                        new SqlParameter("@Source", AnimalPic.Source ?? (object)DBNull.Value));
                 }
                 catch (SqlException ex)
                 {
                     TempData["ErrorMessage"] = ex.Message;
+                    RepopulateViewData();
                     return Page();
                 }
             }

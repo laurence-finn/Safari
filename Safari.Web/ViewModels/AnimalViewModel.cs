@@ -13,20 +13,16 @@ namespace Safari.Web.ViewModels
         [Display (Name = "Diet")]
         public string DietTypeName { get; set; } = default!;
 
-        [Display (Name = "Min. Weight")]
-        public double MinWeight { get; set; } = default!;
-
-        [Display (Name = "Max. Weight")]
-        public double MaxWeight { get; set; } = default!;
-
-        [Display (Name = "Avg. Height")]
+        public double Weight { get; set; } = default!;
         public double Height { get; set; } = default!;
+        public double Length { get; set; } = default!;
 
         [Display (Name = "Endangered?")]
         public bool IsEndangered { get; set; } = default!;
 
-        [Display (Name = "Avg. Lifespan")]
-        public int AverageLifeSpan { get; set; } = default!;
+        [Display (Name = "Lifespan")]
+        public int Lifespan { get; set; } = default!;
+
         public int AnimalId { get; set; }
 
         public List<string> States { get; set; } = default!;

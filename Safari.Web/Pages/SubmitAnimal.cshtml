@@ -18,6 +18,19 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
     </div>
 }
 
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <p>Please correct the following errors:</p>
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
 <h1>Submit an Animal</h1>
 
 <h4>
@@ -71,20 +84,11 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
 
             </div>
             <div class="form-group">
-                <label asp-for="Animal.MinWeight" class="control-label">
-                    Minimum Weight (pounds)
+                <label asp-for="Animal.Weight" class="control-label">
+                    Average Weight (pounds)
                 </label>
-                <input asp-for="Animal.MinWeight" class="form-control" />
-                <span asp-validation-for="Animal.MinWeight" class="text-danger"></span>
-                <br />
-
-            </div>
-            <div class="form-group">
-                <label asp-for="Animal.MaxWeight" class="control-label">
-                    Maximum Weight (pounds)
-                </label>
-                <input asp-for="Animal.MaxWeight" class="form-control" />
-                <span asp-validation-for="Animal.MaxWeight" class="text-danger"></span>
+                <input asp-for="Animal.Weight" class="form-control" />
+                <span asp-validation-for="Animal.Weight" class="text-danger"></span>
                 <br />
 
             </div>
@@ -94,6 +98,15 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                 </label>
                 <input asp-for="Animal.Height" class="form-control" />
                 <span asp-validation-for="Animal.Height" class="text-danger"></span>
+                <br />
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Animal.Length" class="control-label">
+                    Average Length (inches)
+                </label>
+                <input asp-for="Animal.Length" class="form-control" />
+                <span asp-validation-for="Animal.Length" class="text-danger"></span>
                 <br />
 
             </div>
@@ -109,11 +122,11 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
 
             </div>
             <div class="form-group">
-                <label asp-for="Animal.AverageLifeSpan" class="control-label">
-                    Average Life Span (years)
+                <label asp-for="Animal.Lifespan" class="control-label">
+                    Average Lifespan (years)
                 </label>
-                <input asp-for="Animal.AverageLifeSpan" class="form-control" />
-                <span asp-validation-for="Animal.AverageLifeSpan" class="text-danger"></span>
+                <input asp-for="Animal.Lifespan" class="form-control" />
+                <span asp-validation-for="Animal.Lifespan" class="text-danger"></span>
                 <br />
             </div>
             <div class="form-group">
