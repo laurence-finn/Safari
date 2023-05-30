@@ -56,6 +56,7 @@ namespace Safari.Web.Pages
                     _context.DietType, "DietTypeId", "Name");
                 ViewData["StateId"] = new SelectList(
                     _context.State, "StateId", "Name");
+                TempData["ErrorMessage"] = "Please correct the errors on the page.";
                 return Page();
             }
 
