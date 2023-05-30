@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Safari.Data;
 using AutoMapper;
+using Safari.Web.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 var connection = builder.Configuration.GetConnectionString("WildlifeDataConnection");
 builder.Services.AddDbContext<WildlifeDataContext>(options =>
     options.UseSqlServer(connection));
+
+builder.Services.AddAutoMapper(typeof(AnimalProfile));
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();

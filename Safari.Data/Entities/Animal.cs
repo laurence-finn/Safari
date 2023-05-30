@@ -54,4 +54,11 @@ public partial class Animal
     [InverseProperty("Animal")]
     [Display (Name = "Diet")]
     public virtual DietType? DietType { get; set; }
+
+    // Navigation property for AnimalState
+    public virtual ICollection<AnimalState> AnimalState { get; set; } = new List<AnimalState>();
+
+    // Navigation property for AnimalPic
+    public virtual AnimalPic AnimalPic { get; set; }
+
 }
