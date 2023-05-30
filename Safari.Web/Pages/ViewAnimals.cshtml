@@ -2,26 +2,33 @@
 @model Safari.Web.Pages.Animals.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "View All Animals";
 }
 
 <h1>View All Animals</h1>
 
 <p>
     <a asp-page="SubmitAnimal">Submit an Animal</a>
+    <br />
     <a asp-page="Index">Back to Home</a>
 </p>
-<table class="table">
+<table id="AnimalTable" class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Animal[0].Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Animal[0].AnimalType)
+                @Html.DisplayNameFor(model => model.Animal[0].FilePath)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Animal[0].DietType)
+                @Html.DisplayNameFor(model => model.Animal[0].States)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].AnimalTypeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].DietTypeName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Animal[0].MinWeight)
@@ -49,10 +56,16 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AnimalType.Name)
+                    <img src="@item.FilePath" alt="@item.AltText" style="max-width:100px; max-height:100px;">
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DietType.Name)
+                    @string.Join(", ", item.States)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AnimalTypeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DietTypeName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.MinWeight)
@@ -77,3 +90,11 @@
         }
     </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#AnimalTable').DataTable();
+        });
+    </script>
+}

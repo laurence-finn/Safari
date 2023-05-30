@@ -15,7 +15,6 @@ public partial class Animal
     public int AnimalId { get; set; }
 
     [StringLength(50)]
-    [Display (Name = "Name")]
     public string Name { get; set; } = null!;
 
     [Column("AnimalTypeID")]
@@ -26,16 +25,13 @@ public partial class Animal
 
     [LessThanOrEqual(nameof(MaxWeight), ErrorMessage = "Minimum Weight must be less than or equal to Maximum Weight.")]
     [Column(TypeName = "decimal(6, 2)")]
-    [Display (Name = "Min Weight")]
     public decimal? MinWeight { get; set; }
 
     [GreaterThanOrEqual(nameof(MinWeight), ErrorMessage = "Maximum Weight must be greater than or equal to Minimum Weight.")]
     [Column(TypeName = "decimal(6, 2)")]
-    [Display (Name = "Max Weight")]
     public decimal? MaxWeight { get; set; }
 
     [Column(TypeName = "decimal(6, 2)")]
-    [Display (Name = "Avg. Height")]
     public decimal? Height { get; set; }
 
     [Display (Name = "Endangered?")]

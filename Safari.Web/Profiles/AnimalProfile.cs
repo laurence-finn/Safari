@@ -12,10 +12,14 @@ namespace Safari.Web.Profiles
                 .ForMember(dest => dest.States,
                 opt => opt.MapFrom(
                     src => src.AnimalState.Select(s => s.State.Name).ToList()))
-                .ForMember(dest => dest.FilePathFileName,
-                opt => opt.MapFrom(src => Path.Combine(src.AnimalPic.FilePath, src.AnimalPic.FileName)))
+                .ForMember(dest => dest.FilePath,
+                opt => opt.MapFrom(src => src.AnimalPic.FilePath))
                 .ForMember(dest => dest.AltText,
-                opt => opt.MapFrom(src => src.AnimalPic.AltText));
+                opt => opt.MapFrom(src => src.AnimalPic.AltText))
+                .ForMember(dest => dest.AnimalTypeName,
+                opt => opt.MapFrom(src => src.AnimalType.Name))
+                .ForMember(dest => dest.DietTypeName,
+                opt => opt.MapFrom(src => src.DietType.Name));
         }
     }
 }
