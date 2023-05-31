@@ -152,7 +152,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                 <br />
             </div>
             <div class="form-group">
-                <label asp-for="AnimalPic.AltText" class="control-label">Caption for the Image</label>
+                <label asp-for="AnimalPic.AltText" class="control-label">Caption for the Image. If you need to cite a copyright or other credit, do so here.</label>
                 <input asp-for="AnimalPic.AltText" class="form-control" />
                 <span asp-validation-for="AnimalPic.AltText" class="text-danger"></span>
                 <br />
@@ -160,7 +160,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
             <div class="form-group">
                 <label asp-for="AnimalPic.Source" class="control-label">
                     Where did you get the picture from?
-                    <i class="far fa-question-circle" title="If you took the photo yourself, enter 'Self.' If you got the picture from a website, please provide the link."></i>
+                    <i class="far fa-question-circle" title="If you took the photo yourself, enter 'Self.' If you got the picture from a website, please provide the link, or provide the copyright information."></i>
                 </label>
                 <input asp-for="AnimalPic.Source" class="form-control" />
                 <span asp-validation-for="AnimalPic.Source" class="text-danger"></span>
