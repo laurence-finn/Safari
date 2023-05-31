@@ -12,114 +12,86 @@ using Microsoft.Identity.Client;
 using Microsoft.JSInterop;
 using Safari.Data;
 
-namespace Safari.Web.Pages
+namespace Safari.Web.Pages;
+
+public class SubmitAnimalPageModel : PageModel
 {
-    public class SubmitAnimalPageModel : PageModel
+    private readonly WildlifeDataContext _context;
+    private readonly IWildlifeRepository _repository;
+
+    public SubmitAnimalPageModel(WildlifeDataContext context, IWildlifeRepository repository)
     {
-        private readonly WildlifeDataContext _context;
-        private readonly IWildlifeRepository _repository;
+        _context = context;
+        _repository = repository;
+    }
 
-        public SubmitAnimalPageModel(WildlifeDataContext context, IWildlifeRepository repository)
-        {
-            _context = context;
-            _repository = repository;
-        }
+    public IActionResult OnGet()
+    {
+        ViewData["AnimalTypeId"] = new SelectList(
+            _context.AnimalType, "AnimalTypeId", "Name");
+        ViewData["DietTypeId"] = new SelectList(
+            _context.DietType, "DietTypeId", "Name");
+        ViewData["StateId"] = new SelectList(
+            _context.State, "StateId", "Name");
+        return Page();
+    }
 
-        public IActionResult OnGet()
+    [BindProperty]
+    public Animal Animal { get; set; } = default!;
+
+    [BindProperty]
+    public List<int> SelectedStateIds { get; set; } = default!;
+
+    [BindProperty]
+    public AnimalDescription AnimalDescription { get; set; } = default!;
+
+    [BindProperty]
+    public AnimalPic AnimalPic { get; set; } = default!;
+
+    public void RepopulateViewData()
+    {
+        ViewData["AnimalTypeId"] = new SelectList(
+                           _context.AnimalType, "AnimalTypeId", "Name");
+        ViewData["DietTypeId"] = new SelectList(
+                           _context.DietType, "DietTypeId", "Name");
+        ViewData["StateId"] = new SelectList(
+                           _context.State, "StateId", "Name");
+    }
+
+    public IActionResult OnPostResetForm()
+    {
+        RepopulateViewData();
+        return RedirectToPage(); // Redirect back to the same page
+    }
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+        // If the model state is invalid for any other reason, cancel the post
+        if (!ModelState.IsValid)
         {
-            ViewData["AnimalTypeId"] = new SelectList(
-                _context.AnimalType, "AnimalTypeId", "Name");
-            ViewData["DietTypeId"] = new SelectList(
-                _context.DietType, "DietTypeId", "Name");
-            ViewData["StateId"] = new SelectList(
-                _context.State, "StateId", "Name");
+            RepopulateViewData();
             return Page();
         }
 
-        [BindProperty]
-        public Animal Animal { get; set; } = default!;
+        int NewAnimalID = 0;
 
-        [BindProperty]
-        public List<int> SelectedStateIds { get; set; } = default!;
+        using var transaction = await _context.Database.BeginTransactionAsync();
 
-        [BindProperty]
-        public AnimalDescription AnimalDescription { get; set; } = default!;
-
-        [BindProperty]
-        public AnimalPic AnimalPic { get; set; } = default!;
-
-        public void RepopulateViewData()
+        try
         {
-            ViewData["AnimalTypeId"] = new SelectList(
-                               _context.AnimalType, "AnimalTypeId", "Name");
-            ViewData["DietTypeId"] = new SelectList(
-                               _context.DietType, "DietTypeId", "Name");
-            ViewData["StateId"] = new SelectList(
-                               _context.State, "StateId", "Name");
-        }
-
-        public IActionResult OnPostResetForm()
-        {
-            RepopulateViewData();
-            return RedirectToPage(); // Redirect back to the same page
-        }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-            // If the model state is invalid for any other reason, cancel the post
-            if (!ModelState.IsValid)
-            {
-                RepopulateViewData();
-                return Page();
-            }
-
-            int NewAnimalID = 0;
-
-            using var transaction = await _context.Database.BeginTransactionAsync();
-
             // Execute the insert_animal stored procedure
-            try
-            {
-                NewAnimalID = await _repository.AddAnimalAsync(Animal);
-            }
-            catch (SqlException ex)
-            {
-                TempData["ErrorMessage"] = ex.Message;
-                await transaction.RollbackAsync();
-                RepopulateViewData();
-                return Page();
-            }
+            NewAnimalID = await _repository.AddAnimalAsync(Animal);
 
             //Execute the insert_animalstate stored procedure
-            try
+            foreach (var StateID in SelectedStateIds)
             {
-                foreach (var StateID in SelectedStateIds)
-                {
-                    await _repository.AddAnimalStateAsync(NewAnimalID, StateID);
-                }
-            }
-            catch (SqlException ex)
-            {
-                TempData["ErrorMessage"] = ex.Message;
-                await transaction.RollbackAsync();
-                RepopulateViewData();
-                return Page();
+                await _repository.AddAnimalStateAsync(NewAnimalID, StateID);
             }
 
             //Execute the insert_animaldescription stored procedure
-            try
+            if (!string.IsNullOrEmpty(AnimalDescription.Description))
             {
-                if (!string.IsNullOrEmpty(AnimalDescription.Description))
-                {
-                    await _repository.AddAnimalDescriptionAsync(NewAnimalID, AnimalDescription);
-                }
-            }
-            catch (SqlException ex)
-            {
-                TempData["ErrorMessage"] = ex.Message;
-                await transaction.RollbackAsync();
-                RepopulateViewData();
-                return Page();
+                await _repository.AddAnimalDescriptionAsync(NewAnimalID, AnimalDescription);
             }
 
             if (AnimalPic.File != null)
@@ -143,24 +115,21 @@ namespace Safari.Web.Pages
                 }
 
                 // Save the AnimalPic object to the database
-                try
-                {
-                    await _repository.AddAnimalPicAsync(NewAnimalID, AnimalPic);
-                }
-                catch (SqlException ex)
-                {
-                    TempData["ErrorMessage"] = ex.Message;
-                    await transaction.RollbackAsync();
-                    RepopulateViewData();
-                    return Page();
-                }
+                await _repository.AddAnimalPicAsync(NewAnimalID, AnimalPic);
             }
-
-            ModelState.Clear();
-            await transaction.CommitAsync();
-            TempData["SuccessMessage"] = "Animal submitted successfully!";
+        }
+        catch (SqlException ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+            await transaction.RollbackAsync();
             RepopulateViewData();
             return Page();
         }
+
+        ModelState.Clear();
+        await transaction.CommitAsync();
+        TempData["SuccessMessage"] = "Animal submitted successfully!";
+        RepopulateViewData();
+        return Page();
     }
 }
