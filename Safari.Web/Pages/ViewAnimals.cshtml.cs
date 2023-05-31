@@ -11,12 +11,12 @@ using AutoMapper;
 
 namespace Safari.Web.Pages.Animals
 {
-    public class IndexModel : PageModel
+    public class ViewAnimalsPageModel : PageModel
     {
         private readonly WildlifeDataContext _context;
         private readonly IMapper _mapper;
 
-        public IndexModel(WildlifeDataContext context, IMapper mapper)
+        public ViewAnimalsPageModel(WildlifeDataContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

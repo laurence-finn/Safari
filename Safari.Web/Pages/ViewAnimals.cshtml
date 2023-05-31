@@ -1,5 +1,5 @@
 ﻿@page
-@model Safari.Web.Pages.Animals.IndexModel
+@model Safari.Web.Pages.Animals.ViewAnimalsPageModel
 
 @{
     ViewData["Title"] = "View All Animals";
@@ -12,84 +12,8 @@
     <br />
     <a asp-page="Index">Back to Home</a>
 </p>
-<table id="AnimalTable" class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Animal[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Animal[0].FilePath)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Animal[0].States)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Animal[0].AnimalTypeName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Animal[0].DietTypeName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Animal[0].Weight)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Animal[0].Height)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Animal[0].Length)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Animal[0].IsEndangered)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Animal[0].Lifespan)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Animal)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <img src="@item.FilePath" alt="@item.AltText" style="max-width:100px; max-height:100px;">
-                </td>
-                <td>
-                    @string.Join(", ", item.States)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AnimalTypeName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DietTypeName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Weight)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Height)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Length)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsEndangered)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Lifespan)
-                </td>
 
-                <td>
-                    <a asp-page="./Details" asp-route-id="@item.AnimalId">Details</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@await Html.PartialAsync("_AnimalTablePartial", Model.Animal)
 
 @section Scripts {
     <script>
