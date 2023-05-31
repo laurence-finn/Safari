@@ -75,6 +75,8 @@ namespace Safari.Web.Pages
 
             int NewAnimalID = 0;
 
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
             // Execute the insert_animal stored procedure
             try
             {
@@ -83,6 +85,7 @@ namespace Safari.Web.Pages
             catch (SqlException ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
+                await transaction.RollbackAsync();
                 RepopulateViewData();
                 return Page();
             }
@@ -98,6 +101,7 @@ namespace Safari.Web.Pages
             catch (SqlException ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
+                await transaction.RollbackAsync();
                 RepopulateViewData();
                 return Page();
             }
@@ -113,6 +117,7 @@ namespace Safari.Web.Pages
             catch (SqlException ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
+                await transaction.RollbackAsync();
                 RepopulateViewData();
                 return Page();
             }
@@ -145,12 +150,14 @@ namespace Safari.Web.Pages
                 catch (SqlException ex)
                 {
                     TempData["ErrorMessage"] = ex.Message;
+                    await transaction.RollbackAsync();
                     RepopulateViewData();
                     return Page();
                 }
             }
 
             ModelState.Clear();
+            await transaction.CommitAsync();
             TempData["SuccessMessage"] = "Animal submitted successfully!";
             RepopulateViewData();
             return Page();
