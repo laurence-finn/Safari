@@ -14,13 +14,15 @@ using Safari.Data;
 
 namespace Safari.Web.Pages
 {
-    public class SubmitAnimalModel : PageModel
+    public class SubmitAnimalPageModel : PageModel
     {
-        private readonly Safari.Data.WildlifeDataContext _context;
+        private readonly WildlifeDataContext _context;
+        private readonly IWildlifeRepository _repository;
 
-        public SubmitAnimalModel(Safari.Data.WildlifeDataContext context)
+        public SubmitAnimalPageModel(WildlifeDataContext context, IWildlifeRepository repository)
         {
             _context = context;
+            _repository = repository;
         }
 
         public IActionResult OnGet()
@@ -71,36 +73,12 @@ namespace Safari.Web.Pages
                 return Page();
             }
 
-            var NewAnimalID = new SqlParameter("@NewAnimalID", System.Data.SqlDbType.Int)
-            {
-                Direction = System.Data.ParameterDirection.Output
-            };
-
-            var Success = new SqlParameter("@Success", System.Data.SqlDbType.Bit)
-            {
-                Direction = System.Data.ParameterDirection.Output
-            };
-
-            var ErrorMsg = new SqlParameter("@ErrorMsg", System.Data.SqlDbType.NVarChar, 50)
-            {
-                Direction = System.Data.ParameterDirection.Output
-            };
+            int NewAnimalID = 0;
 
             // Execute the insert_animal stored procedure
             try
             {
-                await _context.Database.ExecuteSqlRawAsync("EXEC insert_animal @Name, @AnimalTypeId, @DietTypeId, @Weight, @Height, @Length, @IsEndangered, @AverageLifeSpan, @NewAnimalID Output, @Success Output, @ErrorMsg Output",
-                    new SqlParameter("@Name", Animal.Name),
-                    new SqlParameter("@AnimalTypeId", Animal.AnimalTypeId ?? (object)DBNull.Value),
-                    new SqlParameter("@DietTypeId", Animal.DietTypeId ?? (object)DBNull.Value),
-                    new SqlParameter("@Weight", Animal.Weight ?? (object)DBNull.Value),                  
-                    new SqlParameter("@Height", Animal.Height ?? (object)DBNull.Value),
-                    new SqlParameter("@Length", Animal.Length ?? (object)DBNull.Value),
-                    new SqlParameter("@IsEndangered", Animal.IsEndangered ?? false),
-                    new SqlParameter("@AverageLifeSpan", Animal.Lifespan ?? (object)DBNull.Value),
-                    NewAnimalID,
-                    Success,
-                    ErrorMsg);
+                NewAnimalID = await _repository.AddAnimalAsync(Animal);
             }
             catch (SqlException ex)
             {
@@ -112,11 +90,9 @@ namespace Safari.Web.Pages
             //Execute the insert_animalstate stored procedure
             try
             {
-                foreach (var stateId in SelectedStateIds)
+                foreach (var StateID in SelectedStateIds)
                 {
-                    await _context.Database.ExecuteSqlRawAsync("DECLARE @NewAnimalStateID int, @Success bit, @ErrorMsg nvarchar(50); EXEC insert_animalstate @AnimalID, @StateID, @NewAnimalStateID Output, @Success Output, @ErrorMsg Output",
-                        new SqlParameter("@AnimalID", NewAnimalID.Value),
-                        new SqlParameter("@StateID", stateId));
+                    await _repository.AddAnimalStateAsync(NewAnimalID, StateID);
                 }
             }
             catch (SqlException ex)
@@ -131,9 +107,7 @@ namespace Safari.Web.Pages
             {
                 if (!string.IsNullOrEmpty(AnimalDescription.Description))
                 {
-                    await _context.Database.ExecuteSqlRawAsync("DECLARE @Success bit, @ErrorMsg nvarchar(50); EXEC insert_animaldescription @AnimalID, @Description, @Success Output, @ErrorMsg Output",
-                        new SqlParameter("@AnimalID", NewAnimalID.Value),
-                        new SqlParameter("@Description", AnimalDescription.Description));
+                    await _repository.AddAnimalDescriptionAsync(NewAnimalID, AnimalDescription);
                 }
             }
             catch (SqlException ex)
@@ -149,7 +123,7 @@ namespace Safari.Web.Pages
                 // Format is AnimalID + "_" + Name + "_1" + extension,
                 // where 1 indicates the number of images. Since this is the first image, the number is 1.
                 // This is stored in the database.
-                AnimalPic.FileName = $"{NewAnimalID.Value}_{Animal.Name}_1{Path.GetExtension(AnimalPic.File.FileName)}";
+                AnimalPic.FileName = $"{NewAnimalID}_{Animal.Name}_1{Path.GetExtension(AnimalPic.File.FileName)}";
 
                 // Set the file path to the "images" folder in the wwwroot directory
                 // This is stored in the database.
@@ -166,12 +140,7 @@ namespace Safari.Web.Pages
                 // Save the AnimalPic object to the database
                 try
                 {
-                    await _context.Database.ExecuteSqlRawAsync("DECLARE @NewAnimalPicID int, @Success bit, @ErrorMsg nvarchar(50); EXEC insert_animalpic @AnimalID, @FileName, @FilePath, @AltText, @Source, @NewAnimalPicID Output, @Success Output, @ErrorMsg Output",
-                        new SqlParameter("@AnimalID", NewAnimalID.Value),
-                        new SqlParameter("@FileName", AnimalPic.FileName),
-                        new SqlParameter("@FilePath", AnimalPic.FilePath),
-                        new SqlParameter("@AltText", AnimalPic.AltText ?? (object)DBNull.Value),
-                        new SqlParameter("@Source", AnimalPic.Source ?? (object)DBNull.Value));
+                    await _repository.AddAnimalPicAsync(NewAnimalID, AnimalPic);
                 }
                 catch (SqlException ex)
                 {

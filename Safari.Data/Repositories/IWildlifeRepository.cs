@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Safari.Data
+namespace Safari.Data;
+
+public interface IWildlifeRepository
 {
-    public interface IWildlifeRepository<T>
-    {
-        Task<IEnumerable<T>> GetAllAsync();
-        Task<T> GetByIDAsync(int id);
-        Task AddAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task DeleteAsync(int id);
-    }
+    Task<int> AddAnimalAsync(Animal animal);
+    Task AddAnimalDescriptionAsync(int AnimalID, AnimalDescription AnimalDescription);
+    Task AddAnimalPicAsync(int AnimalID, AnimalPic AnimalPic);
+    Task AddAnimalStateAsync(int AnimalID, int StateID);
 }

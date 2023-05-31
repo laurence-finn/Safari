@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connection = builder.Configuration.GetConnectionString("WildlifeDataConnection");
 builder.Services.AddDbContext<WildlifeDataContext>(options =>
     options.UseSqlServer(connection));
+builder.Services.AddScoped<IWildlifeRepository, WildlifeRepository>();
 
 builder.Services.AddAutoMapper(typeof(AnimalProfile));
 
