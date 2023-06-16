@@ -1,0 +1,29 @@
+﻿@model Safari.Data.AnimalPic
+
+<div class="form-group">
+    <label asp-for="File" class="control-label">
+        Image File
+        <i class="far fa-question-circle" title="Upload a royalty-free picture of the animal."></i>
+    </label>
+    <br />
+    <input asp-for="File" type="file" class="form-control-file" accept="image/*" />
+    <span asp-validation-for="File" class="text-danger"></span>
+    <span asp-validation-message="Model.File" class="text-danger"></span>
+    <br />
+    <br />
+</div>
+<div class="form-group">
+    <label asp-for="AltText" class="control-label">Caption for the Image. If you need to cite a copyright or other credit, do so here.</label>
+    <input asp-for="AltText" class="form-control" />
+    <span asp-validation-for="AltText" class="text-danger"></span>
+    <br />
+</div>
+<div class="form-group">
+    <label asp-for="Source" class="control-label">
+        Where did you get the picture from?
+        <i class="far fa-question-circle" title="If you took the photo yourself, enter 'Self.' If you got the picture from a website, please provide the link, or provide the copyright information."></i>
+    </label>
+    <input asp-for="Source" class="form-control" />
+    <span asp-validation-for="Source" class="text-danger"></span>
+    <br />
+</div>
