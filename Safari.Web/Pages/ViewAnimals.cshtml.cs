@@ -36,6 +36,7 @@ namespace Safari.Web.Pages.Animals
                     .ThenInclude(AnimalState => AnimalState.State)
                 .ToListAsync();
 
+                // Map Animal to AnimalViewModel (populate data from Animal to AnimalViewModel)
                 Animal = _mapper.Map<IList<AnimalViewModel>>(animals);
             }
         }
