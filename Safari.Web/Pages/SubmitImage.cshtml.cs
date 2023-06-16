@@ -1,45 +1,108 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Safari.Data;
 
-namespace Safari.Web.Pages
+namespace Safari.Web.Pages;
+
+public class SubmitImagePageModel : PageModel
 {
-    public class ImagesModel : PageModel
+    private readonly WildlifeDataContext _context;
+    private readonly IWildlifeRepository _repository;
+
+    public SubmitImagePageModel(WildlifeDataContext context, IWildlifeRepository repository)
     {
-        private readonly WildlifeDataContext _context;
+        _context = context;
+        _repository = repository;
+    }
 
-        public ImagesModel(WildlifeDataContext context)
-        {
-            _context = context;
-        }
+    [BindProperty]
+    public AnimalPic AnimalPic { get; set; } = default!;
 
-        public IActionResult OnGet()
+    public void RepopulateViewData()
+    {
+        ViewData["AnimalId"] = new SelectList(_context.Animal, "AnimalId", "Name");
+    }
+
+    public IActionResult OnGet()
+    {
+        RepopulateViewData();
+        return Page();
+    }
+    public IActionResult OnPostResetForm()
+    {
+        RepopulateViewData();
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
         {
-            ViewData["AnimalId"] = new SelectList(_context.Animal, "AnimalId", "Name");
+            RepopulateViewData();
             return Page();
         }
 
-        [BindProperty]
-        public AnimalPic AnimalPic { get; set; } = default!;
+        using var transaction = await _context.Database.BeginTransactionAsync();
 
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        try
         {
-            if (!ModelState.IsValid || _context.AnimalPic == null || AnimalPic == null)
+            if (AnimalPic.File != null)
             {
+                //Get the animal name based on the animal ID the user selected
+                var AnimalName = _context.Animal.Where(a => a.AnimalId == AnimalPic.AnimalId).Select(a => a.Name).FirstOrDefault();
+
+                //if the name comes up empty, return an error
+                if (string.IsNullOrEmpty(AnimalName))
+                {
+                    TempData["ErrorMessage"] = "Animal not found.";
+                    await transaction.RollbackAsync();
+                    RepopulateViewData();
+                    return Page();
+                }
+
+                // Generate a unique file name for the uploaded image
+                // Format is AnimalID + "_" + Name + "_1" + extension,
+                // where 1 indicates the number of images. Since this is the first image, the number is 1.
+                // This is stored in the database.
+                AnimalPic.FileName = $"{AnimalPic.AnimalId}_{AnimalName}_1{Path.GetExtension(AnimalPic.File.FileName)}";
+
+                // Set the file path to the "images" folder in the wwwroot directory
+                // This is stored in the database.
+                AnimalPic.FilePath = Path.Combine("images", AnimalPic.FileName);
+
+                // Save the uploaded file to the images folder.
+                // In the future, I will add a moderation queue to approve images first.
+                var FullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", AnimalPic.FilePath);
+                using (var FileStream = new FileStream(FullPath, FileMode.Create))
+                {
+                    await AnimalPic.File.CopyToAsync(FileStream);
+                }
+
+                // Save the AnimalPic object to the database
+                await _repository.AddAnimalPicAsync(AnimalPic.AnimalId, AnimalPic);
+
+                ModelState.Clear();
+                await transaction.CommitAsync();
+                TempData["SuccessMessage"] = "Image submitted successfully!";
+                RepopulateViewData();
                 return Page();
             }
-
-            _context.AnimalPic.Add(AnimalPic);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            else
+            {
+                TempData["ErrorMessage"] = "No file selected.";
+                await transaction.RollbackAsync();
+                RepopulateViewData();
+                return Page();
+            }
+        }
+        catch (SqlException ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+            await transaction.RollbackAsync();
+            RepopulateViewData();
+            return Page();
         }
     }
 }

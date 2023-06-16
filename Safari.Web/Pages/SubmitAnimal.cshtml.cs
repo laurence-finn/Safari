@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
-using Microsoft.JSInterop;
 using Safari.Data;
 
 namespace Safari.Web.Pages;
@@ -23,17 +15,6 @@ public class SubmitAnimalPageModel : PageModel
     {
         _context = context;
         _repository = repository;
-    }
-
-    public IActionResult OnGet()
-    {
-        ViewData["AnimalTypeId"] = new SelectList(
-            _context.AnimalType, "AnimalTypeId", "Name");
-        ViewData["DietTypeId"] = new SelectList(
-            _context.DietType, "DietTypeId", "Name");
-        ViewData["StateId"] = new SelectList(
-            _context.State, "StateId", "Name");
-        return Page();
     }
 
     [BindProperty]
@@ -58,10 +39,16 @@ public class SubmitAnimalPageModel : PageModel
                            _context.State, "StateId", "Name");
     }
 
+    public IActionResult OnGet()
+    {
+        RepopulateViewData();
+        return Page();
+    }
+
     public IActionResult OnPostResetForm()
     {
         RepopulateViewData();
-        return RedirectToPage(); // Redirect back to the same page
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()

@@ -44,7 +44,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Animal.Name" class="control-label">
-                    Name<span class="text-danger">* </span> 
+                    Name<span class="text-danger">* </span>
                     <i class="far fa-question-circle" title="Enter the name of the animal."></i>
                 </label>
                 <input asp-for="Animal.Name" class="form-control" />
@@ -55,7 +55,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                 <label asp-for="SelectedStateIds" class="control-label">
                     States
                     <i class="far fa-question-circle" title="Select the states where the animal lives."></i>
-                    </label>
+                </label>
                 <select asp-for="SelectedStateIds" class="form-control" asp-items="ViewBag.StateId" multiple></select>
                 <span asp-validation-for="SelectedStateIds" class="text-danger"></span>
                 <br />
@@ -66,7 +66,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                     Animal Type
                     <i class="far fa-question-circle" title="What kind of animal is it? Choose from the list."></i>
                 </label>
-                <select asp-for="Animal.AnimalTypeId" class ="form-control" asp-items="ViewBag.AnimalTypeId">
+                <select asp-for="Animal.AnimalTypeId" class="form-control" asp-items="ViewBag.AnimalTypeId">
                     <option value="">Select an Animal Type</option>
                 </select>
                 <br />
@@ -77,7 +77,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                     Diet
                     <i class="far fa-question-circle" title="What diet does the animal have? Choose from the list."></i>
                 </label>
-                <select asp-for="Animal.DietTypeId" class ="form-control" asp-items="ViewBag.DietTypeId">
+                <select asp-for="Animal.DietTypeId" class="form-control" asp-items="ViewBag.DietTypeId">
                     <option value="">Select a Diet Type</option>
                 </select>
                 <br />
@@ -146,7 +146,8 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                         <input type="submit" value="Submit Animal" class="btn btn-success" />
                     </div>
                     <div>
-                        <input type="reset" value="Reset Form" class="btn btn-danger" asp-page-handler="ResetForm" asp-page="SubmitAnimal" onclick="window.scrollTo(0, 0);" />
+                        <input type="reset" value="Reset Form" class="btn btn-danger"
+                               asp-page-handler="ResetForm" asp-page="SubmitAnimal" onclick="window.scrollTo(0, 0);" />
                     </div>
                     <div>
                         <a class="btn btn-secondary" asp-page="Index">Back to Home</a>
@@ -157,7 +158,9 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
     </div>
 </div>
 
-@section Scripts 
-{
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@section Scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
