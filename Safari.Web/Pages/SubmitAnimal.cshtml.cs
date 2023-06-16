@@ -104,6 +104,12 @@ public class SubmitAnimalPageModel : PageModel
                 // Save the AnimalPic object to the database
                 await _repository.AddAnimalPicAsync(NewAnimalID, AnimalPic);
             }
+
+            ModelState.Clear();
+            await transaction.CommitAsync();
+            TempData["SuccessMessage"] = "Animal submitted successfully!";
+            RepopulateViewData();
+            return Page();
         }
         catch (SqlException ex)
         {
@@ -112,11 +118,5 @@ public class SubmitAnimalPageModel : PageModel
             RepopulateViewData();
             return Page();
         }
-
-        ModelState.Clear();
-        await transaction.CommitAsync();
-        TempData["SuccessMessage"] = "Animal submitted successfully!";
-        RepopulateViewData();
-        return Page();
     }
 }
