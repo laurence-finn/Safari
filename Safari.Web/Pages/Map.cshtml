@@ -59,8 +59,10 @@
                 table.search('').columns().search('').draw();
 
                 // Filter the DataTable for the chosen state. 
-                // RegEx is used to ensure that the search is case-insensitive.
-                table.column(2).search('^' + state + '$', true, false).draw();
+                // RegEx is used to ensure that the search term is not a substring of another state name.
+                // For example, "Arkansas" will not match "Kansas."
+                var statePattern = '\\b' + state + '\\b';                
+                table.column(2).search(statePattern, true, true).draw();
 
                 //Update the heading to show the state name
                 document.getElementById("AnimalHeading").innerHTML = "Showing Animals in " + state;
