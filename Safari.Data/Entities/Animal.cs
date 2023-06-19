@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
-using Safari.Data.Attributes;
 
 namespace Safari.Data;
 
@@ -24,19 +23,22 @@ public partial class Animal
     public int? DietTypeId { get; set; }
 
     [Column(TypeName = "decimal(6, 2)")]
+    [Range(0, double.MaxValue, ErrorMessage = "Weight can't be a negative value.")]
     public decimal? Weight { get; set; }
 
     [Column(TypeName = "decimal(6, 2)")]
+    [Range(0, double.MaxValue, ErrorMessage = "Height can't be a negative value.")]
     public decimal? Height { get; set; }
 
     [Column(TypeName = "decimal(6, 2)")]
+    [Range(0, double.MaxValue, ErrorMessage = "Length can't be a negative value.")]
     public decimal? Length { get; set; }
 
     [Display (Name = "Endangered?")]
     public bool? IsEndangered { get; set; }
 
-    [Range(1, 200, ErrorMessage ="Average life span must be greater than 0 and less than 200 years.")]
     [Column (TypeName = "decimal(6, 2)")]
+    [Range(1, 200, ErrorMessage = "Average life span must be greater than 0 and less than 200 years.")]
     public decimal? Lifespan { get; set; }
 
     [ForeignKey("AnimalTypeId")]

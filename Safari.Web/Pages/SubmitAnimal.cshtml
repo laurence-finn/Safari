@@ -54,7 +54,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
             <div class="form-group">
                 <label asp-for="SelectedStateIds" class="control-label">
                     States
-                    <i class="far fa-question-circle" title="Select the states where the animal lives."></i>
+                    <i class="far fa-question-circle" title="Select the state(s) where the animal lives."></i>
                 </label>
                 <select asp-for="SelectedStateIds" class="form-control" asp-items="ViewBag.StateId" multiple></select>
                 <span asp-validation-for="SelectedStateIds" class="text-danger"></span>
