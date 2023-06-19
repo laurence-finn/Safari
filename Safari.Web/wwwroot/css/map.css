@@ -1,1 +1,31 @@
-﻿
+﻿/*This CSS is based on the interactive map code found at this website: 
+    https://dev.to/codecustard/creating-an-interactive-map-of-the-us-b5o
+*/
+
+
+    path:hover {
+        fill: darkgreen !important;
+    }
+
+#us-map {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#details-box {
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 24px;
+    position: fixed;
+    color: white;
+    font-family: Verdana;
+    background-color: black;
+    width: fit-content;
+    transform: translateX(-50%);
+    transition: opacity .4s ease;
+    z-index: 1;
+}

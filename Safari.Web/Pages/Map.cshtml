@@ -1,5 +1,5 @@
 ﻿@page
-@model Safari.Web.Pages.MapModel
+@model Safari.Web.Pages.MapPageModel
 @{
 }
 
@@ -7,3 +7,91 @@
     <link href="~/css/map.css" rel="stylesheet" />
 }
 
+<h1 id="MapHeading">Interactive Map</h1>
+
+<h4>Click on a state to see the animals that live there!</h4>
+
+<div id="details-box"></div>
+
+@await Html.PartialAsync("_MapPartial")
+
+<h2 id="AnimalHeading">Showing All Animals</h2>
+
+<div>
+<br />
+    <button id="MapReset" class="btn btn-danger">Reset and Pick a New State</button>
+<br />
+<br />
+</div>
+
+<div id="AnimalTableContainer">
+    @await Html.PartialAsync("_AnimalTablePartial", Model.Animal)
+</div>
+
+@section Scripts {
+    @*The script for the map tooltip mouseover effect was adapted from this website: https://dev.to/codecustard/creating-an-interactive-map-of-the-us-b5o*@
+    <script>
+        $(document).ready(function () {
+            $('#AnimalTable').DataTable();
+        });
+
+        var tooltipSpan = document.getElementById('details-box');
+
+        //On mouseover, display the name of the state in the details box
+        document.addEventListener('mouseover', function (e) {
+            if (e.target.tagName == 'path') {
+                var content = e.target.dataset.name;
+                document.getElementById("details-box").innerHTML = content;
+                document.getElementById("details-box").style.opacity = "100%";
+            }
+            else {
+                document.getElementById("details-box").style.opacity = "0%";
+            }
+        });
+
+        //On click, filter the DataTable to show only animals in the selected state.
+        document.addEventListener('click', function (e) {
+            if (e.target.tagName == 'path') {
+                var state = e.target.dataset.name;
+                var table = $('#AnimalTable').DataTable();
+
+                // Reset the DataTable search and clear column filters
+                table.search('').columns().search('').draw();
+
+                // Filter the DataTable for the chosen state. 
+                // RegEx is used to ensure that the search is case-insensitive.
+                table.column(2).search('^' + state + '$', true, false).draw();
+
+                //Update the heading to show the state name
+                document.getElementById("AnimalHeading").innerHTML = "Showing Animals in " + state;
+
+                //Scroll down smoothly to the table
+                document.getElementById("AnimalHeading").scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        //Reset the DataTable and scroll back to the top of the page
+        document.getElementById("MapReset").addEventListener('click', function (e) {
+            var table = $('#AnimalTable').DataTable();
+            
+            // Reset search term
+            table.search('').draw();
+
+            // Clear column filters
+            table.columns().search('').draw();
+
+            //Reset the table heading
+            document.getElementById("AnimalHeading").innerHTML = "Showing All Animals";
+
+            //Scroll smoothly back to the top of the page
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+
+        window.onmousemove = function (e) {
+            var x = e.clientX,
+                y = e.clientY;
+            tooltipSpan.style.top = (y + 20) + 'px';
+            tooltipSpan.style.left = (x) + 'px';
+        };
+    </script>
+}
