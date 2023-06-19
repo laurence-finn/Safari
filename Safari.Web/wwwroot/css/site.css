@@ -17,6 +17,34 @@ html {
     min-height: 100%;
 }
 
-body {
+body, h4 {
     margin-bottom: 60px;
+    font-family: 'Quicksand', sans-serif;
+    background-color: #F5F5DC;
+}
+
+.navbar {
+    background-color: #006400 !important; /* !important ensures your style overrides Bootstrap's */
+}
+
+    .navbar .navbar-brand, .navbar .nav-link {
+        color: #F5F5DC !important;
+    }
+
+.navbar-brand, h1 {
+    font-family: 'Handlee';
+}
+
+.btn-home {
+    background-color: #006400;
+    color: #F5F5DC;
+}
+
+    .btn-home:hover {
+        background-color: #008000;
+    }
+
+footer {
+    background-color: #006400;
+    color: #F5F5DC;
 }
