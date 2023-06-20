@@ -5,13 +5,17 @@
     ViewData["Title"] = "View All Animals";
 }
 
-<h1>View All Animals</h1>
+<h1>Animals</h1>
 
-<p>
-    <a asp-page="SubmitAnimal">Submit an Animal</a>
+<h4>
+    This is a list of all the animals that have been submitted to the Safari Across America website.
     <br />
-    <a asp-page="Index">Back to Home</a>
-</p>
+    Please help us track all of the wildlife of the USA by <a asp-page="SubmitAnimal">submitting a new animal.</a>
+</h4>
+
+<a class="btn btn-primary btn-lg btn-home" asp-page="Index">Back to Home</a>
+<br />
+<br />
 
 @await Html.PartialAsync("_AnimalTablePartial", Model.Animal)
 
