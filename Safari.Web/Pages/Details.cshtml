@@ -6,3 +6,27 @@
 
 <h1>@Html.DisplayFor(model => model.Animal.Name)</h1>
 <hr />
+
+<!--This will become a carousel of all available images at a later date-->
+<img class="mx-auto img-fluid" src="@Model.AnimalPics[0].FilePath" alt="@Model.AnimalPics[0].AltText" />
+
+<br />
+<br />
+
+<h4>Description</h4>
+<br />
+<p>@Model.AnimalDescription</p>
+
+<h4>Key Stats:</h4>
+<br />
+<p>Average Lifespan: @Model.Animal.Lifespan</p>
+<p>Average Height: @Model.Animal.Height</p>
+<p>Average Weight: @Model.Animal.Weight</p>
+<p>Average Length: @Model.Animal.Length</p>
+
+<h4>Locations:</h4>
+<br />
+<p>
+    The @Model.Animal.Name can be found in the following state(s):
+    @string.Join(", ", Model.AnimalStates)
+</p>

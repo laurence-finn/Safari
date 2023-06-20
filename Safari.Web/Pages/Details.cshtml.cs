@@ -10,8 +10,9 @@ namespace Safari.Web.Pages
         private readonly WildlifeDataContext _context;
 
         public Animal Animal { get; set; } = default!;
+        public string AnimalDescription { get; set; } = default!;
         public List<AnimalPic> AnimalPics { get; set; } = default!;
-        public List<AnimalState> AnimalStates { get; set; } = default!;
+        public List<string> AnimalStates { get; set; } = default!;
 
         public DetailsPageModel(WildlifeDataContext context)
         {
@@ -35,8 +36,9 @@ namespace Safari.Web.Pages
                 Animal = animal;
             }
 
+            AnimalDescription = _context.AnimalDescription.Where(a => a.AnimalId == id).FirstOrDefault().Description;
             AnimalPics = _context.AnimalPic.Where(a => a.AnimalId == id).ToList();
-            AnimalStates = _context.AnimalState.Where(a => a.AnimalId == id).ToList();
+            AnimalStates = _context.AnimalState.Where(a => a.AnimalId == id).Select(a => a.State.Name).ToList();
 
             return Page();
         }

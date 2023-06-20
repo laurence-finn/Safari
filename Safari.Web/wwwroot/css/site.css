@@ -23,6 +23,11 @@ body, h4 {
     background-color: #F5F5DC;
 }
 
+h4 {
+    margin: auto;
+    padding: 0;
+}
+
 .navbar {
     background-color: #006400 !important;
 }
@@ -48,3 +53,11 @@ footer {
     background-color: #006400;
     color: #F5F5DC;
 }
+
+.footer a {
+    color: #F5F5DC;
+}
+
+    .footer a:hover {
+        color: #D2B48C;
+    }
