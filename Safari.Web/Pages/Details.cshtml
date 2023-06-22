@@ -10,7 +10,7 @@
 <!--This will become a carousel of all available images at a later date-->
 @if (Model.PicExists)
 {
-    <img class="mx-auto img-fluid" src="@Model.AnimalPics[0].FilePath" alt="@Model.AnimalPics[0].AltText" />
+    <img class="mx-auto img-fluid" src="@Model.AnimalPics[0].FilePath" alt="@Model.AnimalPics[0].AltText" style="max-height: 500px" />
 }
 
 <br />
