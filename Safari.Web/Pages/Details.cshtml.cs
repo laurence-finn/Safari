@@ -9,6 +9,7 @@ namespace Safari.Web.Pages
     {
         private readonly WildlifeDataContext _context;
 
+        //To Do: Create a "DetailsViewModel" class and use it here instead of individual properties
         public Animal Animal { get; set; } = default!;
         public string AnimalDescription { get; set; } = default!;
         public List<AnimalPic> AnimalPics { get; set; } = default!;
@@ -43,7 +44,6 @@ namespace Safari.Web.Pages
 
             PicExists = AnimalPics.Count > 0;
             
-
             return Page();
         }
     }

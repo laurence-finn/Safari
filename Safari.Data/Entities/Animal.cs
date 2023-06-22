@@ -53,6 +53,7 @@ public partial class Animal
     public virtual ICollection<AnimalState> AnimalState { get; set; } = new List<AnimalState>();
 
     // Navigation property for AnimalPic
+    // To Do: Change to ICollection so that it supports multiple pictures per animal.
     public virtual AnimalPic? AnimalPic { get; set; }
 
 }

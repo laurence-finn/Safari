@@ -52,7 +52,8 @@ Here's how you can set up your local environment to test Safari Across America's
 
 1. In Visual Studio, select Safari.Web in the Solution Explorer, or in the dropdown at the top of the screen.
 2. Press `F5` or click `Debug` > `Start Debugging`.
-3. The website will open in a new browser tab.
+3. Click `OK` to any prompts concerning trusting digital certificates.
+4. The website will open in a new browser tab. (Your browser may display a security warning, but this can be safely ignored.)
 
 ## Database Stored Procedures
 
