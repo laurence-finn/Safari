@@ -5,8 +5,21 @@ using Safari.Web.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Check the environment: if dev, use the dev connection string, otherwise use the prod connection string.
+// The prod connection string will be stored in Azure Key Vault at a later date.
+var environment = builder.Environment;
+string connection;
+
+if (environment.IsDevelopment())
+{
+    connection = builder.Configuration.GetConnectionString("WildlifeDataConnection");
+}
+else
+{
+    connection = builder.Configuration.GetConnectionString("WildlifeDataConnectionProd");
+}
+
 // Add services to the container.
-var connection = builder.Configuration.GetConnectionString("WildlifeDataConnection");
 builder.Services.AddDbContext<WildlifeDataContext>(options =>
     options.UseSqlServer(connection));
 builder.Services.AddScoped<IWildlifeRepository, WildlifeRepository>();

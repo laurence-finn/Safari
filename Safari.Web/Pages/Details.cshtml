@@ -8,7 +8,10 @@
 <hr />
 
 <!--This will become a carousel of all available images at a later date-->
-<img class="mx-auto img-fluid" src="@Model.AnimalPics[0].FilePath" alt="@Model.AnimalPics[0].AltText" />
+@if (Model.PicExists)
+{
+    <img class="mx-auto img-fluid" src="@Model.AnimalPics[0].FilePath" alt="@Model.AnimalPics[0].AltText" />
+}
 
 <br />
 <br />
