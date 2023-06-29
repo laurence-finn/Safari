@@ -62,11 +62,14 @@ public class SubmitImagePageModel : PageModel
                     return Page();
                 }
 
+                // Get the count of images for this animal currently in the database
+                var ImageCount = _context.AnimalPic.Where(a => a.AnimalId == AnimalPic.AnimalId).Count();
+                ImageCount++;
+
                 // Generate a unique file name for the uploaded image
-                // Format is AnimalID + "_" + Name + "_1" + extension,
-                // where 1 indicates the number of images. Since this is the first image, the number is 1.
+                // Format is AnimalID + "_" + Name + "_#" + extension, where # is the image number.
                 // This is stored in the database.
-                AnimalPic.FileName = $"{AnimalPic.AnimalId}_{AnimalName}_1{Path.GetExtension(AnimalPic.File.FileName)}";
+                AnimalPic.FileName = $"{AnimalPic.AnimalId}_{AnimalName}_{ImageCount}{Path.GetExtension(AnimalPic.File.FileName)}";
 
                 // Set the file path to the "images" folder in the wwwroot directory
                 // This is stored in the database.
