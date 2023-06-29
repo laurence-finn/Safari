@@ -63,4 +63,4 @@ You can also modify the database by using custom create/update/delete queries, b
 
 ## Contact
 
-If you encounter any problems, please contact `Laurence Finn` at `laurence.c.finn@gmail.com`.
+If you encounter any problems, please contact Laurence Finn at [laurence.c.finn@gmail.com](mailto:laurence.c.finn@gmail.com).
