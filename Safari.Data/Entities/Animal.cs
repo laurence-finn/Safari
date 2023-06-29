@@ -54,6 +54,6 @@ public partial class Animal
 
     // Navigation property for AnimalPic
     // To Do: Change to ICollection so that it supports multiple pictures per animal.
-    public virtual AnimalPic? AnimalPic { get; set; }
+    public virtual ICollection<AnimalPic> AnimalPic { get; set; } = new List<AnimalPic>();
 
 }

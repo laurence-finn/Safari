@@ -16,9 +16,9 @@ public class AnimalProfile : Profile
             opt => opt.MapFrom(
                 src => src.AnimalState.Select(s => s.State.Name).ToList()))
             .ForMember(dest => dest.FilePath,
-            opt => opt.MapFrom(src => src.AnimalPic.FilePath))
+            opt => opt.MapFrom(src => src.AnimalPic.FirstOrDefault().FilePath))
             .ForMember(dest => dest.AltText,
-            opt => opt.MapFrom(src => src.AnimalPic.AltText))
+            opt => opt.MapFrom(src => src.AnimalPic.FirstOrDefault().AltText))
             .ForMember(dest => dest.AnimalTypeName,
             opt => opt.MapFrom(src => src.AnimalType.Name))
             .ForMember(dest => dest.DietTypeName,

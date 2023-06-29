@@ -46,6 +46,10 @@ public partial class WildlifeDataContext : DbContext
             entity.HasOne(d => d.AnimalType).WithMany(p => p.Animal).HasConstraintName("FK_Animal_AnimalType");
 
             entity.HasOne(d => d.DietType).WithMany(p => p.Animal).HasConstraintName("FK_Animal_DietType");
+
+            entity.HasMany(a => a.AnimalPic) // one Animal has many AnimalPics
+            .WithOne(p => p.Animal)   // one AnimalPic belongs to one Animal
+            .HasForeignKey(p => p.AnimalId); // the foreign key on AnimalPic
         });
 
         modelBuilder.Entity<AnimalState>(entity =>

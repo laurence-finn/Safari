@@ -34,4 +34,7 @@ public partial class AnimalPic
     // This is not intended to be saved to the database.
     [NotMapped]
     public IFormFile? File { get; set; } = null;
+
+    // This is the navigation property
+    public virtual Animal? Animal { get; set; }
 }
