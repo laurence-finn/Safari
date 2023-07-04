@@ -41,6 +41,13 @@ public partial class Animal
     [Range(1, 200, ErrorMessage = "Average life span must be greater than 0 and less than 200 years.")]
     public decimal? Lifespan { get; set; }
 
+    [Column(TypeName = "datetime")]
+    [Display(Name = "Date Submitted")]
+    public DateTime? DateSubmitted { get; set; }
+
+    [Display (Name = "Approved")]
+    public bool? IsApproved { get; set; }
+
     [ForeignKey("AnimalTypeId")]
     [InverseProperty("Animal")]
     public virtual AnimalType? AnimalType { get; set; }
@@ -53,7 +60,6 @@ public partial class Animal
     public virtual ICollection<AnimalState> AnimalState { get; set; } = new List<AnimalState>();
 
     // Navigation property for AnimalPic
-    // To Do: Change to ICollection so that it supports multiple pictures per animal.
     public virtual ICollection<AnimalPic> AnimalPic { get; set; } = new List<AnimalPic>();
 
 }
