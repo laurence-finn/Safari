@@ -33,7 +33,7 @@ public partial class AnimalPic
     [Display(Name = "Date Submitted")]
     public DateTime? DateSubmitted { get; set; }
 
-    [Display(Name = "Approved")]
+    [Display(Name = "Approval Status")]
     public bool? IsApproved { get; set; }
 
     // This property temporarily stores the file uploaded by the user,

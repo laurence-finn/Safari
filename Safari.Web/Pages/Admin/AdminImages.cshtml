@@ -1,0 +1,149 @@
+﻿@page
+@model Safari.Web.Pages.Admin.AdminImagesPageModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Moderate Images</h1>
+
+<h4 id="AnimalUnapprovedPicHeader">List of Unapproved Images</h4>
+
+<a href="#AnimalAllPicHeader">Jump to All Images</a>
+
+<table class="table" id="AnimalUnapprovedPicTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AnimalPic[0].Animal)
+            </th>
+            <th>
+                Image
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnimalPic[0].FileName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnimalPic[0].AltText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnimalPic[0].Source)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnimalPic[0].DateSubmitted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnimalPic[0].IsApproved)
+            </th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.AnimalPic)
+        {
+            @if (item.IsApproved == false)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Animal.Name)
+                    </td>
+                    <td>
+                        <img src="..\@item.FilePath" alt="@item.AltText" style="max-width:100px; max-height:100px;">
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FileName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AltText)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Source)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateSubmitted)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsApproved)
+                    </td>
+                    <td>
+                        <a class="btn btn-success" asp-page="./ApproveEditImage" asp-route-id="@item.AnimalPicId">Approve/Edit</a>
+                        <a class="btn btn-danger" asp-page="./DeleteImage" asp-route-id="@item.AnimalPicId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<br />
+<br />
+
+<h4 id="AnimalAllPicHeader">List of All Images</h4>
+
+<a href="#AnimalUnapprovedPicHeader">Jump to Unapproved Images</a>
+
+<table class="table" id="AnimalAllPicTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AnimalPic[0].Animal)
+            </th>
+            <th>
+                Image
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnimalPic[0].FileName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnimalPic[0].AltText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnimalPic[0].Source)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnimalPic[0].DateSubmitted)
+            </th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.AnimalPic)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Animal.Name)
+                </td>
+                <td>
+                    <img src="..\@item.FilePath" alt="@item.AltText" style="max-width:100px; max-height:100px;">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AltText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Source)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateSubmitted)
+                </td>
+                <td>
+                    <a class="btn btn-success" asp-page="./ApproveEditImage" asp-route-id="@item.AnimalPicId">Edit</a>
+                    <a class="btn btn-danger" asp-page="./DeleteImage" asp-route-id="@item.AnimalPicId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#AnimalUnapprovedPicTable").DataTable();
+        });
+        $(document).ready(function () {
+            $("#AnimalAllPicTable").DataTable();
+        });
+    </script>
+}
