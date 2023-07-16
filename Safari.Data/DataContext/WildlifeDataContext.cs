@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Safari.Data;
 
-public partial class WildlifeDataContext : DbContext
+public partial class WildlifeDataContext : IdentityDbContext
 {
     public WildlifeDataContext()
     {
@@ -41,6 +43,8 @@ public partial class WildlifeDataContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<Animal>(entity =>
         {
             entity.HasOne(d => d.AnimalType).WithMany(p => p.Animal).HasConstraintName("FK_Animal_AnimalType");

@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Safari.Data;
 using AutoMapper;
 using Safari.Web.Profiles;
+using Microsoft.AspNetCore.Identity;
+using Safari.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,10 @@ else
 // Add services to the container.
 builder.Services.AddDbContext<WildlifeDataContext>(options =>
     options.UseSqlServer(connection));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<WildlifeDataContext>();
+
 builder.Services.AddScoped<IWildlifeRepository, WildlifeRepository>();
 
 builder.Services.AddAutoMapper(typeof(AnimalProfile));
@@ -42,6 +48,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace Safari.Data;
 public class WildlifeRepository : IWildlifeRepository
 {
     private readonly WildlifeDataContext _context;
+    private readonly UserManager<IdentityUser> _userManager;
 
-    public WildlifeRepository(WildlifeDataContext context)
+    public WildlifeRepository(WildlifeDataContext context, UserManager<IdentityUser> userManager)
     {
         _context = context;
+        _userManager = userManager;
     }
 
     public async Task<int> AddAnimalAsync(Animal animal)
