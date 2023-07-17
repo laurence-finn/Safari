@@ -65,4 +65,14 @@ public class WildlifeRepository : IWildlifeRepository
             new SqlParameter("@AnimalID", AnimalID),
             new SqlParameter("@StateID", StateID));
     }
+
+    public async Task SaveAnimalPicAsync(AnimalPic AnimalPic)
+    {
+        await _context.Database.ExecuteSqlRawAsync("DECLARE @Success bit, @ErrorMsg nvarchar(50); EXEC update_animalpic @AnimalPicID, @AnimalID, @AltText, @Source, @IsApproved, @Success Output, @ErrorMsg Output",
+            new SqlParameter("@AnimalPicID", AnimalPic.AnimalPicId),
+            new SqlParameter("@AnimalID", AnimalPic.AnimalId),
+            new SqlParameter("@AltText", AnimalPic.AltText ?? (object)DBNull.Value),
+            new SqlParameter("@Source", AnimalPic.Source ?? (object)DBNull.Value),
+            new SqlParameter("@IsApproved", AnimalPic.IsApproved));            
+    }
 }

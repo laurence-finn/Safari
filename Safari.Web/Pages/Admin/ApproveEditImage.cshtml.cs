@@ -5,22 +5,38 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Safari.Data;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace Safari.Web.Pages.Admin
 {
-    public class EditModel : PageModel
+    public class ApproveEditImagePageModel : PageModel
     {
-        private readonly Safari.Data.WildlifeDataContext _context;
+        private readonly WildlifeDataContext _context;
+        private readonly IWildlifeRepository _repository;
 
-        public EditModel(Safari.Data.WildlifeDataContext context)
+        public ApproveEditImagePageModel(WildlifeDataContext context, IWildlifeRepository repository)
         {
             _context = context;
+            _repository = repository;
         }
 
         [BindProperty]
         public AnimalPic AnimalPic { get; set; } = default!;
+
+        private async Task<IActionResult> RepopulateViewDataAsync(int? id)
+        {
+            var animalpic = await _context.AnimalPic.FirstOrDefaultAsync(m => m.AnimalPicId == id);
+            if (animalpic == null)
+            {
+                return NotFound();
+            }
+            AnimalPic = animalpic;
+            ViewData["AnimalId"] = new SelectList(_context.Animal, "AnimalId", "Name");
+            return Page();
+        }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,49 +45,36 @@ namespace Safari.Web.Pages.Admin
                 return NotFound();
             }
 
-            var animalpic =  await _context.AnimalPic.FirstOrDefaultAsync(m => m.AnimalPicId == id);
-            if (animalpic == null)
-            {
-                return NotFound();
-            }
-            AnimalPic = animalpic;
-           ViewData["AnimalId"] = new SelectList(_context.Animal, "AnimalId", "Name");
+            await RepopulateViewDataAsync(id);
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                await RepopulateViewDataAsync(AnimalPic.AnimalPicId);
                 return Page();
             }
 
-            _context.Attach(AnimalPic).State = EntityState.Modified;
+            using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _repository.SaveAnimalPicAsync(AnimalPic);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (SqlException ex)
             {
-                if (!AnimalPicExists(AnimalPic.AnimalPicId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                TempData["ErrorMessage"] = ex.Message;
+                await transaction.RollbackAsync();
+                await RepopulateViewDataAsync(AnimalPic.AnimalPicId);
+                return Page();
             }
 
-            return RedirectToPage("./Index");
-        }
-
-        private bool AnimalPicExists(int id)
-        {
-          return (_context.AnimalPic?.Any(e => e.AnimalPicId == id)).GetValueOrDefault();
+            await transaction.CommitAsync();
+            TempData["SuccessMessage"] = "Animal image updated successfully!";
+            await RepopulateViewDataAsync(AnimalPic.AnimalPicId);
+            return Page();
         }
     }
 }

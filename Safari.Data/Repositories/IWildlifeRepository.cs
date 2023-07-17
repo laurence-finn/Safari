@@ -12,4 +12,5 @@ public interface IWildlifeRepository
     Task AddAnimalDescriptionAsync(int AnimalID, AnimalDescription AnimalDescription);
     Task AddAnimalPicAsync(int AnimalID, AnimalPic AnimalPic);
     Task AddAnimalStateAsync(int AnimalID, int StateID);
+    Task SaveAnimalPicAsync(AnimalPic AnimalPic);
 }

@@ -1,63 +1,105 @@
 ﻿@page
-@model Safari.Web.Pages.Admin.EditModel
+@model Safari.Web.Pages.Admin.ApproveEditImagePageModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Approve/Edit Image";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+@if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
 
-<h4>AnimalPic</h4>
+<h1>Approve/Edit Image</h1>
+
+<h4>Toggle "Approval Status" to approve. Edit any other fields as needed. Click save when finished.</h4>
+<br />
+<h4>
+    Note: The "Not Approved" status hides the image on the website but does not remove it.<br />
+    To remove the image completely, you must delete the item in question.
+</h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="AnimalPic.AnimalPicId" />
+
             <div class="form-group">
-                <label asp-for="AnimalPic.AnimalId" class="control-label"></label>
+                <label asp-for="AnimalPic.AnimalId" class="control-label">Animal</label>
                 <select asp-for="AnimalPic.AnimalId" class="form-control" asp-items="ViewBag.AnimalId"></select>
                 <span asp-validation-for="AnimalPic.AnimalId" class="text-danger"></span>
+                <br />
             </div>
+
             <div class="form-group">
                 <label asp-for="AnimalPic.FileName" class="control-label"></label>
-                <input asp-for="AnimalPic.FileName" class="form-control" />
-                <span asp-validation-for="AnimalPic.FileName" class="text-danger"></span>
+                <input asp-for="AnimalPic.FileName" class="form-control" readonly style="background-color: #f8f9fa; color: #6c757d;" />
+                <br />
             </div>
-            <div class="form-group">
-                <label asp-for="AnimalPic.FilePath" class="control-label"></label>
-                <input asp-for="AnimalPic.FilePath" class="form-control" />
-                <span asp-validation-for="AnimalPic.FilePath" class="text-danger"></span>
-            </div>
+
+            <input type="hidden" asp-for="AnimalPic.FilePath" />
+
             <div class="form-group">
                 <label asp-for="AnimalPic.AltText" class="control-label"></label>
                 <input asp-for="AnimalPic.AltText" class="form-control" />
                 <span asp-validation-for="AnimalPic.AltText" class="text-danger"></span>
+                <br />
             </div>
+
             <div class="form-group">
                 <label asp-for="AnimalPic.Source" class="control-label"></label>
                 <input asp-for="AnimalPic.Source" class="form-control" />
                 <span asp-validation-for="AnimalPic.Source" class="text-danger"></span>
+                <br />
             </div>
+
             <div class="form-group">
                 <label asp-for="AnimalPic.DateSubmitted" class="control-label"></label>
-                <input asp-for="AnimalPic.DateSubmitted" class="form-control" />
-                <span asp-validation-for="AnimalPic.DateSubmitted" class="text-danger"></span>
+                <input asp-for="AnimalPic.DateSubmitted" class="form-control" readonly style="background-color: #f8f9fa; color: #6c757d;" />
+                <br />
             </div>
+            <br />
+
             <div class="form-group">
-                <label asp-for="AnimalPic.IsApproved" class="control-label"></label>
-                <input asp-for="AnimalPic.IsApproved" class="form-control" />
+                <label asp-for="AnimalPic.IsApproved" class="control-label">
+                    Approval Status
+                    <i class="far fa-question-circle" title="Select 'Approved' to allow the image to display on the website.
+                        Select 'Not Approved' to hide it."></i>
+                </label>
+                <select asp-for="AnimalPic.IsApproved" class="form-control">
+                    <option value="true">Approved</option>
+                    <option value="false">Not Approved</option>
+                </select>
                 <span asp-validation-for="AnimalPic.IsApproved" class="text-danger"></span>
+                <br />
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                    <div>
+                        <a class="btn btn-secondary" asp-page="./AdminImages">Back to List</a>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
+<br />
+
+
 

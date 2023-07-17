@@ -10,7 +10,7 @@
 
 <h4 id="AnimalUnapprovedPicHeader">List of Unapproved Images</h4>
 
-<a href="#AnimalAllPicHeader">Jump to All Images</a>
+<a href="#AnimalApprovedPicHeader">Jump to Approved Images</a>
 
 <table class="table" id="AnimalUnapprovedPicTable">
     <thead>
@@ -78,11 +78,11 @@
 <br />
 <br />
 
-<h4 id="AnimalAllPicHeader">List of All Images</h4>
+<h4 id="AnimalApprovedPicHeader">List of All Images</h4>
 
 <a href="#AnimalUnapprovedPicHeader">Jump to Unapproved Images</a>
 
-<table class="table" id="AnimalAllPicTable">
+<table class="table" id="AnimalApprovedPicTable">
     <thead>
         <tr>
             <th>
@@ -109,30 +109,33 @@
     <tbody>
         @foreach (var item in Model.AnimalPic)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Animal.Name)
-                </td>
-                <td>
-                    <img src="..\@item.FilePath" alt="@item.AltText" style="max-width:100px; max-height:100px;">
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FileName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AltText)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Source)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateSubmitted)
-                </td>
-                <td>
-                    <a class="btn btn-success" asp-page="./ApproveEditImage" asp-route-id="@item.AnimalPicId">Edit</a>
-                    <a class="btn btn-danger" asp-page="./DeleteImage" asp-route-id="@item.AnimalPicId">Delete</a>
-                </td>
-            </tr>
+            @if (item.IsApproved == true)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Animal.Name)
+                    </td>
+                    <td>
+                        <img src="..\@item.FilePath" alt="@item.AltText" style="max-width:100px; max-height:100px;">
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FileName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AltText)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Source)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateSubmitted)
+                    </td>
+                    <td>
+                        <a class="btn btn-success" asp-page="./ApproveEditImage" asp-route-id="@item.AnimalPicId">Edit</a>
+                        <a class="btn btn-danger" asp-page="./DeleteImage" asp-route-id="@item.AnimalPicId">Delete</a>
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>
@@ -143,7 +146,7 @@
             $("#AnimalUnapprovedPicTable").DataTable();
         });
         $(document).ready(function () {
-            $("#AnimalAllPicTable").DataTable();
+            $("#AnimalApprovedPicTable").DataTable();
         });
     </script>
 }
