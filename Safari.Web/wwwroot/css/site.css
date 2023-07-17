@@ -17,6 +17,23 @@ html {
     min-height: 100%;
 }
 
+.navbar {
+    background-color: #006400 !important;
+}
+
+    .navbar .navbar-brand, .navbar .nav-link:not(.nav-link-admin) {
+        color: #F5F5DC !important;
+    }
+
+.nav-link-admin {
+    color: #9370DB !important;
+    font-weight: bold;
+}
+
+.navbar-brand, h1 {
+    font-family: 'Handlee';
+}
+
 body, h4 {
     margin-bottom: 60px;
     font-family: 'Quicksand', sans-serif;
@@ -28,18 +45,6 @@ h4 {
     padding: 0;
 }
 
-.navbar {
-    background-color: #006400 !important;
-}
-
-    .navbar .navbar-brand, .navbar .nav-link {
-        color: #F5F5DC !important;
-    }
-
-.navbar-brand, h1 {
-    font-family: 'Handlee';
-}
-
 .btn-home {
     background-color: #006400;
     color: #F5F5DC;
@@ -47,6 +52,15 @@ h4 {
 
     .btn-home:hover {
         background-color: #008000;
+    }
+
+.btn-admin {
+    background-color: #8A2BE2;
+    color: #F5F5DC;
+}
+
+    .btn-admin:hover {
+        background-color: #9370DB;
     }
 
 footer {
