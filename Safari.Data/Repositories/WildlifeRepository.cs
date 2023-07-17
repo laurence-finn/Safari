@@ -75,4 +75,10 @@ public class WildlifeRepository : IWildlifeRepository
             new SqlParameter("@Source", AnimalPic.Source ?? (object)DBNull.Value),
             new SqlParameter("@IsApproved", AnimalPic.IsApproved));            
     }
+
+    public async Task DeleteAnimalPicAsync(AnimalPic AnimalPic)
+    {
+        await _context.Database.ExecuteSqlRawAsync("DECLARE @Success bit, @ErrorMsg nvarchar(50); EXEC delete_animalpic @AnimalPicID, @Success Output, @ErrorMsg Output",
+                       new SqlParameter("@AnimalPicID", AnimalPic.AnimalPicId));
+    }
 }

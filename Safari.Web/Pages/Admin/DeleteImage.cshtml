@@ -2,8 +2,15 @@
 @model Safari.Web.Pages.Admin.DeleteModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete Image";
     Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
 }
 
 <h1>Delete</h1>

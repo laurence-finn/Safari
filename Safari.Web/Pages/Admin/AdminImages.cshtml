@@ -6,6 +6,13 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+@if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
+{
+<div class="alert alert-success">
+    @TempData["SuccessMessage"]
+</div>
+}
+
 <h1>Moderate Images</h1>
 
 <h4 id="AnimalUnapprovedPicHeader">List of Unapproved Images</h4>
