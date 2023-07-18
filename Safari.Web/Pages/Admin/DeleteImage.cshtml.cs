@@ -10,12 +10,12 @@ using Safari.Data;
 
 namespace Safari.Web.Pages.Admin
 {
-    public class DeleteModel : PageModel
+    public class DeleteImageModel : PageModel
     {
         private readonly WildlifeDataContext _context;
         private readonly IWildlifeRepository _repository;
 
-        public DeleteModel(Safari.Data.WildlifeDataContext context, IWildlifeRepository repository)
+        public DeleteImageModel(Safari.Data.WildlifeDataContext context, IWildlifeRepository repository)
         {
             _context = context;
             _repository = repository;

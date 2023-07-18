@@ -1,0 +1,207 @@
+﻿@page
+@model Safari.Web.Pages.Admin.AdminAnimalsPageModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<h1>Moderate Animals</h1>
+
+<hr />
+
+<h4 id="AnimalUnapprovedHeader">List of Unapproved Animals</h4>
+
+<a href="#AnimalApprovedHeader">Jump to Approved Animals</a>
+<br />
+<br />
+
+<table id="AnimalUnapprovedTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].States)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].AnimalTypeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].DietTypeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Weight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Height)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Length)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].IsEndangered)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Lifespan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].IsApproved)
+            </th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Animal)
+        {
+            if (item.IsApproved == false)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @string.Join(", ", item.States)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AnimalTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DietTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Weight)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Height)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Length)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsEndangered)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Lifespan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsApproved)
+                    </td>
+                    <td>
+                        <a class="btn btn-success" asp-page="./ApproveEditImage" asp-route-id="@item.AnimalId">Approve/Edit</a>
+                        <a class="btn btn-danger" asp-page="./DeleteImage" asp-route-id="@item.AnimalId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<br />
+<br />
+
+<h4 id="AnimalApprovedHeader">List of Approved Animals</h4>
+
+<a href="#AnimalUnapprovedHeader">Jump to Unapproved Animals</a>
+<br />
+<br />
+
+<table id="AnimalApprovedTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].States)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].AnimalTypeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].DietTypeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Weight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Height)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Length)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].IsEndangered)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].Lifespan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animal[0].IsApproved)
+            </th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Animal)
+        {
+            if (item.IsApproved == true)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @string.Join(", ", item.States)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AnimalTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DietTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Weight)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Height)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Length)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsEndangered)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Lifespan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsApproved)
+                    </td>
+                    <td>
+                        <a class="btn btn-success" asp-page="./ApproveEditAnimal" asp-route-id="@item.AnimalId">Edit</a>
+                        <a class="btn btn-danger" asp-page="./DeleteAnimal" asp-route-id="@item.AnimalId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#AnimalUnapprovedTable").DataTable();
+        });
+        $(document).ready(function () {
+            $("#AnimalApprovedTable").DataTable();
+        });
+    </script>
+}

@@ -75,11 +75,7 @@ public class SubmitAnimalPageModel : PageModel
                 await _repository.AddAnimalStateAsync(NewAnimalID, StateID);
             }
 
-            //Execute the insert_animaldescription stored procedure
-            if (!string.IsNullOrEmpty(AnimalDescription.Description))
-            {
-                await _repository.AddAnimalDescriptionAsync(NewAnimalID, AnimalDescription);
-            }
+            await _repository.AddAnimalDescriptionAsync(NewAnimalID, AnimalDescription);
 
             if (AnimalPic.File != null)
             {

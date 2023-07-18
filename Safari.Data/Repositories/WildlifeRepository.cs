@@ -66,7 +66,30 @@ public class WildlifeRepository : IWildlifeRepository
             new SqlParameter("@StateID", StateID));
     }
 
-    public async Task SaveAnimalPicAsync(AnimalPic AnimalPic)
+    public async Task UpdateAnimalAsync(Animal Animal)
+    {
+        await _context.Database.ExecuteSqlRawAsync("DECLARE @Success bit, @ErrorMsg nvarchar(50); EXEC update_animal @AnimalID, @Name, @AnimalTypeId, @DietTypeId, @Weight, @Height, @Length, @IsEndangered, @AverageLifeSpan, @IsApproved, @Success Output, @ErrorMsg Output",
+            new SqlParameter("@AnimalID", Animal.AnimalId),
+            new SqlParameter("@Name", Animal.Name),
+            new SqlParameter("@AnimalTypeId", Animal.AnimalTypeId ?? (object)DBNull.Value),
+            new SqlParameter("@DietTypeId", Animal.DietTypeId ?? (object)DBNull.Value),
+            new SqlParameter("@Weight", Animal.Weight ?? (object)DBNull.Value),
+            new SqlParameter("@Height", Animal.Height ?? (object)DBNull.Value),
+            new SqlParameter("@Length", Animal.Length ?? (object)DBNull.Value),
+            new SqlParameter("@IsEndangered", Animal.IsEndangered ?? false),
+            new SqlParameter("@AverageLifeSpan", Animal.Lifespan ?? (object)DBNull.Value),
+            new SqlParameter("@IsApproved", Animal.IsApproved));
+    }
+
+    public async Task UpdateAnimalDescriptionAsync(AnimalDescription AnimalDescription)
+    {
+        await _context.Database.ExecuteSqlRawAsync("DECLARE @Success bit, @ErrorMsg nvarchar(50); EXEC update_animaldescription @AnimalDescriptionID, @AnimalID, @Description, @Success Output, @ErrorMsg Output",
+                       new SqlParameter("@AnimalDescriptionID", AnimalDescription.AnimalDescriptionId),
+                                  new SqlParameter("@AnimalID", AnimalDescription.AnimalId),
+                                             new SqlParameter("@Description", AnimalDescription.Description));
+    }
+
+    public async Task UpdateAnimalPicAsync(AnimalPic AnimalPic)
     {
         await _context.Database.ExecuteSqlRawAsync("DECLARE @Success bit, @ErrorMsg nvarchar(50); EXEC update_animalpic @AnimalPicID, @AnimalID, @AltText, @Source, @IsApproved, @Success Output, @ErrorMsg Output",
             new SqlParameter("@AnimalPicID", AnimalPic.AnimalPicId),
@@ -80,5 +103,11 @@ public class WildlifeRepository : IWildlifeRepository
     {
         await _context.Database.ExecuteSqlRawAsync("DECLARE @Success bit, @ErrorMsg nvarchar(50); EXEC delete_animalpic @AnimalPicID, @Success Output, @ErrorMsg Output",
                        new SqlParameter("@AnimalPicID", AnimalPic.AnimalPicId));
+    }
+
+    public async Task DeleteAnimal(int AnimalID)
+    {
+        await _context.Database.ExecuteSqlRawAsync("DECLARE @Success bit, @ErrorMsg nvarchar(50); EXEC delete_animal @AnimalID, @Success Output, @ErrorMsg Output",
+                                  new SqlParameter("@AnimalID", AnimalID));
     }
 }

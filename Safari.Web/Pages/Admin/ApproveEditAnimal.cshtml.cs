@@ -8,39 +8,44 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Safari.Data;
-using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace Safari.Web.Pages.Admin
 {
-    public class ApproveEditImagePageModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly WildlifeDataContext _context;
         private readonly IWildlifeRepository _repository;
 
-        public ApproveEditImagePageModel(WildlifeDataContext context, IWildlifeRepository repository)
+        public EditModel(WildlifeDataContext context, IWildlifeRepository repository)
         {
             _context = context;
             _repository = repository;
         }
 
         [BindProperty]
-        public AnimalPic AnimalPic { get; set; } = default!;
+        public Animal Animal { get; set; } = default!;
+
+        [BindProperty]
+        public AnimalDescription AnimalDescription { get; set; } = default!;
 
         private async Task<IActionResult> RepopulateViewDataAsync(int? id)
         {
-            var animalpic = await _context.AnimalPic.FirstOrDefaultAsync(m => m.AnimalPicId == id);
-            if (animalpic == null)
+            var animal = await _context.Animal.FirstOrDefaultAsync(m => m.AnimalId == id);
+            if (animal == null)
             {
                 return NotFound();
             }
-            AnimalPic = animalpic;
-            ViewData["AnimalId"] = new SelectList(_context.Animal, "AnimalId", "Name");
+            Animal = animal;
+            ViewData["AnimalTypeId"] = new SelectList(
+                               _context.AnimalType, "AnimalTypeId", "Name");
+            ViewData["DietTypeId"] = new SelectList(
+                               _context.DietType, "DietTypeId", "Name");
             return Page();
         }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.AnimalPic == null)
+            if (id == null || _context.Animal == null)
             {
                 return NotFound();
             }
@@ -53,7 +58,7 @@ namespace Safari.Web.Pages.Admin
         {
             if (!ModelState.IsValid)
             {
-                await RepopulateViewDataAsync(AnimalPic.AnimalPicId);
+                await RepopulateViewDataAsync(Animal.AnimalId);
                 return Page();
             }
 
@@ -61,19 +66,20 @@ namespace Safari.Web.Pages.Admin
 
             try
             {
-                await _repository.UpdateAnimalPicAsync(AnimalPic);
+                await _repository.UpdateAnimalAsync(Animal);
+                await _repository.UpdateAnimalDescriptionAsync(AnimalDescription);
             }
             catch (SqlException ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
                 await transaction.RollbackAsync();
-                await RepopulateViewDataAsync(AnimalPic.AnimalPicId);
+                await RepopulateViewDataAsync(Animal.AnimalId);
                 return Page();
             }
 
             await transaction.CommitAsync();
-            TempData["SuccessMessage"] = "Animal image updated successfully!";
-            await RepopulateViewDataAsync(AnimalPic.AnimalPicId);
+            TempData["SuccessMessage"] = "Animal updated successfully!";
+            await RepopulateViewDataAsync(Animal.AnimalId);
             return Page();
         }
     }
