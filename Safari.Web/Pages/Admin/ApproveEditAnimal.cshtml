@@ -135,7 +135,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                         Select 'Not Approved' to hide it."></i>
                 </label>
                 <select asp-for="Animal.IsApproved" class="form-control">
-                    <option value="true">Approved</option>
+                    <option value="true" selected>Approved</option>
                     <option value="false">Not Approved</option>
                 </select>
                 <span asp-validation-for="Animal.IsApproved" class="text-danger"></span>
