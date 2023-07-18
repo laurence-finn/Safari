@@ -28,6 +28,9 @@ namespace Safari.Web.Pages.Admin
         [BindProperty]
         public AnimalDescription AnimalDescription { get; set; } = default!;
 
+        [BindProperty]
+        public List<int> SelectedStateIds { get; set; } = new List<int>();
+
         private async Task<IActionResult> RepopulateViewDataAsync(int? id)
         {
             var animal = await _context.Animal.FirstOrDefaultAsync(m => m.AnimalId == id);
@@ -40,12 +43,22 @@ namespace Safari.Web.Pages.Admin
                                _context.AnimalType, "AnimalTypeId", "Name");
             ViewData["DietTypeId"] = new SelectList(
                                _context.DietType, "DietTypeId", "Name");
+
             var animalDescription = await _context.AnimalDescription.FirstOrDefaultAsync(m => m.AnimalId == id);
             if (animalDescription == null)
             {
                 return NotFound();
             }
             AnimalDescription = animalDescription;
+
+            SelectedStateIds = await _context.AnimalState
+                .Where(a => a.AnimalId == id)
+                .Select(a => a.StateId)
+                .ToListAsync();
+
+            var states = await _context.State.ToListAsync();
+            ViewData["StateId"] = new SelectList(states, "StateId", "Name");
+
             return Page();
         }
 

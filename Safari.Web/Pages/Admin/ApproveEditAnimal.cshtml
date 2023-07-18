@@ -49,6 +49,16 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
             </div>
 
             <div class="form-group">
+                <label asp-for="SelectedStateIds" class="control-label">
+                    States
+                    <i class="far fa-question-circle" title="Select the state(s) where the animal lives."></i>
+                </label>
+                <select asp-for="SelectedStateIds" class="form-control" asp-items="ViewBag.StateId" multiple data-placeholder="Select states"></select>
+                <span asp-validation-for="SelectedStateIds" class="text-danger"></span>
+                <br />
+            </div>
+
+            <div class="form-group">
                 <label asp-for="Animal.AnimalTypeId" class="control-label">
                     Animal Type
                     <i class="far fa-question-circle" title="What kind of animal is it? Choose from the list."></i>
@@ -155,4 +165,16 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
         </form>
     </div>
 </div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('select[multiple]').select2();
+        });
+    </script>
+}
 

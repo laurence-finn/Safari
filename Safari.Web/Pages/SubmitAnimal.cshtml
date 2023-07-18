@@ -58,7 +58,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                     States
                     <i class="far fa-question-circle" title="Select the state(s) where the animal lives."></i>
                 </label>
-                <select asp-for="SelectedStateIds" class="form-control" asp-items="ViewBag.StateId" multiple></select>
+                <select asp-for="SelectedStateIds" class="form-control" asp-items="ViewBag.StateId" multiple data-placeholder="Select states"></select>
                 <span asp-validation-for="SelectedStateIds" class="text-danger"></span>
                 <br />
 
@@ -192,8 +192,15 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
 </div>
 
 @section Scripts
-    {
+{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        $(document).ready(function () {
+            $('select[multiple]').select2();
+        });
+    </script>
+
 }
