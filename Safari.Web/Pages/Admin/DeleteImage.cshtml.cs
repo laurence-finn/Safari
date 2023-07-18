@@ -64,7 +64,7 @@ namespace Safari.Web.Pages.Admin
             }
 
             await transaction.CommitAsync();
-            TempData["SuccessMessage"] = "Animal deleted successfully!";
+            TempData["SuccessMessage"] = "Animal image deleted successfully!";
             return RedirectToPage("./AdminImages");
         }
     }

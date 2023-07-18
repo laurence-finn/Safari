@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Safari.Data;
 
@@ -11,11 +12,13 @@ namespace Safari.Web.Pages.Admin
 {
     public class DeleteAnimalModel : PageModel
     {
-        private readonly Safari.Data.WildlifeDataContext _context;
+        private readonly WildlifeDataContext _context;
+        private readonly IWildlifeRepository _repository;
 
-        public DeleteAnimalModel(Safari.Data.WildlifeDataContext context)
+        public DeleteAnimalModel(WildlifeDataContext context, IWildlifeRepository repository)
         {
             _context = context;
+            _repository = repository;
         }
 
         [BindProperty]
@@ -47,16 +50,22 @@ namespace Safari.Web.Pages.Admin
             {
                 return NotFound();
             }
-            var animal = await _context.Animal.FindAsync(id);
 
-            if (animal != null)
+            var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
-                Animal = animal;
-                _context.Animal.Remove(Animal);
-                await _context.SaveChangesAsync();
+                await _repository.DeleteAnimalAsync(Animal.AnimalId);
+            }
+            catch (SqlException ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                await transaction.RollbackAsync();
             }
 
-            return RedirectToPage("./Index");
+            await transaction.CommitAsync();
+            TempData["SuccessMessage"] = "Animal deleted successfully!";
+            return RedirectToPage("./AdminAnimals");
         }
     }
 }
