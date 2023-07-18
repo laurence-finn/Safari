@@ -31,6 +31,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddScoped<IWildlifeRepository, WildlifeRepository>();
 
 builder.Services.AddAutoMapper(typeof(AnimalProfile));
+builder.Services.AddAutoMapper(typeof(AdminAnimalProfile));
 
 builder.Services.AddRazorPages();
 

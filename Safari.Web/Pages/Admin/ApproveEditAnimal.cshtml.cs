@@ -40,6 +40,12 @@ namespace Safari.Web.Pages.Admin
                                _context.AnimalType, "AnimalTypeId", "Name");
             ViewData["DietTypeId"] = new SelectList(
                                _context.DietType, "DietTypeId", "Name");
+            var animalDescription = await _context.AnimalDescription.FirstOrDefaultAsync(m => m.AnimalId == id);
+            if (animalDescription == null)
+            {
+                return NotFound();
+            }
+            AnimalDescription = animalDescription;
             return Page();
         }
 

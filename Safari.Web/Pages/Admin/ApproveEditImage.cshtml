@@ -16,6 +16,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
 {
     <div class="alert alert-success">
         @TempData["SuccessMessage"]
+        <a asp-page=".\AdminImages">Back to List</a>
     </div>
 }
 

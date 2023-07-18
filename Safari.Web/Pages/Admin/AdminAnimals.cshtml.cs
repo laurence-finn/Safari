@@ -16,9 +16,10 @@ namespace Safari.Web.Pages.Admin
         private readonly WildlifeDataContext _context;
         private readonly IMapper _mapper;
 
-        public AdminAnimalsPageModel(WildlifeDataContext context)
+        public AdminAnimalsPageModel(WildlifeDataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public IList<AdminAnimalViewModel> Animal { get;set; } = default!;
@@ -34,7 +35,7 @@ namespace Safari.Web.Pages.Admin
                     .ThenInclude(AnimalState => AnimalState.State)                    
                 .ToListAsync();
 
-                // Map Animal to AnimalViewModel (populate data from Animal to AnimalViewModel)
+                // Map Animal to AdminAnimalViewModel (populate data from Animal to AdminAnimalViewModel)
                 Animal = _mapper.Map<IList<AdminAnimalViewModel>>(animals);
             }
         }
