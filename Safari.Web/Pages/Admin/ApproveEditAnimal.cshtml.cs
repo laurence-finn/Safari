@@ -87,6 +87,11 @@ namespace Safari.Web.Pages.Admin
             {
                 await _repository.UpdateAnimalAsync(Animal);
                 await _repository.UpdateAnimalDescriptionAsync(AnimalDescription);
+                await _repository.DeleteAllAnimalStateAsync(Animal.AnimalId);
+                foreach (var StateID in SelectedStateIds)
+                {
+                    await _repository.AddAnimalStateAsync(Animal.AnimalId, StateID);
+                }
             }
             catch (SqlException ex)
             {

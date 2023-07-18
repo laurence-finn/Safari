@@ -16,5 +16,6 @@ public interface IWildlifeRepository
     Task UpdateAnimalDescriptionAsync(AnimalDescription AnimalDescription);
     Task UpdateAnimalPicAsync(AnimalPic AnimalPic);
     Task DeleteAnimalPicAsync(AnimalPic AnimalPic);
-    Task DeleteAnimal(int AnimalID);
+    Task DeleteAnimalAsync(int AnimalID);
+    Task DeleteAllAnimalStateAsync(int AnimalID);
 }

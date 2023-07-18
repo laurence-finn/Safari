@@ -105,9 +105,15 @@ public class WildlifeRepository : IWildlifeRepository
                        new SqlParameter("@AnimalPicID", AnimalPic.AnimalPicId));
     }
 
-    public async Task DeleteAnimal(int AnimalID)
+    public async Task DeleteAnimalAsync(int AnimalID)
     {
         await _context.Database.ExecuteSqlRawAsync("DECLARE @Success bit, @ErrorMsg nvarchar(50); EXEC delete_animal @AnimalID, @Success Output, @ErrorMsg Output",
+                                  new SqlParameter("@AnimalID", AnimalID));
+    }
+
+    public async Task DeleteAllAnimalStateAsync(int AnimalID)
+    {
+        await _context.Database.ExecuteSqlRawAsync("DECLARE @Success bit, @ErrorMsg nvarchar(50); EXEC delete_allanimalstate @AnimalID, @Success Output, @ErrorMsg Output",
                                   new SqlParameter("@AnimalID", AnimalID));
     }
 }
