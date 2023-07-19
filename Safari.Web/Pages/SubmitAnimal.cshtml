@@ -61,6 +61,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                 <select asp-for="SelectedStateIds" class="form-control" asp-items="ViewBag.StateId" multiple data-placeholder="Select states"></select>
                 <span asp-validation-for="SelectedStateIds" class="text-danger"></span>
                 <br />
+                <br />
 
             </div>
             <div class="form-group">
@@ -137,7 +138,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                     Description
                     <i class="far fa-question-circle" title="Tell us a little about the animal. This is your chance to share fun facts!"></i>
                 </label>
-                <textarea asp-for="AnimalDescription.Description" class="form-control"></textarea>
+                <textarea asp-for="AnimalDescription.Description" class="form-control" id="AnimalDescriptionEditor"></textarea>
                 <span asp-validation-for="AnimalDescription.Description" class="text-danger"></span>
                 <span asp-validation-for="AnimalDescription" class="text-danger"></span>
                 <br />
@@ -200,6 +201,14 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
     <script>
         $(document).ready(function () {
             $('select[multiple]').select2();
+        });
+
+        tinymce.init({
+            selector: '#AnimalDescriptionEditor',
+            height: 300,
+            menubar: false,
+            plugins: 'advlist autolink lists link image imagetools charmap print preview',
+            toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist | link image'
         });
     </script>
 
