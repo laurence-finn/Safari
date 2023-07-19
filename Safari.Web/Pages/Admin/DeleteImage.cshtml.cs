@@ -57,19 +57,17 @@ namespace Safari.Web.Pages.Admin
 
             try
             {
+                //delete the image from webroot
+                var imagePath = System.IO.Path.Combine("wwwroot", "images", AnimalPic.FileName);
+                System.IO.File.Delete(imagePath);
                 await _repository.DeleteAnimalPicAsync(AnimalPic);
+                await transaction.CommitAsync();
+                TempData["SuccessMessage"] = "Animal image deleted successfully!";
             }
             catch (SqlException ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
                 await transaction.RollbackAsync();
-            }
-
-            try
-            {
-                //delete the image from webroot
-                var imagePath = System.IO.Path.Combine("wwwroot", "images", AnimalPic.FileName);
-                System.IO.File.Delete(imagePath);
             }
             catch (Exception ex)
             {
@@ -77,8 +75,6 @@ namespace Safari.Web.Pages.Admin
                 await transaction.RollbackAsync();
             }
 
-            await transaction.CommitAsync();
-            TempData["SuccessMessage"] = "Animal image deleted successfully!";
             return RedirectToPage("./AdminImages");
         }
     }

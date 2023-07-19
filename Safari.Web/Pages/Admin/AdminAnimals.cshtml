@@ -6,6 +6,12 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+@if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 @if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
 {
     <div class="alert alert-success">
@@ -54,6 +60,9 @@
                 @Html.DisplayNameFor(model => model.Animal[0].Lifespan)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Animal[0].DateSubmitted)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Animal[0].IsApproved)
             </th>
             <th>Options</th>
@@ -91,6 +100,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Lifespan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateSubmitted)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.IsApproved)
@@ -144,6 +156,9 @@
                 @Html.DisplayNameFor(model => model.Animal[0].Lifespan)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Animal[0].DateSubmitted)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Animal[0].IsApproved)
             </th>
             <th>Options</th>
@@ -181,6 +196,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Lifespan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateSubmitted)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.IsApproved)

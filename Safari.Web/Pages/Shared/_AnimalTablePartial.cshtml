@@ -41,42 +41,45 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        <img src="@item.FilePath" alt="@item.AltText" style="max-width:100px; max-height:100px;">
-                    </td>
-                    <td>
-                        @string.Join(", ", item.States)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AnimalTypeName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DietTypeName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Weight)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Height)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Length)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsEndangered)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Lifespan)
-                    </td>
+                if (item.IsApproved == true)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            <img src="@item.FilePath" alt="@item.AltText" style="max-width:100px; max-height:100px;">
+                        </td>
+                        <td>
+                            @string.Join(", ", item.States)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AnimalTypeName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DietTypeName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Weight)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Height)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Length)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsEndangered)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Lifespan)
+                        </td>
 
-                    <td>
-                        <a asp-page="./Details" asp-route-id="@item.AnimalId">Details</a>
-                    </td>
-                </tr>
+                        <td>
+                            <a asp-page="./Details" asp-route-id="@item.AnimalId">Details</a>
+                        </td>
+                    </tr>
+                }
             }
         </tbody>
     </table>

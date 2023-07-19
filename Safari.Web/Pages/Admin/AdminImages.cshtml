@@ -6,6 +6,12 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+@if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 @if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
 {
 <div class="alert alert-success">
