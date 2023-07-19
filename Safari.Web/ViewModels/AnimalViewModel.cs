@@ -30,13 +30,12 @@ namespace Safari.Web.ViewModels
 
         [Display (Name = "Image")]
         public string FilePath { get; set; } = default!;
-        public string AltText { get; set; } = default!;
+        public string AltText { get; set; } = default!;        
 
         [Display (Name = "Date Submitted")]
         public DateTime DateSubmitted { get; set; } = default!;
 
         [Display(Name = "Approval Status")]
         public bool IsApproved { get; set; } = default!;
-
     }
 }

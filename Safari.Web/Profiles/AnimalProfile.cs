@@ -12,16 +12,27 @@ public class AnimalProfile : Profile
     public AnimalProfile()
     {
         CreateMap<Animal, AnimalViewModel>()
-            .ForMember(dest => dest.States,
-            opt => opt.MapFrom(
-                src => src.AnimalState.Select(s => s.State.Name).ToList()))
-            .ForMember(dest => dest.FilePath,
-            opt => opt.MapFrom(src => src.AnimalPic.FirstOrDefault().FilePath))
-            .ForMember(dest => dest.AltText,
-            opt => opt.MapFrom(src => src.AnimalPic.FirstOrDefault().AltText))
-            .ForMember(dest => dest.AnimalTypeName,
+            .ForMember(dest => dest.States, 
+            opt => opt.MapFrom(src => src.AnimalState.Select(s => s.State.Name).ToList()))
+            .ForMember(dest => dest.FilePath, 
+            opt => opt.MapFrom(src => GetApprovedFilePath(src)))
+            .ForMember(dest => dest.AltText, 
+            opt => opt.MapFrom(src => GetApprovedAltText(src)))
+            .ForMember(dest => dest.AnimalTypeName, 
             opt => opt.MapFrom(src => src.AnimalType.Name))
-            .ForMember(dest => dest.DietTypeName,
+            .ForMember(dest => dest.DietTypeName, 
             opt => opt.MapFrom(src => src.DietType.Name));
+    }
+
+    private string GetApprovedFilePath(Animal animal)
+    {
+        var approvedAnimalPic = animal.AnimalPic.FirstOrDefault(ap => ap.IsApproved == true);
+        return approvedAnimalPic?.FilePath;
+    }
+
+    private string GetApprovedAltText(Animal animal)
+    {
+        var approvedAnimalPic = animal.AnimalPic.FirstOrDefault(ap => ap.IsApproved == true);
+        return approvedAnimalPic?.AltText;
     }
 }

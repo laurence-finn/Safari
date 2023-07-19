@@ -24,7 +24,7 @@ namespace Safari.Web.Pages.Admin
             _mapper = mapper;
         }
 
-        public IList<AdminAnimalViewModel> Animal { get;set; } = default!;
+        public IList<AnimalViewModel> Animal { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
@@ -38,7 +38,7 @@ namespace Safari.Web.Pages.Admin
                 .ToListAsync();
 
                 // Map Animal to AdminAnimalViewModel (populate data from Animal to AdminAnimalViewModel)
-                Animal = _mapper.Map<IList<AdminAnimalViewModel>>(animals);
+                Animal = _mapper.Map<IList<AnimalViewModel>>(animals);
             }
         }
     }

@@ -66,7 +66,7 @@
                         @Html.DisplayFor(modelItem => item.Animal.Name)
                     </td>
                     <td>
-                        <img src="..\@item.FilePath" alt="@item.AltText" style="max-width:100px; max-height:100px;">
+                        <img src="..\@item.FilePath?version=@DateTime.UtcNow.Ticks" alt="@item.AltText" style="max-width:100px; max-height:100px;">
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FileName)
@@ -135,7 +135,10 @@
                         @Html.DisplayFor(modelItem => item.Animal.Name)
                     </td>
                     <td>
-                        <img src="..\@item.FilePath" alt="@item.AltText" style="max-width:100px; max-height:100px;">
+                        @if (item.FilePath != null)
+                        {
+                            <img src="..\@item.FilePath?version=@DateTime.UtcNow.Ticks" alt="@item.AltText" style="max-width:100px; max-height:100px;">
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FileName)
