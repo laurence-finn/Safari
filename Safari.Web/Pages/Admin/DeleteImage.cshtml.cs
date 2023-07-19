@@ -63,6 +63,18 @@ namespace Safari.Web.Pages.Admin
                 await transaction.RollbackAsync();
             }
 
+            try
+            {
+                //delete the image from webroot
+                var imagePath = System.IO.Path.Combine("wwwroot", "images", AnimalPic.FileName);
+                System.IO.File.Delete(imagePath);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "There was an error deleting the image from the website: " + ex.Message;
+                await transaction.RollbackAsync();
+            }
+
             await transaction.CommitAsync();
             TempData["SuccessMessage"] = "Animal image deleted successfully!";
             return RedirectToPage("./AdminImages");
