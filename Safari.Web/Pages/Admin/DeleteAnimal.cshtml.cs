@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
@@ -10,6 +11,7 @@ using Safari.Data;
 
 namespace Safari.Web.Pages.Admin
 {
+    [Authorize]
     public class DeleteAnimalModel : PageModel
     {
         private readonly WildlifeDataContext _context;

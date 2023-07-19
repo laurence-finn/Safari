@@ -61,6 +61,12 @@ To alter the database, use SSMS and execute any of the stored procedures located
 
 You can also modify the database by using custom create/update/delete queries, but this is not recommended, as it may result in unintended consequences.
 
+## Admin Login
+
+To test the admin features, click "Admin Login" at the top right of the screen and enter these credentials:
+User: admin@safariamerica.com
+Pass: 9q,tq:Bp=_~WwXq
+
 ## Contact
 
 If you encounter any problems, please contact Laurence Finn at [laurence.c.finn@gmail.com](mailto:laurence.c.finn@gmail.com).
