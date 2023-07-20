@@ -2,7 +2,7 @@
 @model Safari.Web.Pages.SubmitAnimalPageModel
 
 @{
-    ViewData["Title"] = "SubmitAnimal";
+    ViewData["Title"] = "Submit Animal";
 }
 
 @if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
@@ -41,9 +41,10 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
 <hr />
 <br />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-auto">
         <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="Animal.Name" class="control-label">
                     Name<span class="text-danger">* </span>
@@ -53,17 +54,19 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                 <span asp-validation-for="Animal.Name" class="text-danger"></span>
                 <br />
             </div>
+
             <div class="form-group">
                 <label asp-for="SelectedStateIds" class="control-label">
                     States
                     <i class="far fa-question-circle" title="Select the state(s) where the animal lives."></i>
                 </label>
-                <select asp-for="SelectedStateIds" class="form-control" asp-items="ViewBag.StateId" multiple data-placeholder="Select states"></select>
+                <br />
+                <select asp-for="SelectedStateIds" class="form-control" style="width: 75%" asp-items="ViewBag.StateId" multiple data-placeholder="Select states"></select>
                 <span asp-validation-for="SelectedStateIds" class="text-danger"></span>
                 <br />
                 <br />
-
             </div>
+
             <div class="form-group">
                 <label asp-for="Animal.AnimalTypeId" class="control-label">
                     Animal Type
@@ -73,8 +76,8 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                     <option value="">Select an Animal Type</option>
                 </select>
                 <br />
-
             </div>
+
             <div class="form-group">
                 <label asp-for="Animal.DietTypeId" class="control-label">
                     Diet
@@ -84,8 +87,8 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                     <option value="">Select a Diet Type</option>
                 </select>
                 <br />
-
             </div>
+
             <div class="form-group">
                 <label asp-for="Animal.Weight" class="control-label">
                     Average Weight (pounds)
@@ -93,8 +96,8 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                 <input asp-for="Animal.Weight" class="form-control" />
                 <span asp-validation-for="Animal.Weight" class="text-danger"></span>
                 <br />
-
             </div>
+
             <div class="form-group">
                 <label asp-for="Animal.Height" class="control-label">
                     Average Height (inches)
@@ -102,8 +105,8 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                 <input asp-for="Animal.Height" class="form-control" />
                 <span asp-validation-for="Animal.Height" class="text-danger"></span>
                 <br />
-
             </div>
+
             <div class="form-group">
                 <label asp-for="Animal.Length" class="control-label">
                     Average Length (inches)
@@ -111,8 +114,8 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                 <input asp-for="Animal.Length" class="form-control" />
                 <span asp-validation-for="Animal.Length" class="text-danger"></span>
                 <br />
-
             </div>
+
             <div class="form-group">
                 <label asp-for="Animal.IsEndangered" class="control-label">
                     Is the animal endangered?
@@ -122,8 +125,8 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                     <option value="true">Yes</option>
                 </select>
                 <br />
-
             </div>
+
             <div class="form-group">
                 <label asp-for="Animal.Lifespan" class="control-label">
                     Average Lifespan (years)
@@ -174,26 +177,21 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                 <br />
             </div>
 
-            <div class="form-group">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <input type="submit" value="Submit Animal" class="btn btn-success" />
-                    </div>
-                    <div>
-                        <input type="reset" value="Reset Form" class="btn btn-danger"
-                               asp-page-handler="ResetForm" asp-page="SubmitAnimal" onclick="window.scrollTo(0, 0);" />
-                    </div>
-                    <div>
-                        <a class="btn btn-secondary" asp-page="Index">Back to Home</a>
-                    </div>
-                </div>
-            </div>
         </form>
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-4">
+            <input type="submit" value="Submit Animal" class="btn btn-success" />
+            <input type="reset" value="Reset Form" class="btn btn-danger"
+                   asp-page-handler="ResetForm" asp-page="SubmitAnimal" onclick="window.scrollTo(0, 0);" />
+            <a class="btn btn-secondary" asp-page="Index">Back to Home</a>
+    </div>
+</div>
+
 @section Scripts
-{
+    {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
