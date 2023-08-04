@@ -12,12 +12,12 @@
     <div id="carouselExample" class="carousel slide" style="max-width:50%">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="@Model.AnimalPics[0].FilePath" class="d-block w-100" alt="...">
+                <img src="@Model.AnimalPics[0].FilePath" class="d-block w-100" alt="@Model.AnimalPics[0].AltText">
             </div>
             @for (int i = 1; i < Model.AnimalPics.Count; i++)
             {
                 <div class="carousel-item">
-                    <img src="@Model.AnimalPics[i].FilePath" class="d-block w-100" alt="...">
+                    <img src="@Model.AnimalPics[i].FilePath" class="d-block w-100" alt="@Model.AnimalPics[i].AltText">
                 </div>
             }
             )
@@ -32,13 +32,13 @@
         </button>
     </div>
 }
-
 <br />
 <br />
 
 <h4>Description</h4>
 <br />
 @Html.Raw(Model.AnimalDescription)
+<br />
 
 <h4>Key Stats:</h4>
 <br />
@@ -46,6 +46,7 @@
 <p>Average Height: @Model.Animal.Height</p>
 <p>Average Weight: @Model.Animal.Weight</p>
 <p>Average Length: @Model.Animal.Length</p>
+<br />
 
 <h4>Locations:</h4>
 <br />
@@ -53,3 +54,7 @@
     The @Model.Animal.Name can be found in the following state(s):
     @string.Join(", ", Model.AnimalStates)
 </p>
+<br />
+<br />
+<a asp-page="Index" class="btn btn-primary">Back to List</a>
+

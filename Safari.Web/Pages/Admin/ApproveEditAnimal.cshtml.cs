@@ -78,6 +78,7 @@ namespace Safari.Web.Pages.Admin
             if (!ModelState.IsValid)
             {
                 await RepopulateViewDataAsync(Animal.AnimalId);
+                TempData["ErrorMessage"] = "Invalid model.";
                 return Page();
             }
 

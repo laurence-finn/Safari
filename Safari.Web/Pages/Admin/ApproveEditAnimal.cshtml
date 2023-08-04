@@ -151,17 +151,18 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                 <span asp-validation-for="Animal.IsApproved" class="text-danger"></span>
                 <br />
             </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <a class="btn btn-secondary" asp-page="./AdminAnimals">Back to List</a>
+                </div>
+            </div>
 
         </form>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <input type="submit" value="Save" class="btn btn-primary" />
-        <a class="btn btn-secondary" asp-page="./AdminAnimals">Back to List</a>
-    </div>
-</div>
+
 
 @section Scripts
     {

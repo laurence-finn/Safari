@@ -85,19 +85,19 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                 <span asp-validation-for="AnimalPic.Source" class="text-danger"></span>
                 <br />
             </div>
-
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="submit" value="Submit Image" class="btn btn-success" />
+                    <input type="reset" value="Reset Form" class="btn btn-danger"
+                           asp-page-handler="ResetForm" asp-page="SubmitImage" onclick="window.scrollTo(0, 0);" />
+                    <a class="btn btn-secondary" asp-page="Index">Back to Home</a>
+                </div>
+            </div>
         </form>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <input type="submit" value="Submit Image" class="btn btn-success" />
-        <input type="reset" value="Reset Form" class="btn btn-danger"
-               asp-page-handler="ResetForm" asp-page="SubmitImage" onclick="window.scrollTo(0, 0);" />
-        <a class="btn btn-secondary" asp-page="Index">Back to Home</a>
-        </div>
-</div>
+
 
 @section Scripts {
     @{

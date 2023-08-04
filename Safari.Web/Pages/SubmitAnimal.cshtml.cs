@@ -47,6 +47,16 @@ public class SubmitAnimalPageModel : PageModel
 
     public IActionResult OnPostResetForm()
     {
+        // Reset the model properties to their default values
+        Animal = new Animal();
+        SelectedStateIds = new List<int>();
+        AnimalDescription = new AnimalDescription();
+        AnimalPic = new AnimalPic();
+
+        // Clear model state errors
+        ModelState.Clear();
+
+        // Repopulate the view and return to the page
         RepopulateViewData();
         return Page();
     }

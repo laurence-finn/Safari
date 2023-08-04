@@ -51,7 +51,14 @@
                             <img src="@item.FilePath?version=@DateTime.UtcNow.Ticks" alt="@item.AltText" style="max-width:100px; max-height:100px;">
                         </td>
                         <td>
-                            @string.Join(", ", item.States)
+                            @if (item.States.Count <= 5)
+                            {
+                                @string.Join(", ", item.States)
+                            }
+                            else
+                            {
+                                @string.Join(", ", item.States.Take(5)) <span>. . .</span>
+                            }
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.AnimalTypeName)
