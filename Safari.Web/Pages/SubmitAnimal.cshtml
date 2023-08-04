@@ -179,13 +179,17 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
             <div class="row">
                 <div class="col-md-4">
                     <input type="submit" value="Submit Animal" class="btn btn-success" />
+                </div>
+                <div class="col-md-4">
                     <input type="reset" value="Reset Form" class="btn btn-danger"
                            asp-page-handler="ResetForm" asp-page="SubmitAnimal" onclick="window.scrollTo(0, 0);" />
+                </div>
+                <div class="col-md-4">
                     <a class="btn btn-secondary" asp-page="Index">Back to Home</a>
                 </div>
             </div>
-        </form>
-    </div>
+    </form>
+</div>
 </div>
 
 

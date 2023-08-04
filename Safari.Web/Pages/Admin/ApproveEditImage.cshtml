@@ -31,7 +31,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
 <hr />
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-lg-auto">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="AnimalPic.AnimalPicId" />
@@ -52,7 +52,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                 <br />
                 <label asp-for="AnimalPic.FileName" class="control-label"></label>
                 <input asp-for="AnimalPic.FileName" class="form-control" readonly style="background-color: #f8f9fa; color: #6c757d;" />
-                <br />                
+                <br />
             </div>
 
             <input type="hidden" asp-for="AnimalPic.FilePath" />
@@ -91,12 +91,14 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                 <span asp-validation-for="AnimalPic.IsApproved" class="text-danger"></span>
                 <br />
             </div>
+
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-auto">
                     <input type="submit" value="Save" class="btn btn-primary" />
                     <a class="btn btn-secondary" asp-page="./AdminImages">Back to List</a>
-                </div>
+                </div>                
             </div>
+
         </form>
     </div>
 </div>

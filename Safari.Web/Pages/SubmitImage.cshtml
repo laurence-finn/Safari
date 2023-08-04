@@ -36,7 +36,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
 <h4>
     Choose an animal from the database, and upload an image.
     If you found the image from another website, please include the link in the "source"
-    so that we can verify whether we're allowed to post it on our site.    
+    so that we can verify whether we're allowed to post it on our site.
 </h4>
 <br />
 <hr />
@@ -88,8 +88,12 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
             <div class="row">
                 <div class="col-md-4">
                     <input type="submit" value="Submit Image" class="btn btn-success" />
+                </div>
+                <div class="col-md-4">
                     <input type="reset" value="Reset Form" class="btn btn-danger"
                            asp-page-handler="ResetForm" asp-page="SubmitImage" onclick="window.scrollTo(0, 0);" />
+                </div>
+                <div class="col-md-4">
                     <a class="btn btn-secondary" asp-page="Index">Back to Home</a>
                 </div>
             </div>

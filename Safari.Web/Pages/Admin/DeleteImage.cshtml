@@ -63,11 +63,15 @@
             @Html.DisplayFor(model => model.AnimalPic.Animal.Name)
         </dd>
     </dl>
-    
+
     <form method="post">
         <input type="hidden" asp-for="AnimalPic.AnimalPicId" />
         <input type="hidden" asp-for="AnimalPic.FileName" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a class="btn btn-secondary" asp-page="./AdminImages">Back to List</a>
+        <div class="row">
+            <div class="col-md-4">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+                <a class="btn btn-secondary" asp-page="./AdminImages">Back to List</a>
+            </div>            
+        </div>
     </form>
 </div>
