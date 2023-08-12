@@ -1,4 +1,8 @@
-﻿using System;
+﻿//File: Animal.cs
+//Class: Animal
+//Description: This class contains the data model for the Animal table in the Safari database.
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -22,6 +26,7 @@ public partial class Animal
     [Column("DietTypeID")]
     public int? DietTypeId { get; set; }
 
+    //The "Range" attributes are used in the following properties to implement input validation.
     [Column(TypeName = "decimal(6, 2)")]
     [Range(0, double.MaxValue, ErrorMessage = "Weight can't be a negative value.")]
     public decimal? Weight { get; set; }

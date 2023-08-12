@@ -1,4 +1,8 @@
-﻿using System;
+﻿//File: AnimalPic.cs
+//Class: AnimalPic
+//Description: This class contains the data model for the AnimalPic table in the Safari database.
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

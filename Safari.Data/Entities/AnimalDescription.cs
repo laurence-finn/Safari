@@ -1,4 +1,8 @@
-﻿using System;
+﻿//File: AnimalDescription.cs
+//Class: AnimalDescription
+//Description: This class contains the data model for the AnimalDescription table in the Safari database.
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
