@@ -1,4 +1,9 @@
-﻿using System;
+﻿//File: IWildlifeRepository.cs
+//Class: IWildlifeRepository
+//Description: This is the interface class for the WildlifeRepository class, which defines all of the methods
+//that must be implemented in the WildlifeRepository class.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
