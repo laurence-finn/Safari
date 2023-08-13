@@ -13,6 +13,7 @@ namespace Safari.Data;
 [Table("DietType")]
 public partial class DietType
 {
+    //Note that this model does not contain any nullable properties (therefore all are required).
     [Key]
     [Column("DietTypeID")]
     public int DietTypeId { get; set; }

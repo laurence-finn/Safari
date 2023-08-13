@@ -1,8 +1,11 @@
-﻿@page
+﻿@*This is the Moderate Animals page, which allows Admins to view a list of all approved and unapproved animals.*@
+@*Links are provided to approve, edit, or delete any animals on the page.*@
+
+@page
 @model Safari.Web.Pages.Admin.AdminAnimalsPageModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Moderate Animals";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
@@ -69,6 +72,7 @@
         </tr>
     </thead>
     <tbody>
+        @*For each animal in the database, if it is not approved, list it in the table.*@
         @foreach (var item in Model.Animal)
         {
             if (item.IsApproved == false)
@@ -165,6 +169,7 @@
         </tr>
     </thead>
     <tbody>
+        @*For each animal in the database, if it is approved, list it in the table.*@
         @foreach (var item in Model.Animal)
         {
             if (item.IsApproved == true)
@@ -213,6 +218,7 @@
     </tbody>
 </table>
 
+@*The JavaScript for this page sets the tables as DataTables with default settings.*@
 @section Scripts {
     <script>
         $(document).ready(function () {

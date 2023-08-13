@@ -1,4 +1,8 @@
-﻿using System;
+﻿//File: AdminImages.cshtml.cs
+//Class: AdminImagesPageModel
+//Description: This is the code-behind class for the AdminImages.cshtml Razor Page.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +19,7 @@ namespace Safari.Web.Pages.Admin
     {
         private readonly Safari.Data.WildlifeDataContext _context;
 
+        //Constructor
         public AdminImagesPageModel(Safari.Data.WildlifeDataContext context)
         {
             _context = context;
@@ -22,6 +27,8 @@ namespace Safari.Web.Pages.Admin
 
         public IList<AnimalPic> AnimalPic { get;set; } = default!;
 
+
+        //OnGetAsync: On HTTP GET, retrieve all the animal pictures from the database
         public async Task OnGetAsync()
         {
             if (_context.AnimalPic != null)

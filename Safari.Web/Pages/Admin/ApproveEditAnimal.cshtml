@@ -1,5 +1,8 @@
-﻿@page
-@model Safari.Web.Pages.Admin.EditModel
+﻿@*This is the Approve/Edit Animal page, which allows admins to edit an animals details,
+and change its status to approved or not approved.*@
+
+@page
+@model Safari.Web.Pages.Admin.ApproveEditAnimalPageModel
 
 @{
     ViewData["Title"] = "Approve/Edit Animal";
@@ -34,6 +37,8 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
     <div class="col-lg-auto">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*The following properties are hidden to ensure that they are not displayed to the user, 
+                but are still passed to the controller when the form is submitted.*@
             <input type="hidden" asp-for="Animal.AnimalId" />
             <input type="hidden" asp-for="AnimalDescription.AnimalId" />
             <input type="hidden" asp-for="AnimalDescription.AnimalDescriptionId" />
@@ -164,7 +169,11 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
 </div>
 
 
-
+@*The JavaScript for this page sets the State ID selector as a "Select2" multiselector.
+    Additionally, the AnimalDescription text box is set as a TinyMCE editor, with a selection of plugins and tools added to the toolbar.
+    Image linking is allowed for now, but may be changed in the future to simplify moderation and ensure that any images are directly hosted by the site.
+    The validation scripts are also rendered here.
+*@
 @section Scripts
     {
     @{

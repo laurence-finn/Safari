@@ -1,4 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@***************@
+@*Reusable Code*@
+@***************@
+@*This is the "Layout" partial view file. It is rendered on every page in the website,
+    and contains the header, footer, and navigation bar. It also imports the necessary
+    CSS and JavaScript libraries. It is reusable code because it is rendered on multiple
+    pages without the need to rewrite the code.
+*@
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -15,6 +25,7 @@
 </head>
 <body>
     <header>
+        @*Display the navigation bar, which contains links to various locations in the website.*@
         <nav class="navbar navbar-expand-sm border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">Safari Across America</a>
@@ -43,23 +54,29 @@
                             </li>
                         }
                     </ul>
+                    @*Render the Login/Logout buttons as a partial view.*@
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
     </header>
+
+    @*Display the current page the user is on. Essentially, @RenderBody() injects the code contained in the individual Razor Pages,
+        such as SubmitAnimal.cshtml.*@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
+    @*Display the footer, which contains a link to the References page.*@
     <footer class="border-top footer">
         <div class="container">
             <a asp-page="/References">References and Site Info</a>
         </div>
     </footer>
 
+    @*Import the needed JavaScript libraries.*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

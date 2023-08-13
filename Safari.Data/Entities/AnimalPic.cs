@@ -18,6 +18,7 @@ public partial class AnimalPic
     [Column("AnimalPicID")]
     public int AnimalPicId { get; set; }
 
+    //Note that AnimalId is required, because it is not defined as a nullable int.
     [Column("AnimalID")]
     public int AnimalId { get; set; }
 

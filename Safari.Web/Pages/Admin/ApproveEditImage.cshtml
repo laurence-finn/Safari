@@ -1,4 +1,6 @@
-﻿@page
+﻿@*This is the Approve/Edit Image page, where admins can edit image details and set the status to approved or not approved.*@
+
+@page
 @model Safari.Web.Pages.Admin.ApproveEditImagePageModel
 
 @{
@@ -34,6 +36,8 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
     <div class="col-lg-auto">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*The following property is hidden to ensure that they are not displayed to the user,
+            but is still passed to the controller when the form is submitted.*@
             <input type="hidden" asp-for="AnimalPic.AnimalPicId" />
 
             <div class="form-group">
@@ -46,15 +50,19 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
             <div class="form-group">
                 @if (!string.IsNullOrEmpty(Model.AnimalPic.FileName))
                 {
+                    @*To avoid stale images, the img src includes the current date and time to force the cache to be reset.*@
                     <img src="~/images/@Model.AnimalPic.FileName?version=@DateTime.UtcNow.Ticks" alt="Animal Image" style="max-width: 50%;" />
                 }
                 <br />
                 <br />
+                @*The FileName is displayed as read-only and cannot be changed by the admin.*@
                 <label asp-for="AnimalPic.FileName" class="control-label"></label>
                 <input asp-for="AnimalPic.FileName" class="form-control" readonly style="background-color: #f8f9fa; color: #6c757d;" />
                 <br />
             </div>
 
+            @*The following property is hidden to ensure that they are not displayed to the user,
+            but is still passed to the controller when the form is submitted.*@
             <input type="hidden" asp-for="AnimalPic.FilePath" />
 
             <div class="form-group">
@@ -73,6 +81,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
 
             <div class="form-group">
                 <label asp-for="AnimalPic.DateSubmitted" class="control-label"></label>
+                @*The DateSubmitted is displayed as read-only and cannot be changed by the admin.*@
                 <input asp-for="AnimalPic.DateSubmitted" class="form-control" readonly style="background-color: #f8f9fa; color: #6c757d;" />
                 <br />
             </div>
@@ -103,8 +112,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
     </div>
 </div>
 
-
-
-
-
-
+@*The JavaScript for this page renders the validation script import partial view.*@
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

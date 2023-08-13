@@ -1,3 +1,8 @@
+/*
+    This is the CSS file for each page on the website. 
+    Note that !important is used to override the preset Bootstrap stylings. Future revisions may remove this.
+*/
+
 html {
     font-size: 14px;
 }

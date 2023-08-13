@@ -17,6 +17,7 @@ public partial class Animal
     [Column("AnimalID")]
     public int AnimalId { get; set; }
 
+    //Note that Name is required, because it is not defined as a nullable string.
     [StringLength(50)]
     public string Name { get; set; } = null!;
 
@@ -26,6 +27,9 @@ public partial class Animal
     [Column("DietTypeID")]
     public int? DietTypeId { get; set; }
 
+    //****************
+    //Input Validation
+    //****************
     //The "Range" attributes are used in the following properties to implement input validation.
     [Column(TypeName = "decimal(6, 2)")]
     [Range(0, double.MaxValue, ErrorMessage = "Weight can't be a negative value.")]

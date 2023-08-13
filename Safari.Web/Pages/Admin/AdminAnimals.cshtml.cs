@@ -1,4 +1,8 @@
-﻿using System;
+﻿//File: AdminAnimals.cshtml.cs
+//Class: AdminAnimalsPageModel
+//Description: This is the code-behind class for the AdminAnimals.cshtml Razor Page.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,12 +16,14 @@ using Safari.Web.ViewModels;
 
 namespace Safari.Web.Pages.Admin
 {
+    //Only users with the Admin role can access this page
     [Authorize]
     public class AdminAnimalsPageModel : PageModel
     {
         private readonly WildlifeDataContext _context;
         private readonly IMapper _mapper;
 
+        //Constructor
         public AdminAnimalsPageModel(WildlifeDataContext context, IMapper mapper)
         {
             _context = context;
@@ -26,6 +32,7 @@ namespace Safari.Web.Pages.Admin
 
         public IList<AnimalViewModel> Animal { get;set; } = default!;
 
+        //OnGetAsync: On HTTP GET, retrieve all the animals from the database and map them to the AnimalViewModel
         public async Task OnGetAsync()
         {
             if (_context.Animal != null)
@@ -37,7 +44,7 @@ namespace Safari.Web.Pages.Admin
                     .ThenInclude(AnimalState => AnimalState.State)                    
                 .ToListAsync();
 
-                // Map Animal to AdminAnimalViewModel (populate data from Animal to AdminAnimalViewModel)
+                // Map Animal to AdminAnimalViewModel (populate data from Animal to AnimalViewModel)
                 Animal = _mapper.Map<IList<AnimalViewModel>>(animals);
             }
         }

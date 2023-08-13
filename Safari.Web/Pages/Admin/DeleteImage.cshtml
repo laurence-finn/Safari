@@ -1,5 +1,8 @@
-﻿@page
-@model Safari.Web.Pages.Admin.DeleteImageModel
+﻿@*This is the Delete Image page, which can be accessed by Administrators
+    by selecting an animal image from the Moderate Images page.*@
+
+@page
+@model Safari.Web.Pages.Admin.DeleteImagePageModel
 
 @{
     ViewData["Title"] = "Delete Image";
@@ -65,6 +68,8 @@
     </dl>
 
     <form method="post">
+        @*The AnimalPicId and FileName properties is hidden, 
+            but still present on the form because they are needed to process the delete action.*@
         <input type="hidden" asp-for="AnimalPic.AnimalPicId" />
         <input type="hidden" asp-for="AnimalPic.FileName" />
         <div class="row">

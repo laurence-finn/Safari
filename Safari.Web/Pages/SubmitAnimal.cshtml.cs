@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Safari.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace Safari.Web.Pages;
 
@@ -21,6 +22,7 @@ public class SubmitAnimalPageModel : PageModel
     public Animal Animal { get; set; } = default!;
 
     [BindProperty]
+    [Required(ErrorMessage = "Please select at least one state.")]
     public List<int> SelectedStateIds { get; set; } = default!;
 
     [BindProperty]
@@ -85,6 +87,11 @@ public class SubmitAnimalPageModel : PageModel
                 await _repository.AddAnimalStateAsync(NewAnimalID, StateID);
             }
 
+            // If the description is null, set it to "No description provided."
+            if (AnimalDescription.Description == null)
+            {
+                AnimalDescription.Description = "No description provided.";
+            }
             await _repository.AddAnimalDescriptionAsync(NewAnimalID, AnimalDescription);
 
             if (AnimalPic.File != null)

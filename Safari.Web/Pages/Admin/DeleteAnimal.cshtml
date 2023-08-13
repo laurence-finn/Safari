@@ -1,5 +1,8 @@
-﻿@page
-@model Safari.Web.Pages.Admin.DeleteAnimalModel
+﻿@*This is the Delete Animal page, which can be accessed by Administrators
+    by selecting an animal from the Moderate Animals page.*@
+
+@page
+@model Safari.Web.Pages.Admin.DeleteAnimalPageModel
 
 @{
     ViewData["Title"] = "Delete Animal";
@@ -83,6 +86,7 @@
     </dl>
 
     <form method="post">
+        @*The AnimalId property is hidden, but still present on the form because it is needed to process the delete action.*@
         <input type="hidden" asp-for="Animal.AnimalId" />
         <div class="row">
             <div class="col-md-4">

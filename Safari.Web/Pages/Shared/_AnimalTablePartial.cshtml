@@ -1,4 +1,12 @@
-﻿@model IList<Safari.Web.ViewModels.AnimalViewModel>
+﻿@***************@
+@*Reusable Code*@
+@***************@
+@*This is the Animal Table Partial View. It is rendered on any page where animals are listed,
+    such as the View All Animals and Interactive Map pages. A partial view allows this table to reused
+    on multiple pages without rewriting the code.
+*@
+
+@model IList<Safari.Web.ViewModels.AnimalViewModel>
 
 @if (Model.Any())
 {
@@ -39,6 +47,7 @@
             </tr>
         </thead>
         <tbody>
+            @*For each Animal object contained in the AnimalViewModel, display it if it has an "Approved" status.*@
             @foreach (var item in Model)
             {
                 if (item.IsApproved == true)
@@ -51,6 +60,8 @@
                             <img src="@item.FilePath?version=@DateTime.UtcNow.Ticks" alt="@item.AltText" style="max-width:100px; max-height:100px;">
                         </td>
                         <td>
+                            @*List the states the animal can be found in. If there are less than 5 states, display them all.
+                                If there are more than 5 states, display the first 5 states followed by an ellipsis.*@
                             @if (item.States.Count <= 5)
                             {
                                 @string.Join(", ", item.States)
@@ -91,7 +102,11 @@
         </tbody>
     </table>
 }
+@*If there are no animals in the database, display "No animals found" instead of a table. *@
 else
 {
     <p>No animals found.</p>
 }
+
+@*This file does not contain any JavaScript for the DataTables, because it behaves unpredictably if 
+    used in a partial view.*@
