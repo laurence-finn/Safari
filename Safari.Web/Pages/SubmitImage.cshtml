@@ -45,6 +45,8 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
     <div class="col-md-4">
         <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @*Display a dropdown box that allows the user to select which animal the image belongs to.*@
             <div class="form-group">
                 <label asp-for="AnimalPic.AnimalId" class="control-label">
                     Animal<span class="text-danger">* </span>
@@ -53,9 +55,17 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                 <select asp-for="AnimalPic.AnimalId" class="form-control" asp-items="ViewBag.AnimalId">
                     <option value="">Select an Animal</option>
                 </select>
+                @******************@
+                @*Input Validation*@
+                @******************@
+                @*Each div in the form contains a span for input validation. This uses the JQuery Validation library
+                to validate the input on the client side. The validation is based on the data types for the model.
+                For example, AnimalPic.AnimalId is not a nullable integer, so JQuery Validation will display an error if
+                the user tries to submit without selecting an animal for the image.*@
                 <span asp-validation-for="AnimalPic.AnimalId" class="text-danger"></span>
                 <br />
             </div>
+            
             <div class="form-group">
                 <label asp-for="AnimalPic.File" class="control-label">
                     Image File
@@ -85,6 +95,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                 <span asp-validation-for="AnimalPic.Source" class="text-danger"></span>
                 <br />
             </div>
+
             <div class="row">
                 <div class="col-md-4">
                     <input type="submit" value="Submit Image" class="btn btn-success" />
@@ -97,6 +108,7 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                     <a class="btn btn-secondary" asp-page="Index">Back to Home</a>
                 </div>
             </div>
+
         </form>
     </div>
 </div>

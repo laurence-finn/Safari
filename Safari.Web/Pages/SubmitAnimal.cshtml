@@ -51,6 +51,13 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
                     <i class="far fa-question-circle" title="Enter the name of the animal."></i>
                 </label>
                 <input asp-for="Animal.Name" class="form-control" />
+                @******************@
+                @*Input Validation*@
+                @******************@
+                @*Each div in the form contains a span for input validation. This uses the JQuery Validation library
+                    to validate the input on the client side. The validation is based on the data types for the model.
+                    For example, Animal.Name is not a nullable string, so JQuery Validation will display an error if
+                    the user tries to submit without providing it.*@                
                 <span asp-validation-for="Animal.Name" class="text-danger"></span>
                 <br />
             </div>
