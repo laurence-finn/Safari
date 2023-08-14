@@ -1,4 +1,9 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+﻿//File: Register.cshtml.cs
+//Class: RegisterModel
+//Description: This is the scaffolded code-behind class for the Register page. It is included in this project because registration is disabled.
+//The OnGet and OnPost methods both redirect to the Login page.
+
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
@@ -23,11 +28,13 @@ namespace Safari.Web.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
+        //OnGet: On HTTP GET, redirect to the Login page.
         public IActionResult OnGet()
         {
             return RedirectToPage("Login");
         }
 
+        //OnPost: On HTTP POST, redirect to the Login page.
         public IActionResult OnPost()
         {
             return RedirectToPage("Login");
