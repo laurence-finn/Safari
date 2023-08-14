@@ -1,3 +1,8 @@
+//File: Error.cshtml.cs
+//Class: ErrorModel
+//Description: This is the code-behind for the Error page, which is displayed when an error occurs in the application.
+//It has not been modified from its original ASP.NET Core scaffolding.
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Diagnostics;

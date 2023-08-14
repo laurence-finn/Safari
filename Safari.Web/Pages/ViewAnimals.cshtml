@@ -1,4 +1,7 @@
-﻿@page
+﻿@*This is the View All Animals page. It is intended to provide another method for the user to view all the animals in the database,
+    instead of clicking through the interactive map.*@
+
+@page
 @model Safari.Web.Pages.Animals.ViewAnimalsPageModel
 
 @{
@@ -15,8 +18,10 @@
 <br />
 <br />
 
+@*Render the Animal Table partial view, _AnimalTablePartial.cshtml.*@
 @await Html.PartialAsync("_AnimalTablePartial", Model.Animal)
 
+@*The JavaScript for this page sets the Animal Table as a DataTable with default settings.*@
 @section Scripts {
     <script>
         $(document).ready(function () {

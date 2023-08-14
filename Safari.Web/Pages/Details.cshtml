@@ -1,4 +1,6 @@
-﻿@page
+﻿@*This is the Details page, which displays whenever a user clicks the appropriate link for an animal from a list.*@
+
+@page
 @model Safari.Web.Pages.DetailsPageModel
 @{
     ViewData["Title"] = "Details for " + Model.Animal.Name;
@@ -7,6 +9,10 @@
 <h1>@Html.DisplayFor(model => model.Animal.Name)</h1>
 <hr />
 
+@*If the animal has a picture, create a Bootstrap carousel that will contain that pictures along with any others.
+    A carousel is a slideshow of images that the user can click through by using arrows on the side of the images,
+    and it is a part of the Bootstrap CSS framework.
+*@
 @if (Model.PicExists)
 {
     <div id="carouselExample" class="carousel slide" style="max-width:50%">
@@ -35,6 +41,7 @@
 <br />
 <br />
 
+@*Render the description of the animal. In the database, this is stored as HTML, so the raw HTML can be used here.*@
 <h4>Description</h4>
 <br />
 @Html.Raw(Model.AnimalDescription)
@@ -48,6 +55,7 @@
 <p>Average Length: @Model.Animal.Length</p>
 <br />
 
+@*List any states the animal can be found in.*@
 <h4>Locations:</h4>
 <br />
 <p>

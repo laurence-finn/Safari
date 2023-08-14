@@ -1,3 +1,7 @@
+//File: Map.cshtml.cs
+//Class: MapPageModel
+//Description: This is the code-behind class for the Map page. It generates a list of animals to display.
+
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,12 +16,15 @@ public class MapPageModel : PageModel
     private readonly WildlifeDataContext _context;
     private readonly IMapper _mapper;
 
+    //Constructor
     public MapPageModel(WildlifeDataContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
     }
 
+    //This property is a list of AnimalViewModel objects. AnimalViewModel is a view model class that
+    //contains data from the Animal model, with some modifications to make it easier to display.
     public IList<AnimalViewModel> Animal { get; set; } = default!;
 
     public async Task OnGetAsync()

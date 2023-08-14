@@ -1,4 +1,8 @@
-﻿@page
+﻿@*This is the Submit Animal page, which allows users to submit an animal to the website.
+    The animal is added to the database as an unapproved record. Admin approval is required for it to be viewable on
+    pages such as View All Animals and the Interactive Map.*@
+
+@page
 @model Safari.Web.Pages.SubmitAnimalPageModel
 
 @{
@@ -65,9 +69,13 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
             <div class="form-group">
                 <label asp-for="SelectedStateIds" class="control-label">
                     States <span class="text-danger">* </span>
+                    @*Some of the fields on the form have a question mark icon. The user can hover over this to
+                        view additional guidance for the field.*@
                     <i class="far fa-question-circle" title="Select the state(s) where the animal lives."></i>
                 </label>
                 <br />
+                @*Create a multi-selector box for the Animal States, pre-filled with all states in the database.
+                    This uses the Select2 JavaScript library.*@
                 <select asp-for="SelectedStateIds" class="form-control" style="width: 75%" asp-items="ViewBag.StateId" multiple data-placeholder="Select states"></select>
                 <br />
                 <span asp-validation-for="SelectedStateIds" class="text-danger"></span>
@@ -201,6 +209,8 @@ else if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
 </div>
 
 
+@*The JavaScript for this page adds the ValidationScriptsPartial partial view, which imports the JQuery Validation libraries.
+    It also configures the TinyMCE editor for the animal description with some custom settings for the toolbar and plugins.*@
 
 @section Scripts
     {

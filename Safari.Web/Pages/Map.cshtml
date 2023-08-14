@@ -1,8 +1,13 @@
-﻿@page
+﻿@*This is the interactive map page of the website, where users can view a map of the United States, select a state, and view all
+    animals that live in that state. The map uses an SVG image from the link provided below. Additional attribution information
+    for the SVG can be found in the partial view file _MapPartial.cshtml.*@
+
+@page
 @model Safari.Web.Pages.MapPageModel
 @{
 }
 
+@*The Map page uses some additional CSS styling to set the font, colors, and hover behavior associated with the map SVG.*@
 @section AdditionalStyles {
     <link href="~/css/map.css" rel="stylesheet" />
 }
@@ -26,6 +31,7 @@
     <br />
 </div>
 
+@*Render the partial view, which is found in _AnimalTablePartial.cshtml, using the Animal model associated with this page.*@
 <div id="AnimalTableContainer">
     @await Html.PartialAsync("_AnimalTablePartial", Model.Animal)
 </div>

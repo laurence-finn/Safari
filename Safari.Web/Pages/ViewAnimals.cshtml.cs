@@ -1,4 +1,8 @@
-﻿using System;
+﻿//File: ViewAnimals.cshtml.cs
+//Class: ViewAnimalsPageModel
+//Description: This is the code-behind class for the ViewAnimals.cshtml page. It is responsible for generating a list of all animals in the database.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +20,7 @@ namespace Safari.Web.Pages.Animals
         private readonly WildlifeDataContext _context;
         private readonly IMapper _mapper;
 
+        //Constructor
         public ViewAnimalsPageModel(WildlifeDataContext context, IMapper mapper)
         {
             _context = context;
@@ -24,10 +29,14 @@ namespace Safari.Web.Pages.Animals
 
         public IList<AnimalViewModel> Animal { get;set; } = default!;
 
+        //OnGetAsync: On HTTP GET, retrieve all animals from the database and map them to AnimalViewModels.
+        //Currently, unapproved animals are filtered by the HTML page, but in the future this code may be updated
+        //to filter by approval status here.
         public async Task OnGetAsync()
         {
             if (_context.Animal != null)
             {
+                //LINQ query to retrieve all animals from the database
                 var animals = await _context.Animal
                 .Include(a => a.AnimalType)
                 .Include(a => a.DietType)

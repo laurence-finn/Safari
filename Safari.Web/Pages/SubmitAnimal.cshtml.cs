@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿//File: SubmitAnimal.cshtml.cs
+//Class: SubmitAnimalPageModel
+//Description: This is the code-behind class for the Submit Animal page, which allows users to submit animals to the database.
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
@@ -12,6 +16,7 @@ public class SubmitAnimalPageModel : PageModel
     private readonly WildlifeDataContext _context;
     private readonly IWildlifeRepository _repository;
 
+    //Constructor
     public SubmitAnimalPageModel(WildlifeDataContext context, IWildlifeRepository repository)
     {
         _context = context;
@@ -31,6 +36,7 @@ public class SubmitAnimalPageModel : PageModel
     [BindProperty]
     public AnimalPic AnimalPic { get; set; } = default!;
 
+    //RepopulateViewData: Repopulates the view data for the dropdown lists
     public void RepopulateViewData()
     {
         ViewData["AnimalTypeId"] = new SelectList(
@@ -41,12 +47,14 @@ public class SubmitAnimalPageModel : PageModel
                            _context.State, "StateId", "Name");
     }
 
+    //OnGet: On HTTP GET, populate the view data and return the page
     public IActionResult OnGet()
     {
         RepopulateViewData();
         return Page();
     }
 
+    //OnPostResetForm: On HTTP POST, if the user clicks the "Reset Form" button, reset the form and return the page
     public IActionResult OnPostResetForm()
     {
         // Reset the model properties to their default values
@@ -63,6 +71,7 @@ public class SubmitAnimalPageModel : PageModel
         return Page();
     }
 
+    //OnPostAsync: On HTTP POST, if the user clicks the "Submit" button, try to submit the animal to the database.
     public async Task<IActionResult> OnPostAsync()
     {
         // If the model state is invalid for any other reason, cancel the post
@@ -72,8 +81,11 @@ public class SubmitAnimalPageModel : PageModel
             return Page();
         }
 
+        //Create a variable to store the new animal's ID. This ID is set after adding a record to the Animal table,
+        //and is used when adding records to the AnimalState, AnimalDescription, and AnimalPic tables.
         int NewAnimalID = 0;
 
+        //Begin transaction
         using var transaction = await _context.Database.BeginTransactionAsync();
 
         try
@@ -107,7 +119,6 @@ public class SubmitAnimalPageModel : PageModel
                 AnimalPic.FilePath = Path.Combine("images", AnimalPic.FileName);
 
                 // Save the uploaded file to the images folder.
-                // In the future, I will add a moderation queue to approve images first.
                 var FullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", AnimalPic.FilePath);
                 using (var FileStream = new FileStream(FullPath, FileMode.Create))
                 {
@@ -119,14 +130,17 @@ public class SubmitAnimalPageModel : PageModel
             }
 
             ModelState.Clear();
+            //Commit the transaction
             await transaction.CommitAsync();
             TempData["SuccessMessage"] = "Animal submitted successfully!";
             RepopulateViewData();
             return Page();
         }
+        //Catch any SQL exceptions: rollback the transaction and display an error message on the Submit page.
         catch (SqlException ex)
         {
             TempData["ErrorMessage"] = ex.Message;
+            //Rollback the transaction
             await transaction.RollbackAsync();
             RepopulateViewData();
             return Page();

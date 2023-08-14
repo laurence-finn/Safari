@@ -1,4 +1,9 @@
-﻿using Safari.Data;
+﻿//File: AnimalViewModel.cs
+//Class: AnimalViewModel
+//Description: AnimalViewModel is a model that stores Animal information. Using the AnimalProfile and AutoMapper, it is filled with information
+//mapped from the rest of the database.
+
+using Safari.Data;
 using System.ComponentModel.DataAnnotations;
 
 namespace Safari.Web.ViewModels
@@ -28,10 +33,13 @@ namespace Safari.Web.ViewModels
         [Display (Name="State(s)")]
         public List<string> States { get; set; } = default!;
 
+        //AnimalViewModel only needs the first approved picture, which is used as a thumbnail on the table row.
+        //Because of this, an AnimalPic object isn't needed; just the file path and alt text.
         [Display (Name = "Image")]
         public string FilePath { get; set; } = default!;
         public string AltText { get; set; } = default!;        
 
+        //Date Submitted and Approval Status are included in the AnimalViewModel, but are only used in the Admin view.
         [Display (Name = "Date Submitted")]
         public DateTime DateSubmitted { get; set; } = default!;
 
