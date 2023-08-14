@@ -37,7 +37,12 @@ namespace Safari.Web.Pages.Admin
         [BindProperty]
         public List<int> SelectedStateIds { get; set; } = new List<int>();
 
+        //*************
+        //Reusable Code
+        //*************
         //RepopulateViewDataAsync: This method repopulates the ViewData for the page whenever the page is refreshed/loaded.
+        //Instead of copying this code into every GET and POST method, it is placed here and called whenever needed,
+        //reducing the amount of code needed.
         private async Task<IActionResult> RepopulateViewDataAsync(int? id)
         {
             var animal = await _context.Animal.FirstOrDefaultAsync(m => m.AnimalId == id);

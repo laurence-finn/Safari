@@ -33,7 +33,12 @@ namespace Safari.Web.Pages.Admin
         [BindProperty]
         public AnimalPic AnimalPic { get; set; } = default!;
 
+        //*************
+        //Reusable Code
+        //*************
         //RepopulateViewDataAsync: This method repopulates the ViewData for the page whenever the page is refreshed/loaded.
+        //Instead of copying this code into every GET and POST method, it is placed here and called whenever needed,
+        //reducing the amount of code needed.
         private async Task<IActionResult> RepopulateViewDataAsync(int? id)
         {
             var animalpic = await _context.AnimalPic.FirstOrDefaultAsync(m => m.AnimalPicId == id);

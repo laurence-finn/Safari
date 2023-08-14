@@ -36,7 +36,12 @@ public class SubmitAnimalPageModel : PageModel
     [BindProperty]
     public AnimalPic AnimalPic { get; set; } = default!;
 
-    //RepopulateViewData: Repopulates the view data for the dropdown lists
+    //*************
+    //Reusable Code
+    //*************
+    //RepopulateViewData: This method repopulates the ViewData for the page whenever the page is refreshed/loaded.
+    //Instead of copying this code into every GET and POST method, it is placed here and called whenever needed,
+    //reducing the amount of code needed.
     public void RepopulateViewData()
     {
         ViewData["AnimalTypeId"] = new SelectList(

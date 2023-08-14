@@ -3,6 +3,13 @@
 //Description: AnimalViewModel is a model that stores Animal information. Using the AnimalProfile and AutoMapper, it is filled with information
 //mapped from the rest of the database.
 
+//*************
+//Reusable Code
+//*************
+//The properties in the AnimalViewModel are reused throughout the project, wherever a list of animals is displayed,
+//such as the View All Animals page, Interactive Map, and Moderate Animals page. By using a ViewModel, the properties
+//do not need to be redefined in each view, therefore making the code reusable.
+
 using Safari.Data;
 using System.ComponentModel.DataAnnotations;
 
