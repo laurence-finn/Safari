@@ -2,6 +2,13 @@
 //Class: Animal
 //Description: This class contains the data model for the Animal table in the Safari database.
 
+//*************
+//Reusable Code
+//*************
+//The properties in the Animal model/entity are reused throughout the project, wherever a list of animals is displayed,
+//or whenever properties are stored to be sent to the database. For example, the Submit Animal page creates an Animal
+//object, stores properties to it, and sends it to the database as a new record.
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

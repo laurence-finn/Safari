@@ -3,6 +3,13 @@
 //Description: This class implements the IWildlifeRepository interface. All of the methods are used to manipulate the database.
 //Safari uses stored procedures, so all of the methods call a stored procedure to create, update, or delete data.
 
+//*************
+//Reusable Code
+//*************
+//This repository contains a number of calls to SQL stored procedures which are reused throughout the pages on the website.
+//For example, the Submit Image and Submit Animal pages both invoke AddAnimalPicAsync, which adds an image's information
+//to the database. Using reusable code avoids the need to repeat this code on both of those pages.
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
