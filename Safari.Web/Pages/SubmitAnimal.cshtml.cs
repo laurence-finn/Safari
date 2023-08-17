@@ -134,11 +134,11 @@ public class SubmitAnimalPageModel : PageModel
                 await _repository.AddAnimalPicAsync(NewAnimalID, AnimalPic);
             }
 
-            ModelState.Clear();
             //Commit the transaction
             await transaction.CommitAsync();
             TempData["SuccessMessage"] = "Animal submitted successfully!";
-            RepopulateViewData();
+            //Reset the form after submitting, in case the user wants to submit another animal
+            OnPostResetForm();
             return Page();
         }
         //Catch any SQL exceptions: rollback the transaction and display an error message on the Submit page.
