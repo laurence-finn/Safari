@@ -2,6 +2,9 @@
 
 A website that tracks wildlife in the USA.
 
+## Video Walkthrough
+For a walkthrough of the website's functionality and coding methods, please visit https://youtu.be/59Q19aA7mz8 .
+
 ## Prerequisites
 
 * You have a Windows/Linux/Mac machine.
